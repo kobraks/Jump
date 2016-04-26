@@ -1,0 +1,357 @@
+map = {
+	neme = "przejdz to";
+	width = 48;
+	height = 13;
+	tailWidth =32;
+	tailHeight = 32;
+	texture = "Tile.png";
+	startPosition = { x = 0; y = 9; }
+	gravity = 400.0;
+	author =  "Mateusz Druciarek";
+	
+	clouds = 
+	{
+		have_clouds = true; #sprawia że uruchamiony będzie generator chmur.
+
+		to_left = true;
+		
+		timeToSpawn =
+		{
+
+			min = 0; # minimalny czas spawnu chmur podowany w seknudach
+
+			max = 3; # maxymalny czas w którym chmurka może się spawnić
+
+		}
+		
+		speed = #prędkość poruszania się chmury
+		{
+
+			min = 20; #minimalna prędkość poruszania się chmury
+
+			max = 80; #maksymalna prędkość poruszania się chmury
+
+		}
+	}
+
+	background =
+	{
+
+		fileName = "bg.png"; #wczytuje tło z pliku w data/textures/
+
+		#można także podać name = "grassMid";
+
+		#lub też number = 83;
+
+	
+	}
+	endPosition = {
+
+		x = 100; #można także podać y, ale jak podasz tak jak wtym przykładzie będzie sprawdzać na całości y.
+
+		nextmap = "example.txt";
+
+	}
+}
+	{	x = 0;
+		y = 3;
+
+	name = "boxExplosive";
+	moving = {
+
+		can_move = true;
+
+		y = -2 : 0;
+	}
+}
+
+{	x = 0;
+	y = 10;
+
+	number = 82;
+}
+{	x = 1;
+	y = 10;
+
+	number = 82;
+}
+{	x = 1;
+	y = 4;
+
+	name = "boxAlt";
+}
+
+{	x = 2;
+	y = 10;
+
+	number = 82;
+}
+{	x = 2;
+	y = 5;
+
+	name = "boxAlt";
+}
+{	x = 3;
+	y = 5;
+
+	number = 82;
+}{	x = 3;
+	y = 10;
+
+	number = 82;
+}
+{	x = 3;
+	y = 2;
+
+	name = "boxAlt";
+}{	x = 4;
+	y = 10;
+
+	name = "boxAlt";
+}{	x = 4;
+	y = 2;
+
+	name = "boxAlt";
+}{	x = 5;
+	y = 6;
+
+	name = "boxAlt";
+}
+{	x = 6;
+	y = 9;
+
+	name = "boxAlt";
+}{	x = 6;
+	y = 2;
+
+	name = "boxAlt";
+}{	x = 7;
+	y = 7;
+
+	name = "boxAlt";
+}{	x = 8;
+	y = 8;
+
+	name = "boxAlt";
+}{	x = 9;
+	y = 3;
+
+	name = "boxAlt";
+}
+{	x = 9;
+	y = 8;
+
+	name = "boxAlt";
+}{	x = 10;
+	y = 3;
+
+	name = "boxAlt";
+}{	x = 11;
+	y = 9;
+
+	name = "boxAlt";
+}{	x = 12;
+	y = 2;
+
+name = "boxAlt";
+}{	x = 12;
+	y = 9;
+
+	name = "boxAlt";
+}{	x = 14;
+	y = 3;
+
+	name = "boxAlt";
+}{	x = 14;
+	y = 10;
+
+	number = 82;
+}{	x = 16;
+	y = 4;
+
+	name = "boxAlt";
+}{	x = 16;
+	y = 10;
+
+	number = 82;
+}{	x = 17;
+	y = 4;
+
+	name = "boxAlt";
+}{	x = 17;
+	y = 10;
+
+	number = 82;
+}{	x = 19;
+	y = 5;
+
+	name = "boxAlt";
+}
+{	x = 19:22;
+	y = 9;
+
+	name = "boxAlt";
+}{	x = 20:22;
+	y = 8;
+
+	name = "boxAlt";
+}{	x = 21:22;
+	y = 7;
+
+	name = "boxAlt";
+}{	x = 22;
+	y = 6;
+
+	name = "boxAlt";
+}
+	{	x = 20:21;
+	y = 3;
+
+	name = "boxAlt";
+}
+{	x = 23:24;
+	y = 2;
+
+	name = "boxAlt";
+}
+{	x = 24;
+	y = 11;
+
+	number = 82;
+}
+{	x = 26:27;
+	y = 2;
+
+	name = "boxAlt";
+}{	x = 25:26;
+	y = 7;
+
+	name = "boxAlt";
+}
+{	x = 26:27;
+	y = 10;
+
+	number = 82;
+}
+{	x = 28:30;
+	y = 11;
+
+	number = 82;
+}
+{	x = 28;
+	y = 6;
+
+	name = "boxAlt";
+}
+{	x = 29;
+	y = 7;
+
+	name = "boxAlt";
+}
+{	x = 29;
+	y = 3;
+
+	name = "boxAlt";
+}
+{	x = 30:32;
+	y = 2;
+
+	name = "boxAlt";
+}
+{	x = 31:32;
+	y = 6;
+
+	name = "boxAlt";
+}
+{	x = 28:30;
+	y = 11;
+
+	number = 82;
+}
+{	x = 34;
+	y = 7;
+
+	name = "boxAlt";
+}{	x = 34;
+	y = 1;
+
+	name = "boxAlt";
+}{	x = 35:37;
+	y = 2;
+
+	name = "boxAlt";
+}
+{	x = 36;
+	y = 8;
+
+	name = "boxAlt";
+}{	x = 36:39;
+	y = 11;
+
+	number = 82;
+}
+{	x = 39:40;
+	y = 4;
+
+	name = "boxAlt";
+}
+{	x = 41;
+	y = 2;
+
+	name = "boxAlt";
+}
+{	x = 42;
+	y = 5;
+
+	name = "boxAlt";
+}
+{	x = 41:43;
+	y = 10:11;
+
+	name = "castleCenter";
+}{	x = 42:43;
+	y = 9;
+
+	name = "castleCenter";
+}
+{	x = 43;
+	y = 8;
+
+	name = "castleCenter";
+}
+{	x = 45:46;
+	y = 6;
+
+	name = "castleCenter";
+	moving = {
+
+		can_move = true;
+
+	y = -4 : 4;
+	speed = 120;}
+}
+{	x = 46;
+	y = 5;
+
+	name =  "signExit";
+	have_collision = false
+
+}
+{x=0:23;
+Y=11;
+water=true;}
+{x=25:27;
+y=11;
+lava = true;}
+{x=31;
+y=11;
+lava = true;}
+{x=35;
+y=11;
+lava = true;}
+{x=40;
+y=11;
+lava = true;}
+{x=44:46;
+y=11;
+lava = true;}

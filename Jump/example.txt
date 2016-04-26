@@ -1,0 +1,222 @@
+﻿#plik musi mieć formatowanie UTF-8 lub UTF-16 inne są nieobsługiwane.
+#wszystkie wartości oznaczone map = { ... }
+#mozna podac np map.name = "example";
+
+map = {
+	#tak zapisywane są komentarze. Komentarze są ignorowane podczas odczytu pliku.
+	#wszystko co znajduje się za znakiem # uznawane będzie za komentarz.
+
+	name = "example";
+	
+	width = 30; #szerokość mapy
+	height = 18; #wysokość map
+	#powyrzsze wartości można także podać jako
+	#size = { 
+	#	x = 30; 
+	#	y = 18;
+	#}
+	
+	#możesz podać domyślne wartości
+	defaultValues = 
+	{
+		tiles = #domyślne wartości dla kafla
+		{
+			display = true; #Jeżeli wpiszesz false to domyślnie nie będzie wyświetlane kafle
+			have_collision = true; #Czy sprawdzać kolizje
+			number = 0; #domyślny numer tekstury
+			name = "grassMid"; #domyślna nazwa tekstury
+		}
+		
+		movinTiles = #domyślne wartości dla poruszających się platform
+		{
+			speed = 50; #prędkość przemieszczania się
+		}
+	}
+	
+	tailWidth =32; #szerokość jednego bloku grafiki
+	tailHeight = 32; #wysokość jednego bloku grafiki
+	#można też zapisać to tail = { x= 32; y = 32; }
+	
+	texture = "Tile.png"; #nazwa pliku z teksturami
+	
+	startPosition = { x = 0; y = 16; }
+	#możesz także zapisać startPosition i wszytkie zmienne co przyjmują dwie wartości np tak:
+	#startPosition.x = 0;
+	#startPosition.y = 16;
+	
+	groundHeight = 576; #domyślnie groundHeight wysokość od ziemi (najniższa wartość na która postać może spaść) wynosi: height*tailHeight + 64;
+	#komputer sam tą wartość wyliczy jeżeli nie zostanie podana
+	
+	gravity = 400.0; #siła przyciągania domyślnie 400,0;
+	
+	author = "Maciej Druciarek";
+	
+	clouds = 
+	{
+		have_clouds = true; #sprawia że uruchamiony będzie generator chmur.
+		timeToSpawn = 
+		{
+			min = 0; # minimalny czas spawnu chmur podowany w seknudach
+			max = 3; # maxymalny czas w którym chmurka może się spawnić
+		}
+		
+		to_left = true; #Po utworzeniu będą lecieć w lewo (jeżeli chcesz w prawo to to_right = true)
+			
+		speed = #prędkość poruszania się chmury
+		{
+			min = 20; #minimalna prędkość poruszania się chmury
+			max = 80; #maksymalna prędkość poruszania się chmury
+		}
+	}
+	
+	background = 
+	{
+		fileName = "bg.png"; #wczytuje tło z pliku w data/textures/
+		#można także podać name = "grassMid";
+		#lub też number = 83;
+	}
+	
+	endPosition = { 
+		x = 100; #można także podać y, ale jak podasz tak jak wtym przykładzie będzie sprawdzać na całości y.
+		nextmap = "example.txt";
+	}
+}
+
+#brak zapisu wartość = {} zostanie zintrepretowana jako 1 = { #jakieś instrukcje }
+#jeżeli to ma być mapa nie zapisuj tego 1 = { }, może w przyszłości takie coś dorobie.
+
+{
+	x = 0;
+	y = 5;
+	
+	number = 82;
+}
+
+{
+	x = 13;
+	y = 13;
+	
+	enemy = {
+		isEnemy = true; #jest przeciwnikiem (odbiera życie gracza)
+		type =  NONE; #typ przeciwnika
+	}
+}
+
+{
+	x = 0;
+	y = 13;
+	
+	item = {
+		isItem = true; #czy jest przedmiotem
+		type = bronze_coin; # typ przedmiotu dostępne typy to: heart (serce), bronze_coin (moneta z brązu), silver_coin (moneta z srebra), gold_coin (moneta z złota), tree (drzewo), star (gwiazdka), spikes (kolce), bush (krzaki), none (brak typ) reszta wartości jest ignorowana i traktowana jakbyś wpisał NONE
+		
+		value = 10; #wartość w punktach, wartość ujemna jest ignorowana i można to pominąć domyślnie dla bronzowej monety ta wartość wynosi właśnie 10
+	}
+}
+
+{
+	x = 1;
+	y = 13;
+	
+	item = {
+		isItem = true;
+		type = heart;
+	}
+}
+
+{
+	x = 2 : 5;
+	y = 10 : 13;
+	
+	item = {
+		isItem = true;
+		type = gold_coin;
+	}
+}
+
+{
+	#instrukcja zapisu całej lini, w tym wypadku wyświetli wszystkie bloki od 0 - 9.
+	x = 0:9;
+	y = 17;
+	
+	display = true; #opcjonalnie, domyślnie będzie uważane za wartość true.
+	have_collision = true; #opcjonalnie
+	
+	number = 82; #wybrana teksturka z pliku, jeżeli się jej nie poda zostanie wybrana wartość 0;
+}
+
+{
+	x = 16:29;
+	y = 17;
+	
+	display = true; #opcjonalnie
+	have_collision = true; # opcjonalnie
+	
+	number = 82;
+}
+
+{
+	x = 10:15;
+	y = 13;
+	
+	name = "castleMid";
+	
+	#zapis poruszającej się platformy
+	
+	moving = {
+		can_move = true; #wartość sprawdza czy platforma może się ruszać jeżeli wpisze się false lub nic się nie wpisze to poniższe wartośći zostaną zignorowane
+		
+		x = -10:10; #poruszać się będzie dziesięć jednostek w prawo i dziesięć jednostek w lewo od ustalonej pozycji.
+		y = 13; #wysokość jeżeli się nie zmienia to można to pominąc.
+		
+		speed = 120; #prędkość poruszania się platformy, która zstanie użyta we wzoże (1/60) * speed;
+	}
+}
+
+{
+	x = 17:20;
+	y = 7;
+	
+	number = 82;
+}
+
+{
+	x = 3 : 5;
+	y = 0:10;
+}
+
+{
+	x = 9;
+	y = 16;
+	
+	number = 82;
+}
+
+{
+	x = 5;
+	y = 16;
+	
+	number = 82;
+}
+
+{
+	x = 17:21;
+	y = 6;
+	
+	number = 82;
+
+}
+
+{
+	x = 0 : 20;
+	y = 16;
+	
+	water = true;
+}
+
+#{
+#	x = 0:50;
+#	y = 0:50;
+#	
+#	have_collision = false;
+#}
