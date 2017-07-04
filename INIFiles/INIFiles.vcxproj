@@ -151,14 +151,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Exports.hpp" />
-    <ClInclude Include="INIFiles.hpp" />
-    <ClInclude Include="Section.hpp" />
-    <ClInclude Include="Variable.hpp" />
+    <ClInclude Include="INIFile.h" />
+    <ClInclude Include="INIFileBadAllocException.h" />
+    <ClInclude Include="INIFileException.h" />
+    <ClInclude Include="INIFileNotInitializedException.h" />
+    <ClInclude Include="INIFileSectionAlreadyExistsException.h" />
+    <ClInclude Include="INIFileSectionDoesNotExistException.h" />
+    <ClInclude Include="INIFileUnableToReadException.h" />
+    <ClInclude Include="INIFileUnableToWriteFileException.h" />
+    <ClInclude Include="INIFileUnableToWriteStreamException.h" />
+    <ClInclude Include="INIFileVariableDoesNotExistsException.h" />
+    <ClInclude Include="INIReader.h" />
+    <ClInclude Include="INIWriter.h" />
+    <ClInclude Include="MSGExceptions.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Section.h" />
+    <ClInclude Include="Simbols.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="INIFiles.cpp" />
+    <ClCompile Include="INIFile.cpp" />
+    <ClCompile Include="INIReader.cpp" />
+    <ClCompile Include="INIWriter.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Section.cpp" />
-    <ClCompile Include="Variable.cpp" />
+    <ClCompile Include="Tokenizer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

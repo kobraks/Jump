@@ -1,150 +1,170 @@
-#include "Section.hpp"
-#include <boost/algorithm/string.hpp>
-#include <fstream>
+#include "Section.h"
+#include <algorithm>
+#include "INIFileBadAllocException.h"
+#include "INIFileVariableDoesNotExistsException.h"
+#include <exception>
 
-using namespace ini;
+ini::Section::Section(const std::string& _name) : name_(_name)
+{}
 
-Section::Section()
+ini::Section::Section(const std::string& _name, const std::initializer_list<Variable*>& _variables) : Section(_name)
 {
+	variable(_variables);
 }
 
-Section::Section(std::wstring name, std::wstring valueName, std::wstring value)
+ini::Section::Section(const std::string& _name, const std::initializer_list<Variable>& _variables) : Section(_name)
 {
-	this->name = name;
-	this->variables.push_back(std::shared_ptr<Variable>(new Variable(valueName, value)));
+	variable(_variables);
 }
 
-
-Section::~Section()
+ini::Section::Section(const std::string& _name, const Variable _variable) : Section(_name)
 {
-	this->comments.clear();
-	this->variables.clear();
+	variable(_variable);
 }
 
-void Section::setName(std::wstring name)
+ini::Section::Section(const std::string& _name, Variable* _variable) : Section(_name)
 {
-	this->name = name;
+	variable(_variable);
 }
 
-//---------------------------------------------------------------Values--------------------------------------------------------------
-
-std::wstring Section::getName()
+ini::Section::Section(const std::string& _name, Variable* _begin, Variable* _end) : Section(_name)
 {
-	return this->name;
+	variable(_begin, _end);
 }
 
-auto Section::findVariable(std::wstring name) -> std::shared_ptr<Variable>
+ini::Section::Section(const Section& _section)
 {
-	std::shared_ptr<Variable> error = NULL;
-
-	for (auto element : this->variables)
+	try
 	{
-		if (boost::to_upper_copy(name) == boost::to_upper_copy(element->getName())) return element;
+		for (auto variable : _section.variables_)
+			variables_.push_back(new Variable(*variable));
+
+		name_ = _section.name();
 	}
-
-	return error;
+	catch(std::bad_alloc)
+	{
+		throw exception::INIFileBadAllocException();
+	}
 }
 
-std::wstring Section::getValue(std::wstring name)
+ini::Section::~Section()
 {
-	auto variable = findVariable(name);
-
-	if (variable != NULL) return variable->getValue();
-
-	return L"";
+	clear();
 }
 
-void Section::addValue(std::wstring& name, std::wstring& value)
+void ini::Section::clear()
 {
-	if (this->getValue(name) != L"") this->setValue(name, value);
-	else this->variables.push_back(std::shared_ptr<Variable>(new Variable(name, value)));
+	for (auto variable : variables_)
+		delete variable;
+
+	variables_.clear();
 }
 
-void Section::setValue(std::wstring& name, std::wstring& value)
+void ini::Section::name(const std::string& _name)
 {
-	if (this->getValue(name) == L"") return;
+	if (_name != "" || !_name.empty())
+		name_ = _name;
+}
+
+std::string ini::Section::name() const
+{
+	return name_;
+}
+
+ini::Variable ini::Section::variable(const std::string& _var_name) const
+{
+	auto result = std::find_if(variables_.begin(), variables_.end(), [_var_name](const Variable const* _variable) { return _var_name == _variable->name; });
+
+	if (result != variables_.end())
+		return **result;
 	else
-	{
-		auto variable = findVariable(name);
-		if (variable != NULL) variable->setValue(value);
-	}
+		throw exception::INIFileVariableDoesNotExistsException();
 }
 
-bool Section::existValue(std::wstring  name)
+ini::Variable* ini::Section::variable(const std::string& _variable)
 {
-	auto variable = findVariable(name);
-	if (variable != NULL) return true;
+	auto result = find(_variable);
 
-	return false;
-}
-
-//---------------------------------------------------------------Comments--------------------------------------------------
-void Section::addComment(std::wstring comment)
-{
-	this->comments.push_back(std::shared_ptr<std::wstring>(new std::wstring(comment)));
-}
-
-void Section::addCommentToValue(std::wstring name, std::wstring comment)
-{
-	if (this->getValue(name) == L"") return;
+	if (result != variables_.end())
+		return *result;
 	else
+		throw exception::INIFileVariableDoesNotExistsException();
+}
+
+
+void ini::Section::variable(Variable* _variable)
+{
+	if (_variable)
 	{
-		auto variable = findVariable(name);
-		if (variable != NULL) variable->addComment(comment);
-	}
-}
+		auto var = find(_variable->name);
 
-void Section::deleteValueComment(std::wstring name, int line)
-{
-	if (this->getValue(name) == L"") return;
-	else
-	{
-		auto variable = findVariable(name);
-		if (variable != NULL) variable->deleteComment(line);
-	}
-}
-
-void Section::deleteComment(int line)
-{
-	if (comments.empty()) return;
-	else if (line > comments.size()) return;
-	else if (line < 0) return;
-	else comments.erase(comments.begin() + line);
-}
-
-void Section::deleteAllComments()
-{
-	this->comments.clear();
-}
-
-void Section::deleteAllVariableComments(std::wstring name)
-{
-	auto variable = findVariable(name);
-	if (variable != NULL) variable->deleteAllComments();
-}
-
-int Section::getNumberOfSectionsInFile(std::wstring name)
-{
-	int numberOfSection = 0;
-	std::wstring temp;
-
-	std::wfstream* file = new std::wfstream(name, std::ios::in);
-	if (file->good())
-	{
-		while (std::getline(*file, temp))
+		if (var != variables_.end())
 		{
-			if (isSectionName(temp)) numberOfSection++;
+			size_t pos = std::distance(variables_.begin(), var);
+			delete variables_[pos];
+			variables_[pos] = _variable;
 		}
+		else
+			variables_.push_back(_variable);
 	}
-	else numberOfSection = -1;
-	file->close();
-	delete file;
-
-	return numberOfSection;
 }
 
-bool Section::isSectionName(std::wstring name)
+void ini::Section::variable(const Variable& _variable)
 {
-	std::wregex pattern(L"\\[(.*?)\\]");
-	return std::regex_search(name, pattern);
+	try
+	{
+		auto var = find(_variable.name);
+
+		if (var != variables_.end())
+		{
+			size_t pos = std::distance(variables_.begin(), var);
+			variables_[pos]->value = _variable.value;
+		}
+		else
+			variables_.push_back(new Variable(_variable));
+	}
+	catch(std::bad_alloc)
+	{
+		throw exception::INIFileBadAllocException();
+	}
+}
+
+std::vector<ini::Variable*> ini::Section::variables() const
+{
+	return variables_;
+}
+
+void ini::Section::variable(Variable* _begin, Variable* _end)
+{
+	for (auto i = _begin; i != _end; ++i)
+		variable(*i);
+}
+
+void ini::Section::variable(const std::initializer_list<Variable>& _variables)
+{
+	for (auto variable : _variables)
+		this->variable(variable);
+}
+
+void ini::Section::variable(const std::initializer_list<Variable*>& _variables)
+{
+	for (auto variable : _variables)
+		this->variable(variable);
+}
+
+std::vector<ini::Variable*>::iterator ini::Section::find(const std::string& _var_name)
+{
+	return std::find_if(variables_.begin(), variables_.end(), [_var_name](const Variable const* _variable) { return _var_name == _variable->name; });
+}
+
+void ini::Section::remove_variable(const std::string& _variable_name)
+{
+	auto variable = find(_variable_name);
+
+	if (variable == variables_.end())
+		throw exception::INIFileVariableDoesNotExistsException();
+
+	size_t pos = std::distance(variables_.begin(), variable);
+	delete variables_[pos];
+	variables_.erase(variables_.begin() + pos);
 }

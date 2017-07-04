@@ -2,10 +2,10 @@
 
 #ifdef INI_INIFILES_EXPORTS
 
-#define INI_INIFILES __declspec(dllexport) 
+#define INIFILES __declspec(dllexport) 
 
 #else
 
-#define INI_INIFILES __declspec(dllimport) 
+#define INIFILES __declspec(dllimport) 
 
 #endif
