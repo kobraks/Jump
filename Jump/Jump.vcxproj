@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -88,12 +88,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;SFML_DYNAMIC;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump;C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\Interface;C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\MapFiles;C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\INIFiles;C:\Users\Katarzyna\Documents\biblioteka\boost_1_59_0;C:\Users\Katarzyna\Documents\biblioteka\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\Interface;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\MapFiles;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\INIFiles;D:\Biblioteki\boost-2017;D:\Biblioteki\sfml-2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\lib;C:\Users\Katarzyna\Documents\biblioteka\SFML-2.3.2\lib;C:\Users\Katarzyna\Documents\biblioteka\boost_1_59_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\lib;D:\Biblioteki\sfml-2017\lib;D:\Biblioteki\boost-2017\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Box2D.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -119,14 +119,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;SFML_STATIC;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump;C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\Interface;C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\MapFiles;C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\INIFiles;C:\Users\Katarzyna\Documents\biblioteka\boost_1_59_0;C:\Users\Katarzyna\Documents\biblioteka\SFML-2.3.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\Interface;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\MapFiles;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\INIFiles;D:\Biblioteki\boost-2017;D:\Biblioteki\sfml-2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Katarzyna\Documents\Visual Studio 2015\Projects\Jump\lib;C:\Users\Katarzyna\Documents\biblioteka\SFML-2.3.2\lib;C:\Users\Katarzyna\Documents\biblioteka\boost_1_59_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\lib;D:\Biblioteki\sfml-2017\lib;D:\Biblioteki\boost-2017\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Box2D.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

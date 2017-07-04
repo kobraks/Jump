@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <stdio.h>
+#include <intrin.h>
 
 inline std::string NowTime();
 
