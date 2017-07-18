@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;SFML_DYNAMIC;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\Interface;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\MapFiles;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\INIFiles;D:\Biblioteki\boost-2017;D:\Biblioteki\sfml-2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump;D:\Biblioteki\boost-2017;D:\Biblioteki\sfml-2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +119,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;SFML_STATIC;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\Interface;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\MapFiles;C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump\INIFiles;D:\Biblioteki\boost-2017;D:\Biblioteki\sfml-2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Maciej\Documents\Visual Studio 2017\Projects\Jump;D:\Biblioteki\boost-2017;D:\Biblioteki\sfml-2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,28 +158,27 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FadeIn.cpp" />
     <ClCompile Include="FadeOut.cpp" />
+    <ClCompile Include="FontCoinatiner.cpp" />
     <ClCompile Include="FrameRate.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GuiButton.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="Hud.cpp" />
+    <ClCompile Include="INIFile.cpp" />
+    <ClCompile Include="INIParser.cpp" />
+    <ClCompile Include="INIReader.cpp" />
+    <ClCompile Include="INISection.cpp" />
+    <ClCompile Include="INITokenizer.cpp" />
+    <ClCompile Include="INIWriter.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="Loading.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Tail.cpp" />
     <ClCompile Include="xmlFile.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\INIFiles\INIFiles.vcxproj">
-      <Project>{92e25f59-9451-4c24-8b4d-b332351c31e7}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Interface\Interface.vcxproj">
-      <Project>{949221d2-c8dd-4b7d-8c3a-e3a660d16cb0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\MapFiles\MapFiles.vcxproj">
-      <Project>{68ff5901-6e65-4a03-9e71-889eef7d62f9}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -192,12 +191,38 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FadeIn.h" />
     <ClInclude Include="FadeOut.h" />
+    <ClInclude Include="FontCoinatiner.h" />
     <ClInclude Include="FrameRate.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GuiButton.h" />
+    <ClInclude Include="GUiEvent.h" />
+    <ClInclude Include="GuiItem.h" />
+    <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="GuiDrawable.h" />
     <ClInclude Include="Hud.h" />
+    <ClInclude Include="INIFile.h" />
+    <ClInclude Include="INIFileBadAllocException.h" />
+    <ClInclude Include="INIFileException.h" />
+    <ClInclude Include="INIFileNotInitializedException.h" />
+    <ClInclude Include="INIFileSectionAlreadyExistsException.h" />
+    <ClInclude Include="INIFileSectionDoesNotExistException.h" />
+    <ClInclude Include="INIFileUnableToReadException.h" />
+    <ClInclude Include="INIFileUnableToWriteFileException.h" />
+    <ClInclude Include="INIFileUnableToWriteStreamException.h" />
+    <ClInclude Include="INIFileVariableDoesNotExistsException.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MSGExceptions.h" />
+    <ClInclude Include="INIParser.h" />
+    <ClInclude Include="INIReader.h" />
+    <ClInclude Include="INISection.h" />
+    <ClInclude Include="Simbols.h" />
+    <ClInclude Include="INIToken.h" />
+    <ClInclude Include="INITokenizer.h" />
+    <ClInclude Include="INIVariable.h" />
+    <ClInclude Include="INIWriter.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Loading.h" />
-    <ClInclude Include="Log.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />

@@ -4,8 +4,10 @@
 #include <SFML\Audio.hpp>
 
 #include "Configuration.h"
-#include "Log.h"
 #include "Engine.h"
+
+#include "Menu.h"
+#include "MainMenu.h"
 
 namespace jump
 {
@@ -13,24 +15,21 @@ namespace jump
 	{
 	public:
 		Game();
+		Game(int argc, char* argv[]);
 		virtual ~Game();
 
-		void runGame();
-		void processArguments(int argc, char* argv[]);
+		void run_game();
+		void parse_arguments(int argc, char* argv[]);
 
 		enum GameState { NONE, GAME, OPTIONS, EXIT, GAME_OVER, MENU, SPLASCHSCREEN };
 
 	protected:
-		GameState state;
+		GameState state_;
 
 	private:
-		sf::RenderWindow* window;
-		sf::Font* titleFont;
-		sf::Font* optionsFont;
-		sf::Font* authorFont;
-		sf::Font* debugFont;
-		system::Configuration*  config;
-		Engine *engine;
+		sf::RenderWindow* window_;
+		system::Configuration*  config_;
+		Engine *engine_;
 
 		int amoutOptions;
 		std::wstring* optionsNames;
@@ -38,8 +37,8 @@ namespace jump
 
 		void update();
 		void draw();
-		void createMenu();
-		void splaschScreen(std::string fileName);
+
+		Menu* menu_;
 	};
 
 }

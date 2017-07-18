@@ -1,10 +1,12 @@
 #include "Game.h"
 #include <iostream>
 
-#include "GUIMenager.h"
-#include "Item.h"
-#include "Button.h"
+#include "GuiManager.h"
+#include "GuiItem.h"
+#include "GuiButton.h"
 #include "FrameRate.h"
+
+#include "FontCoinatiner.h"
 
 #include "AnimationHandler.h"
 #include "FadeIn.h"
@@ -30,8 +32,6 @@ Game::Game()
 		!debugFont->loadFromFile(config->fontPath + config->fontNames["debug"]))
 	{
 
-		FILE_LOG(logERROR) << "Cannot load font";
-
 		MessageBox(NULL, L"Cannot load font", L"Cannot load font", MB_YESNOCANCEL);
 		return;
 	}
@@ -42,9 +42,8 @@ Game::Game()
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
-	FILE_LOG(logINFO) << "Initialize window";
 	window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "Jump", sf::Style::Default, settings);
-	FILE_LOG(logINFO) << "Initialize engine";
+	system::gui::GuiManager::set_window(*window);
 	engine = NULL;
 
 	state = SPLASCHSCREEN;
@@ -60,7 +59,7 @@ Game::~Game()
 	delete optionsFont;
 }
 
-void Game::runGame()
+void Game::run_game()
 {
 	splaschScreen(config->dataFile + "/sfml-logo.png");
 
@@ -147,11 +146,11 @@ void Game::update()
 		}
 		break;
 	case MENU:
-		GUIMenager::getInstance().update(sf::Vector2f(sf::Mouse::getPosition(*window)));
+		system::gui::GuiManager::update();
 		
 		if (state != states)
 		{
-			GUIMenager::getInstance().clear();
+			system::gui::GuiManager::clear();
 		}
 		state = states;
 
@@ -180,7 +179,7 @@ void Game::draw()
 	switch (state)
 	{
 	case MENU:
-		GUIMenager::getInstance().draw(*window);
+		system::gui::GuiManager::draw();
 
 	case GAME:
 		if (engine) engine->draw(*window);
@@ -205,36 +204,34 @@ void Game::createMenu()
 	optionsNames[1] = L"Opcje";
 	optionsNames[2] = L"Wyjscie";
 
-	std::vector<Item*> buttons;
+	std::vector<system::gui::GuiItem*> buttons;
 
 	std::cout << window->getSize().x << std::endl;
 	std::cout << window->getSize().y << std::endl;
 
 	for (int i = 0; i < amoutOptions; i++)
 	{
-		Button* button = new Button;
+		auto button = new system::gui::GuiButton(optionsNames[i], *this->optionsFont);
 
-		button->setFont(this->optionsFont);
-		button->setString(optionsNames[i]);
-		button->setCharacterSize(50U);
+		button->set_character_size(50U);
 		button->loadFromFIle(config->dataFile + "/Interface/button.png");
 
-		button->setPosition(window->getSize().x / 2 - button->getGlobalBounds().width / 2,
-			window->getSize().y / 2 - (((button->getGlobalBounds().height + 30)* amoutOptions / 2))
-			+ (button->getGlobalBounds().height + 5) * i);
+		button->position(window->getSize().x / 2 - button->size().x / 2,
+			window->getSize().y / 2 - (((button->size().y + 30)* amoutOptions / 2))
+			+ (button->size().y + 5) * i);
 
 		switch (i)
 		{
 		case 0:
-			button->setActionOnClick([]()->void {states = GAME; });
+			button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { state = GAME; });
 			break;
 
 		case 1:
-			button->setActionOnClick([]()->void {states = OPTIONS; });
+			button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { state = OPTIONS; });
 			break;
 
 		case 2:
-			button->setActionOnClick([]()->void {states = EXIT; });
+			button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { state = EXIT; });
 			break;
 		}
 
@@ -245,7 +242,7 @@ void Game::createMenu()
 	mousePosition.setCharacterSize(20u);
 	mousePosition.setFont(*debugFont);
 
-	GUIMenager::getInstance().add(buttons);
+	system::gui::GuiManager::add(buttons.begin(), buttons.end());
 }
 
 void Game::splaschScreen(std::string fileName)

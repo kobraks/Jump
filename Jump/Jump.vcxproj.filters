@@ -55,6 +55,24 @@
     <Filter Include="Header Files\System\animation\animations">
       <UniqueIdentifier>{4474afec-91a8-4815-9266-2f4debcf7aaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\System\gui">
+      <UniqueIdentifier>{d162de21-ebcd-4db7-9ff7-ed099c0c417f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\gui">
+      <UniqueIdentifier>{697e572d-754e-4549-ad1a-8bbb0bc7da29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\ini">
+      <UniqueIdentifier>{9bf48382-f317-4b7f-a5fa-03a52684c020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\ini">
+      <UniqueIdentifier>{b00dab8f-3dc4-4442-b1ba-a9b552628b36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\ini\exceptions">
+      <UniqueIdentifier>{6cfdb8e4-d438-484f-9900-9fce328cd36c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\exceptions">
+      <UniqueIdentifier>{47c81ab6-ab7e-4252-8d33-25ff0cd5d2f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -120,6 +138,36 @@
     <ClCompile Include="FadeOut.cpp">
       <Filter>Source Files\System\animation\animations</Filter>
     </ClCompile>
+    <ClCompile Include="GuiManager.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiButton.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="INIFile.cpp">
+      <Filter>Source Files\System\ini</Filter>
+    </ClCompile>
+    <ClCompile Include="INIParser.cpp">
+      <Filter>Source Files\System\ini</Filter>
+    </ClCompile>
+    <ClCompile Include="INIReader.cpp">
+      <Filter>Source Files\System\ini</Filter>
+    </ClCompile>
+    <ClCompile Include="INISection.cpp">
+      <Filter>Source Files\System\ini</Filter>
+    </ClCompile>
+    <ClCompile Include="INITokenizer.cpp">
+      <Filter>Source Files\System\ini</Filter>
+    </ClCompile>
+    <ClCompile Include="INIWriter.cpp">
+      <Filter>Source Files\System\ini</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontCoinatiner.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -139,9 +187,6 @@
     </ClInclude>
     <ClInclude Include="Tail.h">
       <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="Position.h">
       <Filter>Header Files\System</Filter>
@@ -187,6 +232,87 @@
     </ClInclude>
     <ClInclude Include="AnimationHandler.h">
       <Filter>Header Files\System\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiItem.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiManager.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiButton.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="FontCoinatiner.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiDrawable.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GUiEvent.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFile.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INIParser.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INIReader.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INISection.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INIToken.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INITokenizer.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INIVariable.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INIWriter.h">
+      <Filter>Header Files\System\ini</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileBadAllocException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileNotInitializedException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileSectionAlreadyExistsException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileSectionDoesNotExistException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileUnableToReadException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileUnableToWriteFileException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileUnableToWriteStreamException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="INIFileVariableDoesNotExistsException.h">
+      <Filter>Header Files\System\ini\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="MSGExceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Simbols.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
