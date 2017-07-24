@@ -12,9 +12,9 @@ namespace jump
 			class FadeOut : public FadeIn
 			{
 			public:
-				FadeOut(sf::Sprite& sprite, float speed = system::animations::speed::MEDIUM);
+				FadeOut(sf::Sprite& _sprite, float _speed = system::animations::speed::MEDIUM);
 
-				virtual void update();
+				virtual void update(sf::RenderWindow& _window);
 			};
 		}
 	}

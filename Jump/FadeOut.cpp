@@ -4,19 +4,19 @@ using namespace jump;
 using namespace system;
 using namespace animations;
 
-FadeOut::FadeOut(sf::Sprite& sprite, float speed) : FadeIn(sprite, speed)
+FadeOut::FadeOut(sf::Sprite& _sprite, float _speed) : FadeIn(_sprite, _speed)
 {
-	this->_alpha = 255;
+	alpha_ = 255;
 }
 
-void FadeOut::update()
+void FadeOut::update(sf::RenderWindow& _window)
 {
-	_alpha -= 1;
+	alpha_ -= 1;
 
-	if (_alpha >= 0 && _alpha <= 255)
-		_sprite->setColor(sf::Color(255, 255, 255, _alpha));
-	else if (_alpha < 0)
-		_sprite->setColor(sf::Color(255, 255, 255, 0));
+	if (alpha_ >= 0 && alpha_ <= 255)
+		sprite_->setColor(sf::Color(255, 255, 255, alpha_));
+	else if (alpha_ < 0)
+		sprite_->setColor(sf::Color(255, 255, 255, 0));
 
-	if (_alpha <= 0) this->stop();
+	if (alpha_ <= 0) this->stop();
 }

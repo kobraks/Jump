@@ -21,19 +21,10 @@ namespace jump
 		void run_game();
 		void parse_arguments(int argc, char* argv[]);
 
-		enum GameState { NONE, GAME, OPTIONS, EXIT, GAME_OVER, MENU, SPLASCHSCREEN };
-
-	protected:
-		GameState state_;
-
 	private:
 		sf::RenderWindow* window_;
-		system::Configuration*  config_;
-		Engine *engine_;
 
-		int amoutOptions;
-		std::wstring* optionsNames;
-		sf::Text mousePosition;
+		sf::Text mouse_position_;
 
 		void update();
 		void draw();

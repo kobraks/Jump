@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "Animation.h"
 #include <memory>
+#include <SFML/Graphics.hpp>
+
+#include "Animation.h"
 
 namespace jump
 {
@@ -11,26 +13,21 @@ namespace jump
 		class AnimationHandler
 		{
 			AnimationHandler();
-			AnimationHandler(AnimationHandler&);
 
-			std::vector<std::shared_ptr<Animation>> _items;
+			std::vector<Animation*> animations_;;
+			static AnimationHandler* get_instance();
 		public:
-			static AnimationHandler& getInstance();
+			AnimationHandler(AnimationHandler&) = delete;
 
-			AnimationHandler& addAnimation(Animation* animation, float sleep);
-			AnimationHandler& addAnimation(Animation* animation, bool pause = false);
-			AnimationHandler& addAnimation(Animation* animation, Animation* runAfterThisAnimation);
+			static AnimationHandler* add(Animation* _animation);
+			
+			static AnimationHandler* remove_animation(const unsigned int& _index);
+			static AnimationHandler* remove_animation(Animation* _animation);
+			static AnimationHandler* update(sf::RenderWindow& _window);
+			static AnimationHandler* draw(sf::RenderWindow& window);
+			static AnimationHandler* clear();
 
-			AnimationHandler& addAnimation(std::shared_ptr<Animation> animation, float sleep);
-			AnimationHandler& addAnimation(std::shared_ptr<Animation> animation, bool pause = false);
-			AnimationHandler& addAnimation(std::shared_ptr<Animation> animation, std::shared_ptr<Animation> afterAnimation);
-
-			AnimationHandler& deleteAnimation(int index);
-			void update();
-			void draw(sf::RenderWindow& window);
-			AnimationHandler& deleteAll();
-
-			std::vector<std::shared_ptr<Animation>> getAnimations();
+			static std::vector<Animation*> get_animations();
 
 			~AnimationHandler();
 		};

@@ -1,5 +1,4 @@
 #include "Console.h"
-#include "Log.h"
 
 using namespace jump;
 using namespace system;

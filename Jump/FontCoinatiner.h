@@ -13,6 +13,8 @@ namespace jump
 		public:
 			FontCointainer(FontCointainer&) = delete;
 
+			static FontCointainer* get_instance();
+
 			static sf::Font* get_font(std::string _name);
 			static FontCointainer* add_font(std::string _name, sf::Font* _font);
 
@@ -23,8 +25,6 @@ namespace jump
 			sf::Font* find(std::string _name);
 
 			std::map<std::string, sf::Font*> fonts_;
-
-			static FontCointainer* get_instance();
 		};
 	}
 }

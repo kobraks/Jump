@@ -1,261 +1,154 @@
 #include "Game.h"
 #include <iostream>
 
+#include "UnableToLoadException.h"
+#include "UnableToLoadFontException.h"
+#include "BadAllocException.h"
+
 #include "GuiManager.h"
 #include "GuiItem.h"
 #include "GuiButton.h"
 #include "FrameRate.h"
 
+#include "defines.h"
 #include "FontCoinatiner.h"
 
 #include "AnimationHandler.h"
-#include "FadeIn.h"
-#include "FadeOut.h"
 
-using namespace jump;
+#include "MainMenu.h"
 
-const sf::Time timeStep = sf::seconds(1.f / 60.f);
-
-Game::Game()
+jump::Game::Game(): menu_(nullptr)
 {
-	titleFont = new sf::Font();
-	optionsFont = new sf::Font();
-	authorFont = new sf::Font();
-	debugFont = new sf::Font();
-	
-	config = new system::Configuration();
-	config->loadFromFile(L"configuration.ini");
-
-	if (!titleFont->loadFromFile(config->fontPath + config->fontNames["title"]) ||
-		!optionsFont->loadFromFile(config->fontPath + config->fontNames["options"]) ||
-		!authorFont->loadFromFile(config->fontPath + config->fontNames["author"]) ||
-		!debugFont->loadFromFile(config->fontPath + config->fontNames["debug"]))
+	try
 	{
+		auto fonts = system::FontCointainer::get_instance();
+		auto config = system::Configuration::get_instance();
 
-		MessageBox(NULL, L"Cannot load font", L"Cannot load font", MB_YESNOCANCEL);
-		return;
+		fonts->add_font(TITLE_CODE, new sf::Font());
+		fonts->add_font(OPTION_CODE, new sf::Font());
+		fonts->add_font(AUTHOR_CODE, new sf::Font());
+		fonts->add_font(DEBUG_CODE, new sf::Font());
+
+		try
+		{
+			config->load(CONFIGURATION_FILE_NAME);
+		}
+		catch (...)
+		{
+			config->set_defaults();
+			config->save(CONFIGURATION_FILE_NAME);
+		}
+
+		if (fonts->get_font(TITLE_CODE)->loadFromFile(config->font_path + config->font_names[TITLE_CODE]))
+			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[TITLE_CODE]);
+
+		if (fonts->get_font(OPTION_CODE)->loadFromFile(config->font_path + config->font_names[OPTION_CODE]))
+			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[OPTION_CODE]);
+
+		if (fonts->get_font(AUTHOR_CODE)->loadFromFile(config->font_path + config->font_names[AUTHOR_CODE]))
+			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[AUTHOR_CODE]);
+
+		if (fonts->get_font(DEBUG_CODE)->loadFromFile(config->font_path + config->font_names[DEBUG_CODE]))
+			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[DEBUG_CODE]);
+
+		sf::ContextSettings settings;
+		settings.antialiasingLevel = 8;
+
+		window_ = new sf::RenderWindow(sf::VideoMode(800, 600, 32), WINDOW_NAME, sf::Style::Default, settings);
+		system::gui::GuiManager::set_window(*window_);
+
+		mouse_position_.setCharacterSize(20u);
+		mouse_position_.setFont(*system::FontCointainer::get_font(DEBUG_CODE));
+	}
+	catch(std::bad_alloc)
+	{
+		throw system::exception::BadAllocException();
+	}
+}
+
+jump::Game::~Game()
+{
+	if(window_)
+		window_->close();
+
+	for (auto it = menu_; it != nullptr; it = menu_->parent())
+	{
+		auto parent = menu_->parent();
+		delete menu_;
+		menu_ = parent;
 	}
 
-	config->debugFont = debugFont;
-	config->font = optionsFont;
-
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
-
-	window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "Jump", sf::Style::Default, settings);
-	system::gui::GuiManager::set_window(*window);
-	engine = NULL;
-
-	state = SPLASCHSCREEN;
+	delete window_;	
 }
 
-Game::~Game()
+void jump::Game::run_game()
 {
-	delete engine;
+	menu_ = new menu::MainMenu(*window_);
+	system::Configuration* config = system::Configuration::get_instance();
 
-	delete window;
-	delete titleFont;
-	delete authorFont;
-	delete optionsFont;
-}
-
-void Game::run_game()
-{
-	splaschScreen(config->dataFile + "/sfml-logo.png");
-
-	sf::Time timefromlastupdate = sf::Time::Zero;
+	sf::Time time_from_last_update = sf::Time::Zero;
 	sf::Clock clock;
 
-	if (config->showFPS)
+	if (config->show_fps)
 	{
-		system::FrameRate::getInstance().setFont(config->debugFont);
+		system::FrameRate::getInstance().setFont(system::FontCointainer::get_font(DEBUG_CODE));
 		system::FrameRate::getInstance().initiate();
 	}
 
-	while (window->isOpen())
+	while (window_->isOpen() || menu_)
 	{
-		timefromlastupdate += clock.restart();
-		window->clear();
+		time_from_last_update += clock.restart();
+		window_->clear();
 
-		sf::Vector2f mouse(sf::Mouse::getPosition(*window));
+		sf::Vector2f mouse(sf::Mouse::getPosition(*window_));
 		sf::Event event;
 
-		while (window->pollEvent(event))
+		while (window_->pollEvent(event))
 		{
+			menu_->add_event(event);
+
 			//Wciœniêcie ESC lub przycisk X
-			if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed &&
-				event.key.code == sf::Keyboard::Escape && state == MENU)
-				state = EXIT;
-
-			if (event.key.code == sf::Keyboard::Escape && state == SPLASCHSCREEN)
+			if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed && sf::Keyboard::Escape == event.key.code)
 			{
-				auto animations = system::AnimationHandler::getInstance().getAnimations();
-
-				for (auto element : animations)
-				{
-					if (element->isRunning() && !element->isPaused())
-					{
-						element->stop();
-						break;
-					}
-				}
-			}
-
-			if (event.key.code == sf::Keyboard::F5 && state == GAME)
-			{
-				if (this->engine) engine->reload(window);
+				if (menu_ && menu_->is_running())
+					menu_->stop();
 			}
 		}
 
 		if (config->debug)
 		{
-			std::string text;
-			text = "x: " + std::to_string(mouse.x);
-			text += " y: " + std::to_string(mouse.y);
+			mouse_position_.setPosition(window_->mapPixelToCoords(sf::Vector2i(10, 10), window_->getView()));
+			auto text = "x: " + std::to_string(mouse.x) + " y: " + std::to_string(mouse.y);
 
-			mousePosition.setString(text);
+			mouse_position_.setString(text);
 		}
 
-		while (timefromlastupdate >= timeStep)
+		while (time_from_last_update >= config->time_step_)
 		{
-			timefromlastupdate -= timeStep;
+			time_from_last_update -= config->time_step_;
 
 			update();
 		}
 
-		window->clear();
+		window_->clear();
 		draw();
-		window->display();
+		window_->display();
 	}
 }
 
-Game::GameState states;
-
-void Game::update()
+void jump::Game::update()
 {
-	system::AnimationHandler::getInstance().update();
+	system::AnimationHandler::update(*window_);
 
-	switch (state)
-	{
-	case SPLASCHSCREEN:
-
-		if (system::AnimationHandler::getInstance().getAnimations().empty())
-		{
-			state = MENU;
-			createMenu();
-		}
-		break;
-	case MENU:
-		system::gui::GuiManager::update();
-		
-		if (state != states)
-		{
-			system::gui::GuiManager::clear();
-		}
-		state = states;
-
-		break;
-
-	case GAME:
-		if (!engine)
-		{
-			engine = new Engine(config);
-			engine->runEngine(window);
-		}
-		engine->update(timeStep, window);
-
-		break;
-
-	case EXIT:
-		window->close();
-		break;
-	}
+	if (menu_ && menu_->is_running())
+		menu_->update(*window_);
+	else
+		window_->close();
 }
 
-void Game::draw()
+void jump::Game::draw()
 {
-	system::AnimationHandler::getInstance().draw(*window);
-
-	switch (state)
-	{
-	case MENU:
-		system::gui::GuiManager::draw();
-
-	case GAME:
-		if (engine) engine->draw(*window);
-	}
-
-	if (config->debug) window->draw(mousePosition);
-	if (config->showFPS)
-	{
-		system::FrameRate::getInstance().update();
-		system::FrameRate::getInstance().draw(*window);
-	}
-}
-
-void Game::createMenu()
-{
-	states = state;
-
-	amoutOptions = 3;
-	optionsNames = new std::wstring[amoutOptions];
-
-	optionsNames[0] = L"Start Gry";
-	optionsNames[1] = L"Opcje";
-	optionsNames[2] = L"Wyjscie";
-
-	std::vector<system::gui::GuiItem*> buttons;
-
-	std::cout << window->getSize().x << std::endl;
-	std::cout << window->getSize().y << std::endl;
-
-	for (int i = 0; i < amoutOptions; i++)
-	{
-		auto button = new system::gui::GuiButton(optionsNames[i], *this->optionsFont);
-
-		button->set_character_size(50U);
-		button->loadFromFIle(config->dataFile + "/Interface/button.png");
-
-		button->position(window->getSize().x / 2 - button->size().x / 2,
-			window->getSize().y / 2 - (((button->size().y + 30)* amoutOptions / 2))
-			+ (button->size().y + 5) * i);
-
-		switch (i)
-		{
-		case 0:
-			button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { state = GAME; });
-			break;
-
-		case 1:
-			button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { state = OPTIONS; });
-			break;
-
-		case 2:
-			button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { state = EXIT; });
-			break;
-		}
-
-		buttons.push_back(button);
-	}
-
-	mousePosition.setPosition(sf::Vector2f(10, 10));
-	mousePosition.setCharacterSize(20u);
-	mousePosition.setFont(*debugFont);
-
-	system::gui::GuiManager::add(buttons.begin(), buttons.end());
-}
-
-void Game::splaschScreen(std::string fileName)
-{
-	sf::Texture texture;
-	texture.loadFromFile(fileName);
-	texture.setSmooth(true);
-
-	sf::Sprite sprite;
-	sprite.setTexture(texture);
-	sprite.setScale(window->getSize().x / texture.getSize().x, window->getSize().y / texture.getSize().y);
-
-	system::Animation* animation = new system::animations::FadeIn(sprite, 2.5/255.f);
-
-	system::AnimationHandler::getInstance().addAnimation(animation, new system::animations::FadeOut(sprite, 2.5 / 255.f));
+	system::AnimationHandler::draw(*window_);
+	if (menu_)
+		window_->draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)));
 }

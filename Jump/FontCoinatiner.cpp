@@ -43,4 +43,10 @@ jump::system::FontCointainer::~FontCointainer()
 	}
 }
 
+jump::system::FontCointainer* jump::system::FontCointainer::get_instance()
+{
+	static FontCointainer instance;
+
+	return &instance;
+}
 

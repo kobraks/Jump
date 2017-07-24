@@ -1,40 +1,35 @@
 #include "FadeIn.h"
 
-using namespace jump;
-using namespace system;
-using namespace animations;
 
-FadeIn::FadeIn(sf::Sprite& sprite, float speed)
+jump::system::animations::FadeIn::FadeIn(sf::Sprite& _sprite, float _speed) : Animation(_speed)
 {
-	initialize(speed);
-
-	this->_sprite = new sf::Sprite(sprite);
-	_texture = new sf::Texture(*sprite.getTexture());
-	_sprite->setTexture(*_texture);
-	_sprite->setColor(sf::Color(255, 255, 255, 0));
+	sprite_ = new sf::Sprite(_sprite);
+	texture_ = new sf::Texture(*_sprite.getTexture());
+	sprite_->setTexture(*texture_);
+	sprite_->setColor(sf::Color(255, 255, 255, 0));
 	
-	_alpha = -0;
+	alpha_ = -0;
 }
 
-void FadeIn::update()
+void jump::system::animations::FadeIn::update(sf::RenderWindow& _window)
 {
-	_alpha += 1;
+	alpha_ += 1;
 
-	if (_alpha >= 0 && _alpha <= 255)
-		_sprite->setColor(sf::Color(255, 255, 255, _alpha));
-	else if (_alpha > 0)
-		_sprite->setColor(sf::Color(255, 255, 255, 255));
+	if (alpha_ >= 0 && alpha_ <= 255)
+		sprite_->setColor(sf::Color(255, 255, 255, alpha_));
+	else if (alpha_ > 0)
+		sprite_->setColor(sf::Color(255, 255, 255, 255));
 
-	if (_alpha >= 255) this->stop();
+	if (alpha_ >= 255) this->stop();
 }
 
-void FadeIn::draw(sf::RenderWindow& window)
+void jump::system::animations::FadeIn::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
 {
-	window.draw(*_sprite);
+	_target.draw(*sprite_, _states);
 }
 
-FadeIn::~FadeIn()
+jump::system::animations::FadeIn::~FadeIn()
 {
-	delete _sprite;
-	delete _texture;
+	delete sprite_;
+	delete texture_;
 }

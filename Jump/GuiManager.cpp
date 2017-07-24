@@ -17,6 +17,7 @@ jump::system::gui::GuiManager::~GuiManager()
 class jump::system::gui::GuiManager* jump::system::gui::GuiManager::set_window(sf::RenderWindow& _window)
 {
 	get_instance()->window_ = &_window;
+	return get_instance();
 }
 
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::get_instance()

@@ -177,18 +177,22 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="SplashScreen.cpp" />
     <ClCompile Include="Tail.cpp" />
     <ClCompile Include="xmlFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationHandler.h" />
+    <ClInclude Include="BadAllocException.h" />
     <ClInclude Include="Bust.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Clouds.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="defines.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="exception.h" />
     <ClInclude Include="FadeIn.h" />
     <ClInclude Include="FadeOut.h" />
     <ClInclude Include="FontCoinatiner.h" />
@@ -226,8 +230,11 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="Tail.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="UnableToLoadException.h" />
+    <ClInclude Include="UnableToLoadFontException.h" />
     <ClInclude Include="xmlFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

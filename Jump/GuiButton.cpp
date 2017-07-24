@@ -25,7 +25,7 @@ void jump::system::gui::GuiButton::update(sf::Event& _e, sf::RenderWindow& _wind
 {
 	auto mouse_position = sf::Mouse::getPosition(_window);
 
-	bool mouse_insite;
+	bool mouse_insite = false;
 
 	if (_e.type == sf::Event::MouseMoved)
 	{

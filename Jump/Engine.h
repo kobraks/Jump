@@ -7,14 +7,15 @@
 #include "Configuration.h"
 #include "Map.h"
 #include "Player.h"
+#include "Menu.h"
 
 
 namespace jump
 {
-	class Engine : b2ContactListener
+	class Engine : b2ContactListener, Menu
 	{
 	public:
-		Engine(system::Configuration* config);
+		Engine(Menu* _parent);
 		~Engine();
 
 		void runEngine(sf::RenderWindow* window);

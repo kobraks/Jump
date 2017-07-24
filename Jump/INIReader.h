@@ -2,7 +2,6 @@
 #include <string>
 #include <istream>
 
-
 #include "INIFile.h"
 
 namespace jump
@@ -14,6 +13,8 @@ namespace jump
 			class IniReader
 			{
 			public:
+				IniReader(IniReader&) = delete;
+
 				IniReader(IniFile* _ini, const std::string& _file_name);
 				IniReader(IniFile* _ini, std::istream& _input);
 

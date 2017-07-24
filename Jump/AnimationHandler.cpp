@@ -1,135 +1,101 @@
 #include "AnimationHandler.h"
 
-using namespace jump;
-using namespace system;
+#include <algorithm>
 
-AnimationHandler& AnimationHandler::getInstance()
+jump::system::AnimationHandler* jump::system::AnimationHandler::get_instance()
 {
 	static AnimationHandler animation;
-	return animation;
+	return &animation;
 }
 
-AnimationHandler::AnimationHandler()
+jump::system::AnimationHandler::AnimationHandler()
 {
 }
 
-AnimationHandler& AnimationHandler::addAnimation(Animation* animation, float sleep)
+jump::system::AnimationHandler* jump::system::AnimationHandler::add(Animation* _animation)
 {
-	animation->sleep(sleep);
+	auto instance = get_instance();
 
-	_items.push_back(std::shared_ptr<Animation>(animation));
+	if (_animation)
+		instance->animations_.push_back(_animation);
+	else
+		throw std::exception();
 
-	return *this;
+	return instance;
 }
 
-AnimationHandler& AnimationHandler::addAnimation(Animation* animation, bool pause)
+jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation(const unsigned int& _index)
 {
-	if (pause) animation->pause();
-	_items.push_back(std::shared_ptr<Animation>(animation));
+	auto instance = get_instance();
 
-	return *this;
+	if (instance->animations_.empty())
+		throw std::exception();
+
+	if (_index >= 0 && _index < instance->animations_.size())
+		instance->animations_.erase(instance->animations_.begin() + _index);
+	else
+		throw std::exception();
+
+	return instance;
 }
 
-AnimationHandler& AnimationHandler::addAnimation(Animation* animation, Animation* runAf)
+class jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation(Animation* _animation)
 {
-	std::shared_ptr<Animation> tmp(animation);
-	std::shared_ptr<Animation> tmpA(runAf);
+	auto instance = get_instance();
 
-	if (runAf) animation->runAfterEnd(tmpA);
-	this->addAnimation(tmpA);
-	_items.push_back(tmp);
 
-	return *this;
 }
 
-AnimationHandler& AnimationHandler::addAnimation(std::shared_ptr<Animation> animation, float sleep)
+
+jump::system::AnimationHandler* jump::system::AnimationHandler::update(sf::RenderWindow& _window)
 {
-	animation->sleep(sleep);
+	auto instance = get_instance();
 
-	_items.push_back(animation);
-
-	return *this;
-}
-
-AnimationHandler& AnimationHandler::addAnimation(std::shared_ptr<Animation> animation, bool pause)
-{
-	if (pause) animation->pause();
-	_items.push_back(animation);
-
-	return *this;
-}
-
-AnimationHandler& AnimationHandler::addAnimation(std::shared_ptr<Animation> animation, std::shared_ptr<Animation> runAfterAnimation)
-{
-	if (runAfterAnimation) animation->runAfterEnd(runAfterAnimation);
-	this->addAnimation(runAfterAnimation);
-
-	_items.push_back(animation);
-
-	return *this;
-}
-
-AnimationHandler& AnimationHandler::deleteAnimation(int index)
-{
-	if (_items.empty()) return *this;
-	if (index >= 0 && index < _items.size()) _items.erase(_items.begin() + index);
-
-	return *this;
-}
-
-void AnimationHandler::update()
-{
-	if (_items.empty()) return;
-
-	for (int i = 0; i < _items.size(); i++)
+	for (size_t i = 0; i < instance->animations_.size(); i++)
 	{
-		auto element = _items[i];
+		auto animation = instance->animations_[i];
 
-		if (element->isRunning())
-		{
-			if (!element->isPaused())
-			{
-				if (element->_speed <= element->_clock->getElapsedTime().asSeconds())
-				{
-					element->update();
-					element->_clock->restart();
-				}
-			}
-		}
+		if (animation->is_running())
+			animation->update_handler(_window);
 		else
 		{
-			_items.erase(_items.begin() + i);
+			remove_animation(i);
 
 			i--;
 		}
 	}
+
+	return instance;
 }
 
-void AnimationHandler::draw(sf::RenderWindow& window)
+jump::system::AnimationHandler* jump::system::AnimationHandler::draw(sf::RenderWindow& window)
 {
-	if (_items.empty()) return;
+	auto instance = get_instance();
 
-	for (auto element : _items)
-	{
-		element->draw(window);
-	}
+	for (auto animation : instance->animations_)
+		window.draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(animation)));
+	
+	return instance;
 }
 
-AnimationHandler& AnimationHandler::deleteAll()
+jump::system::AnimationHandler* jump::system::AnimationHandler::clear()
 {
-	if (_items.empty()) return *this;
+	auto instance = get_instance();
 
-	_items.clear();
+	for (auto animation : instance->animations_)
+		delete animation;
 
-	return *this;
+	instance->animations_.clear();
+
+	return instance;
 }
 
-std::vector<std::shared_ptr<Animation>> AnimationHandler::getAnimations()
+std::vector<jump::system::Animation*> jump::system::AnimationHandler::get_animations()
 {
-	return _items;
+	return get_instance()->animations_;
 }
 
-AnimationHandler::~AnimationHandler()
+jump::system::AnimationHandler::~AnimationHandler()
 {
-	this->deleteAll();
+	clear();
 }

@@ -73,6 +73,12 @@
     <Filter Include="Header Files\System\exceptions">
       <UniqueIdentifier>{47c81ab6-ab7e-4252-8d33-25ff0cd5d2f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\menu">
+      <UniqueIdentifier>{e12df889-0c57-4714-abf5-5a6c71131517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menu">
+      <UniqueIdentifier>{988f8f31-a5fa-44a6-a5ae-a33e91db1a6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -162,11 +168,14 @@
     <ClCompile Include="INIWriter.cpp">
       <Filter>Source Files\System\ini</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FontCoinatiner.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="SplashScreen.cpp">
+      <Filter>Source Files\menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,11 +317,29 @@
     <ClInclude Include="Simbols.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnableToLoadException.h">
+      <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="BadAllocException.h">
+      <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="exception.h">
+      <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="UnableToLoadFontException.h">
+      <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashScreen.h">
+      <Filter>Header Files\menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

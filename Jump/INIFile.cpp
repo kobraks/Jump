@@ -5,6 +5,7 @@
 #include "IniFileBadAllocException.h"
 #include "IniFileSectionDoesNotExistException.h"
 #include "IniFileSectionAlreadyExistsException.h"
+#include <boost/algorithm/string.hpp>
 
 jump::system::ini::IniFile::IniFile()
 {
@@ -110,7 +111,7 @@ jump::system::ini::IniSection jump::system::ini::IniFile::section(const std::str
 {
 	auto result = std::find_if(sections_.begin(), sections_.end(), [_name](const IniSection const* _section)
 	{
-		return _name == _section->name();
+		return boost::algorithm::to_upper_copy(_name) == boost::algorithm::to_upper_copy(_section->name());
 	});
 
 	if (result != sections_.end())
@@ -152,6 +153,6 @@ std::vector<jump::system::ini::IniSection*>::iterator jump::system::ini::IniFile
 	return std::find_if(sections_.begin(), sections_.end(), 
 		[_section_name](const IniSection const* _section)
 		{
-			return _section_name == _section->name();
+			return boost::algorithm::to_upper_copy(_section_name) == boost::algorithm::to_upper_copy(_section->name());
 		});
 }

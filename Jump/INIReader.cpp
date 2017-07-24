@@ -13,7 +13,7 @@
 #include "IniParser.h"
 #include "Simbols.h"
 
-jump::system::ini::IniReader::IniReader(jump::system::ini::IniFile* _ini, const std::string& _file_name)
+jump::system::ini::IniReader::IniReader(IniFile* _ini, const std::string& _file_name)
 {
 	if (_ini)
 		throw exception::IniFileNotInitializedException();

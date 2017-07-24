@@ -2,95 +2,107 @@
 
 #include <exception>
 
-#include "Log.h"
-
-using namespace jump;
-using namespace system;
-
-Animation::Animation()
+jump::system::Animation::Animation(Animation* _animation): animation_(_animation), pause_time_(0), speed_(animations::speed::MEDIUM),
+run_(false), paused_(false), pause_clock_(nullptr), clock_(new sf::Clock)
 {
-	initialize(animations::speed::MEDIUM);
 }
 
-Animation::Animation(float speed)
+jump::system::Animation::Animation(float _speed, Animation* _animation) : Animation(_animation)
 {
-	initialize(speed);
+	speed_ = _speed;
 }
 
-void Animation::initialize(float speed)
+jump::system::Animation::~Animation()
 {
-	_animation = NULL;
-	_pauseClock = NULL;
-	_isRun = true;
-	_isPaused = false;
-	_pauseTime = 0;
-	_clock = new sf::Clock;
-	_speed = speed;
+
+	delete pause_clock_;
+	delete clock_;
+
+	if (animation_)
+		animation_->pause();
 }
 
-Animation::~Animation()
+void jump::system::Animation::update_pause_timer()
 {
-	delete _pauseClock;
+	if (!pause_clock_) return;
 
-	if (_animation)
+	if (pause_clock_->getElapsedTime().asSeconds() >= pause_time_)
 	{
-		_animation->pause();
+		delete pause_clock_;
+		pause();
 	}
 }
 
-void Animation::updatePauseTimer()
+bool jump::system::Animation::is_running() const
 {
-	if (!_pauseClock) return;
-
-	if (_pauseClock->getElapsedTime().asSeconds() >= this->_pauseTime) this->_isPaused = false;
+	return run_;
 }
 
-bool Animation::isRunning()
+bool jump::system::Animation::is_paused() const
 {
-	return _isRun;
+	return paused_;
 }
 
-bool Animation::isPaused()
-{
-	return _isPaused;
-}
 
-void Animation::sleep(float time)
+void jump::system::Animation::sleep(float _time)
 {
-	if (time > 0)
+	if (_time > 0)
 	{
-		this->_isPaused = true;
-		this->_pauseClock = new sf::Clock();
-		this->_pauseTime = time;
+		paused_ = true;
+		if (pause_clock_)
+			pause_clock_->restart();
+		else
+			pause_clock_ = new sf::Clock();
+
+		pause_time_ = _time;
 	}
 }
 
-void Animation::pause()
+void jump::system::Animation::pause()
 {
-	if (this->_isPaused)
+	if (paused_)
 	{
-		if (_pauseClock)
+		if (pause_clock_)
 		{
-			delete _pauseClock;
-			_pauseTime = 0;
+			delete pause_clock_;
+			pause_time_ = 0;
 		}
 
-		this->_isPaused = false;
+		paused_ = false;
 	}
 
 	else
 	{
-		this->_isPaused = true;
+		paused_ = true;
 	}
 }
 
-void Animation::stop()
+void jump::system::Animation::stop()
 {
-	this->_isRun = false;
+	run_ = false;
 }
 
-void Animation::runAfterEnd(std::shared_ptr<Animation> animation)
+void jump::system::Animation::start()
 {
-	_animation = std::shared_ptr<Animation>(animation);
-	animation->pause();
+	run_ = true;
+}
+
+void jump::system::Animation::run_after_end(Animation* _animation)
+{
+	animation_ = _animation;
+	animation_->pause();
+}
+
+void jump::system::Animation::update_handler(sf::RenderWindow& _window)
+{
+	if (run_)
+	{
+		if (paused_)
+			update_pause_timer();
+		else if (speed_ <= clock_->getElapsedTime().asSeconds())
+		{
+			update(_window);
+			clock_->restart();
+		}
+	}
 }

@@ -40,6 +40,10 @@ namespace jump
 				void set_texture_hovered(sf::Texture* _texture);
 				void set_texture_normal(sf::Texture* _texture);
 
+				void set_texture_normal(sf::Texture* _texture, sf::IntRect& _shape);
+				void set_texture_hovered(sf::Texture* _texture, sf::IntRect& _shape);
+				void set_texture_clicked(sf::Texture* _texture, sf::IntRect& _shape);
+
 				void set_color_clicked(const sf::Color& _color);
 				void set_color_hovered(const sf::Color& _color);
 				void set_color_normal(const sf::Color& _color);

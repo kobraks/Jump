@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
-#include <memory>
 
 namespace jump
 {
@@ -9,34 +8,35 @@ namespace jump
 	{
 		class AnimationHandler;
 
-		class Animation
+		class Animation : public sf::Drawable
 		{
 		public:
-			virtual void update() = 0;
-			virtual void draw(sf::RenderWindow& window) = 0;
-			
-			void updatePauseTimer();
+			explicit Animation(Animation* _animation = nullptr);
+			explicit Animation(float _speed, Animation* _animation = nullptr);
 
-			void stop();
-			bool isRunning();
-			bool isPaused();
-			void sleep(float time);
-			void runAfterEnd(std::shared_ptr<Animation> animation);
+			virtual void update(sf::RenderWindow& _window) = 0;;
+			virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const = 0;
+
+			bool is_running() const;
+			bool is_paused() const;
+			void sleep(float _time);
+			void run_after_end(Animation* _animation);
 			void pause();
+			void stop();
+			void start();
 
 			virtual ~Animation();
 
 		protected:
-			void initialize(float speed);
-			Animation(float speed);
-			Animation();
+			void update_pause_timer();
+			void update_handler(sf::RenderWindow& _window);
 
 		private:
-			std::shared_ptr<Animation> _animation;
-			float _pauseTime, _speed;
-			bool _isRun, _isPaused;
+			Animation* animation_;
+			float pause_time_, speed_;
+			bool run_, paused_;
 
-			sf::Clock* _pauseClock,* _clock;
+			sf::Clock* pause_clock_,* clock_;
 
 			friend AnimationHandler;
 		};
@@ -45,11 +45,11 @@ namespace jump
 		{
 			namespace speed
 			{
-				const float MEDIUM = 0.08f;
-				const float VERYSLOW = 1.f;
-				const float SLOW = 0.5f;
-				const float FAST = 0.05f;
-				const float VERYFAST = 0.f;
+				static const float MEDIUM = 0.08f;
+				static const float VERYSLOW = 1.f;
+				static const float SLOW = 0.5f;
+				static const float FAST = 0.05f;
+				static const float VERYFAST = 0.f;
 			}
 		}
 	}
