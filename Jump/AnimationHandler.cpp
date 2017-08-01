@@ -52,8 +52,9 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation
 	auto find = std::find(instance->animations_.begin(), instance->animations_.end(), _animation);
 	if (instance->animations_.end() != find)
 	{
-		instance->animations_.erase(find);
 		delete *find;
+
+		instance->animations_.erase(find);
 	}
 
 	return instance;
@@ -96,7 +97,10 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::clear()
 	auto instance = get_instance();
 
 	for (auto animation : instance->animations_)
+	{
+		animation->animation_ = nullptr;
 		delete animation;
+	}
 
 	instance->animations_.clear();
 

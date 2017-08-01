@@ -78,13 +78,15 @@ void jump::Game::run_game()
 
 	sf::Time time_from_last_update = sf::Time::Zero;
 	sf::Clock clock;
+	sf::Text frame_rate_text;
+	sf::Time frame_rate = sf::Time::Zero;
 
-	if (config->show_fps)
-	{
-	}
+	frame_rate_text.setCharacterSize(10U);
+	frame_rate_text.setFont(*system::FontCointainer::get_font(DEBUG_CODE));
 
 	while (window_->isOpen())
 	{
+		frame_rate = clock.getElapsedTime();
 		time_from_last_update += clock.restart();
 		window_->clear();
 
@@ -104,14 +106,6 @@ void jump::Game::run_game()
 			}
 		}
 
-		if (config->debug)
-		{
-			mouse_position_.setPosition(window_->mapPixelToCoords(sf::Vector2i(10, 10), window_->getView()));
-			auto text = "x: " + std::to_string(mouse.x) + " y: " + std::to_string(mouse.y);
-
-			mouse_position_.setString(text);
-		}
-
 		while (time_from_last_update >= config->time_step_)
 		{
 			time_from_last_update -= config->time_step_;
@@ -121,6 +115,25 @@ void jump::Game::run_game()
 
 		window_->clear();
 		draw();
+
+		if (config->show_fps)
+		{
+			frame_rate_text.setPosition(window_->mapPixelToCoords(sf::Vector2i(0, 5), window_->getView()));
+			frame_rate_text.setString(std::to_string(static_cast<int>(std::truncf(1.0f / frame_rate.asSeconds()))) + " FPS");
+
+			window_->draw(frame_rate_text);
+
+		}
+
+		if (config->debug)
+		{
+			mouse_position_.setPosition(window_->mapPixelToCoords(sf::Vector2i(10, 10), window_->getView()));
+			auto text = "x: " + std::to_string(static_cast<int>(mouse.x)) + " y: " + std::to_string(static_cast<int>(mouse.y));
+
+			mouse_position_.setString(text);
+			window_->draw(mouse_position_);
+		}
+
 		window_->display();
 	}
 }

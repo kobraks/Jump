@@ -37,6 +37,8 @@ namespace jump
 
 		void update(sf::RenderWindow& _window)
 		{
+			events_ = Events::get_events();
+
 			if (events_.empty())
 			{
 				update(sf::Event(), _window);
@@ -53,13 +55,12 @@ namespace jump
 
 		void register_event(const sf::Event& _event)
 		{
-			events_.push(_event);
+			Events::register_event(_event);
 		}
 
 		void clear_events()
 		{
-			while (!events_.empty())
-				events_.pop();
+			Events::clear_events();
 		}
 
 	protected:
@@ -68,6 +69,45 @@ namespace jump
 	private:
 		Menu* parent_;
 		std::queue<sf::Event> events_;
+
+		class Events
+		{
+			std::queue<sf::Event> events_;
+
+			Events()
+			{}
+
+			static Events* get_instace()
+			{
+				static Events instance;
+
+				return &instance;
+			}
+
+		public:
+			static void register_event(const sf::Event& _event)
+			{
+				auto instance = get_instace();
+
+				instance->events_.push(_event);
+			}
+
+			static void clear_events()
+			{
+				auto instance = get_instace();
+
+				while (!instance->events_.empty())
+					instance->events_.pop();
+			}
+
+			static std::queue<sf::Event>& get_events()
+			{
+				auto instance = get_instace();
+
+				return instance->events_;
+			}
+
+		};
 		bool run_;
 	};
 

@@ -22,7 +22,6 @@ jump::system::Animation::~Animation()
 
 	if (animation_)
 	{
-		system::AnimationHandler::add(animation_);
 		animation_->pause();
 	}
 }
@@ -94,8 +93,13 @@ void jump::system::Animation::start()
 
 void jump::system::Animation::run_after_end(Animation* _animation)
 {
+	if (!_animation)
+		return;
+
 	animation_ = _animation;
 	animation_->pause();
+
+	system::AnimationHandler::add(animation_);
 }
 
 void jump::system::Animation::update_handler(sf::RenderWindow& _window)

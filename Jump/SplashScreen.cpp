@@ -55,16 +55,14 @@ void jump::menu::SplashScreen::update(sf::Event& _event, sf::RenderWindow& _wind
 
 	if (_event.type == _event.KeyPressed)
 	{
-		if (fade_in_)
+ 		if (fade_in_)
 		{
 			system::AnimationHandler::remove_animation(fade_in_);
-			delete fade_in_;
 			fade_in_ = nullptr;
 		}
 		else if (fade_out_)
 		{
 			system::AnimationHandler::remove_animation(fade_out_);
-			delete fade_out_;
 			fade_out_ = nullptr;
 
 			stop();
