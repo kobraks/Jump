@@ -2,7 +2,6 @@
 
 #include <string>
 
-#include "GuiButton.h"
 #include "GuiManager.h"
 
 #include "defines.h"
@@ -13,16 +12,16 @@
 #include "UnableToLoadException.h"
 
 #include "SplashScreen.h"
-#include "Engine.h"
 
 
-jump::menu::MainMenu::MainMenu(sf::RenderWindow& _window, Menu* _parent = nullptr) : Menu(_parent)
+jump::menu::MainMenu::MainMenu(sf::RenderWindow& _window, Menu* _parent) : Menu(_parent)
 {
 	try
 	{
 		menu_ = new SplashScreen(this);
+		texture_button_ = nullptr;
 
-		const size_t amount_options = 3;
+/*		const size_t amount_options = 3;
 		std::string options[] =
 		{
 			START_GAME,
@@ -51,7 +50,7 @@ jump::menu::MainMenu::MainMenu(sf::RenderWindow& _window, Menu* _parent = nullpt
 			switch (i)
 			{
 			case 0:
-				button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { menu_ = new Engine(this); });
+				button->add_action_on_click([this](sf::Event&, system::gui::GuiItem*) { menu_ = nullptr; });
 				break;
 
 			case 1:
@@ -66,7 +65,7 @@ jump::menu::MainMenu::MainMenu(sf::RenderWindow& _window, Menu* _parent = nullpt
 			buttons.push_back(button);
 		}
 
-		system::gui::GuiManager::add(buttons.begin(), buttons.end());
+		system::gui::GuiManager::add(buttons.begin(), buttons.end());*/
 	}
 	catch(std::bad_alloc)
 	{
@@ -85,23 +84,23 @@ jump::menu::MainMenu::~MainMenu()
 void jump::menu::MainMenu::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
 {
 	if (menu_)
-		_target.draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)));
+		_target.draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)), _states);
 	else
 		system::gui::GuiManager::draw();
 }
 
 void jump::menu::MainMenu::update(sf::Event& _event, sf::RenderWindow& _window)
 {
-	if (!menu_->is_running())
-	{
-		delete menu_;
-		menu_ = nullptr;
-	}
-
 	if (menu_)
 	{
-		menu_->add_event(_event);
-		menu_->update(_window);
+		if (!menu_->is_running())
+		{
+			delete menu_;
+			menu_ = nullptr;
+		}
+		else
+			menu_->update(_window);
+
 	}
 	else
 	{

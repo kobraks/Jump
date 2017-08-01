@@ -17,14 +17,17 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::add(Animation* _
 	auto instance = get_instance();
 
 	if (_animation)
-		instance->animations_.push_back(_animation);
+	{
+		if (std::find(instance->animations_.begin(), instance->animations_.end(), _animation) == instance->animations_.end())
+			instance->animations_.push_back(_animation);
+	}
 	else
 		throw std::exception();
 
 	return instance;
 }
 
-jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation(const unsigned int& _index)
+jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation(const size_t& _index)
 {
 	auto instance = get_instance();
 
@@ -32,18 +35,28 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation
 		throw std::exception();
 
 	if (_index >= 0 && _index < instance->animations_.size())
+	{
+		delete instance->animations_[_index];
 		instance->animations_.erase(instance->animations_.begin() + _index);
+	}
 	else
 		throw std::exception();
 
 	return instance;
 }
 
-class jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation(Animation* _animation)
+jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation(Animation* _animation)
 {
 	auto instance = get_instance();
 
+	auto find = std::find(instance->animations_.begin(), instance->animations_.end(), _animation);
+	if (instance->animations_.end() != find)
+	{
+		instance->animations_.erase(find);
+		delete *find;
+	}
 
+	return instance;
 }
 
 

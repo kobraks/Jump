@@ -1,11 +1,9 @@
 #include "FadeIn.h"
 
 
-jump::system::animations::FadeIn::FadeIn(sf::Sprite& _sprite, float _speed) : Animation(_speed)
+jump::system::animations::FadeIn::FadeIn(sf::Sprite& _sprite, float _speed) : Animation(255, _speed)
 {
-	sprite_ = new sf::Sprite(_sprite);
-	texture_ = new sf::Texture(*_sprite.getTexture());
-	sprite_->setTexture(*texture_);
+	sprite_ = &_sprite;
 	sprite_->setColor(sf::Color(255, 255, 255, 0));
 	
 	alpha_ = -0;
@@ -30,6 +28,4 @@ void jump::system::animations::FadeIn::draw(sf::RenderTarget& _target, sf::Rende
 
 jump::system::animations::FadeIn::~FadeIn()
 {
-	delete sprite_;
-	delete texture_;
 }

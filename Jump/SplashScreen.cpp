@@ -25,6 +25,8 @@ jump::menu::SplashScreen::SplashScreen(Menu* _parent) : Menu(_parent), scaled_(f
 		fade_out_ = new system::animations::FadeOut(*sprite_, 2.5f / 255.f);
 		fade_in_ = new system::animations::FadeIn(*sprite_, 2.5f / 255.f);
 		fade_in_->run_after_end(fade_out_);
+
+		system::AnimationHandler::add(fade_in_);
 	}
 	catch (std::bad_alloc)
 	{
@@ -41,7 +43,6 @@ jump::menu::SplashScreen::~SplashScreen()
 
 void jump::menu::SplashScreen::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
 {
-	
 }
 
 void jump::menu::SplashScreen::update(sf::Event& _event, sf::RenderWindow& _window)
@@ -52,7 +53,7 @@ void jump::menu::SplashScreen::update(sf::Event& _event, sf::RenderWindow& _wind
 		sprite_->setScale(_window.getSize().x / texture_->getSize().x, _window.getSize().y / texture_->getSize().y);
 	}
 
-	if (_event.KeyPressed)
+	if (_event.type == _event.KeyPressed)
 	{
 		if (fade_in_)
 		{

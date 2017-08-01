@@ -16,7 +16,7 @@ namespace jump
 					
 				}
 
-				const char* what() noexcept
+				virtual const char* what() const throw()
 				{
 					return message_.c_str();
 				}

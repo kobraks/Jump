@@ -11,7 +11,7 @@ namespace jump
 			class UnableToLoadFontException : public UnableToLoadException
 			{
 			public:
-				UnableToLoadFontException(const std::string& _font_name) : UnableToLoadException(MSG_UNABLE_TO_LOAD + MSG_UNABLE_TO_LOAD_FONT + _font_name)
+				UnableToLoadFontException(const std::string& _font_name) : UnableToLoadException(std::string(MSG_UNABLE_TO_LOAD) + std::string(MSG_UNABLE_TO_LOAD_FONT) + _font_name)
 				{}
 			};
 		}

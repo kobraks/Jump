@@ -21,7 +21,7 @@ namespace jump
 
 			static AnimationHandler* add(Animation* _animation);
 			
-			static AnimationHandler* remove_animation(const unsigned int& _index);
+			static AnimationHandler* remove_animation(const size_t& _index);
 			static AnimationHandler* remove_animation(Animation* _animation);
 			static AnimationHandler* update(sf::RenderWindow& _window);
 			static AnimationHandler* draw(sf::RenderWindow& window);

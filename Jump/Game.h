@@ -4,7 +4,6 @@
 #include <SFML\Audio.hpp>
 
 #include "Configuration.h"
-#include "Engine.h"
 
 #include "Menu.h"
 #include "MainMenu.h"

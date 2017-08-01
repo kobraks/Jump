@@ -1,13 +1,15 @@
 #include "Animation.h"
 
 #include <exception>
+#include "AnimationHandler.h"
 
-jump::system::Animation::Animation(Animation* _animation): animation_(_animation), pause_time_(0), speed_(animations::speed::MEDIUM),
-run_(false), paused_(false), pause_clock_(nullptr), clock_(new sf::Clock)
+jump::system::Animation::Animation(sf::Uint16 _max_stages, Animation* _animation): stage_(0), max_stages_(_max_stages), animation_(_animation),
+															pause_time_(0), speed_(animations::speed::MEDIUM),
+                                                           run_(true), paused_(false), pause_clock_(nullptr), clock_(new sf::Clock)
 {
 }
 
-jump::system::Animation::Animation(float _speed, Animation* _animation) : Animation(_animation)
+jump::system::Animation::Animation(sf::Uint16 _max_stages, float _speed, Animation* _animation) : Animation(_max_stages, _animation)
 {
 	speed_ = _speed;
 }
@@ -19,7 +21,10 @@ jump::system::Animation::~Animation()
 	delete clock_;
 
 	if (animation_)
+	{
+		system::AnimationHandler::add(animation_);
 		animation_->pause();
+	}
 }
 
 void jump::system::Animation::update_pause_timer()

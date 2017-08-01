@@ -37,16 +37,29 @@ namespace jump
 
 		void update(sf::RenderWindow& _window)
 		{
-			if (is_running())
+			if (events_.empty())
+			{
+				update(sf::Event(), _window);
+			}
+
+			while (!events_.empty())
 			{
 				update(events_.front(), _window);
 				events_.pop();
+				if (!is_running())
+					break;
 			}
 		}
 
-		void add_event(sf::Event& _event)
+		void register_event(const sf::Event& _event)
 		{
 			events_.push(_event);
+		}
+
+		void clear_events()
+		{
+			while (!events_.empty())
+				events_.pop();
 		}
 
 	protected:

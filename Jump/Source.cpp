@@ -1,5 +1,3 @@
-#include <Windows.h>
-#include <string>
 #include <iostream>
 #include <exception>
 #include <memory>
@@ -18,9 +16,10 @@ int main(int argc, char* argv[])
 	{
 		
 	}
-	catch (std::exception ex)
+	catch (std::exception& ex)
 	{
-		std::cout << ex.what();
+		std::cout << ex.what() << std::endl;
+		system("pause");
 
 	}
 	catch (...)

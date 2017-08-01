@@ -14,6 +14,13 @@
 #include "INIFileVariableDoesNotExistsException.h"
 #include "INIFileSectionDoesNotExistException.h"
 
+jump::system::Configuration* jump::system::Configuration::get_instance()
+{
+	static Configuration instance;
+	return &instance;
+}
+
+
 jump::system::Configuration::Configuration()
 {
 	set_defaults();

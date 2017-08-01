@@ -7,7 +7,7 @@
 
 jump::system::ini::IniWriter::IniWriter(IniFile* _ini, const std::string& _file_name, const bool& _override)
 {
-	if (_ini)
+	if (!_ini)
 		throw exception::IniFileNotInitializedException();
 
 	std::fstream *file;
@@ -19,7 +19,7 @@ jump::system::ini::IniWriter::IniWriter(IniFile* _ini, const std::string& _file_
 		else
 			file = new std::fstream(_file_name, std::ios::out);
 
-		if (file->good())
+		if (!file->good())
 		{
 			delete file;
 			throw exception::IniFileUnableToWriteFile();
@@ -47,7 +47,7 @@ jump::system::ini::IniWriter::IniWriter(IniFile* _ini, const std::string& _file_
 
 jump::system::ini::IniWriter::IniWriter(IniFile* _ini, std::ostream& _stream)
 {
-	if (_ini)
+	if (!_ini)
 		throw exception::IniFileNotInitializedException();
 
 	if (!_stream.good())

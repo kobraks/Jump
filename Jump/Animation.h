@@ -11,8 +11,8 @@ namespace jump
 		class Animation : public sf::Drawable
 		{
 		public:
-			explicit Animation(Animation* _animation = nullptr);
-			explicit Animation(float _speed, Animation* _animation = nullptr);
+			explicit Animation(sf::Uint16 _max_stages, Animation* _animation = nullptr);
+			explicit Animation(sf::Uint16 _max_stages, float _speed, Animation* _animation = nullptr);
 
 			virtual void update(sf::RenderWindow& _window) = 0;;
 			virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const = 0;
@@ -25,12 +25,28 @@ namespace jump
 			void stop();
 			void start();
 
+			sf::Uint16 stage() const
+			{
+				return stage_;
+			}
+
+			void stage(const sf::Uint16& _stage)
+			{
+				stage_ = _stage;
+			}
+
+			sf::Uint16 max_stages() const
+			{
+				return max_stages_;
+			}
+
 			virtual ~Animation();
 
 		protected:
 			void update_pause_timer();
 			void update_handler(sf::RenderWindow& _window);
 
+			sf::Uint16 stage_, max_stages_;
 		private:
 			Animation* animation_;
 			float pause_time_, speed_;

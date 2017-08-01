@@ -5,17 +5,13 @@
 #include "UnableToLoadFontException.h"
 #include "BadAllocException.h"
 
-#include "GuiManager.h"
-#include "GuiItem.h"
-#include "GuiButton.h"
-#include "FrameRate.h"
-
 #include "defines.h"
 #include "FontCoinatiner.h"
 
 #include "AnimationHandler.h"
 
 #include "MainMenu.h"
+#include "GuiManager.h"
 
 jump::Game::Game(): menu_(nullptr)
 {
@@ -39,22 +35,22 @@ jump::Game::Game(): menu_(nullptr)
 			config->save(CONFIGURATION_FILE_NAME);
 		}
 
-		if (fonts->get_font(TITLE_CODE)->loadFromFile(config->font_path + config->font_names[TITLE_CODE]))
+		if (!fonts->get_font(TITLE_CODE)->loadFromFile(config->font_path + config->font_names[TITLE_CODE]))
 			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[TITLE_CODE]);
 
-		if (fonts->get_font(OPTION_CODE)->loadFromFile(config->font_path + config->font_names[OPTION_CODE]))
+		if (!fonts->get_font(OPTION_CODE)->loadFromFile(config->font_path + config->font_names[OPTION_CODE]))
 			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[OPTION_CODE]);
 
-		if (fonts->get_font(AUTHOR_CODE)->loadFromFile(config->font_path + config->font_names[AUTHOR_CODE]))
+		if (!fonts->get_font(AUTHOR_CODE)->loadFromFile(config->font_path + config->font_names[AUTHOR_CODE]))
 			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[AUTHOR_CODE]);
 
-		if (fonts->get_font(DEBUG_CODE)->loadFromFile(config->font_path + config->font_names[DEBUG_CODE]))
+		if (!fonts->get_font(DEBUG_CODE)->loadFromFile(config->font_path + config->font_names[DEBUG_CODE]))
 			throw system::exception::UnableToLoadFontException(config->font_path + config->font_names[DEBUG_CODE]);
 
 		sf::ContextSettings settings;
 		settings.antialiasingLevel = 8;
 
-		window_ = new sf::RenderWindow(sf::VideoMode(800, 600, 32), WINDOW_NAME, sf::Style::Default, settings);
+		window_ = new sf::RenderWindow(sf::VideoMode(800, 600, 32), WINDOW_NAME, sf::Style::Default);
 		system::gui::GuiManager::set_window(*window_);
 
 		mouse_position_.setCharacterSize(20u);
@@ -71,13 +67,7 @@ jump::Game::~Game()
 	if(window_)
 		window_->close();
 
-	for (auto it = menu_; it != nullptr; it = menu_->parent())
-	{
-		auto parent = menu_->parent();
-		delete menu_;
-		menu_ = parent;
-	}
-
+	delete menu_;
 	delete window_;	
 }
 
@@ -91,11 +81,9 @@ void jump::Game::run_game()
 
 	if (config->show_fps)
 	{
-		system::FrameRate::getInstance().setFont(system::FontCointainer::get_font(DEBUG_CODE));
-		system::FrameRate::getInstance().initiate();
 	}
 
-	while (window_->isOpen() || menu_)
+	while (window_->isOpen())
 	{
 		time_from_last_update += clock.restart();
 		window_->clear();
@@ -103,11 +91,12 @@ void jump::Game::run_game()
 		sf::Vector2f mouse(sf::Mouse::getPosition(*window_));
 		sf::Event event;
 
+		menu_->clear_events();
+
 		while (window_->pollEvent(event))
 		{
-			menu_->add_event(event);
+			menu_->register_event(event);
 
-			//Wciœniêcie ESC lub przycisk X
 			if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed && sf::Keyboard::Escape == event.key.code)
 			{
 				if (menu_ && menu_->is_running())
@@ -148,7 +137,8 @@ void jump::Game::update()
 
 void jump::Game::draw()
 {
-	system::AnimationHandler::draw(*window_);
 	if (menu_)
 		window_->draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)));
+
+	system::AnimationHandler::draw(*window_);
 }

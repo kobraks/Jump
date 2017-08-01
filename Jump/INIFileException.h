@@ -14,11 +14,11 @@ namespace jump
 				{
 				public:
 
-					IniFileException(const std::string& _message) : message_(_message)
+					explicit IniFileException(const std::string& _message) : message_(_message)
 					{
 					}
 
-					virtual const char* what() const noexcept
+					virtual const char* what() const throw()
 					{
 						return message_.c_str();
 					}

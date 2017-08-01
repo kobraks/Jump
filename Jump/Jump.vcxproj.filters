@@ -16,32 +16,8 @@
     <Filter Include="Header Files\System">
       <UniqueIdentifier>{83c9b710-cec3-42ac-a4c9-2122a5f7718e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Map">
-      <UniqueIdentifier>{bac1eccc-0538-4ac5-a836-83d855d2727f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{b62a995d-8de6-408f-91c1-0e2e3fdec39f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Map">
-      <UniqueIdentifier>{6a445b49-fe54-4c39-8d4a-7dd23617d596}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Objects">
-      <UniqueIdentifier>{28f6d060-9913-49cd-ba88-4445001ccdea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Objects\Characters">
-      <UniqueIdentifier>{9fe80413-a025-4613-9f83-f35140716e6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Objects">
-      <UniqueIdentifier>{7c4a8726-5e60-41b6-ac52-febcaf0483e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Objects\Characters">
-      <UniqueIdentifier>{97d0c450-f29a-4f61-8a18-02acab4e2b3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Objects\Other">
-      <UniqueIdentifier>{52d11c48-e0ea-4662-9d83-0b048ef281d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Objects\Other">
-      <UniqueIdentifier>{dac97a4d-0c15-45cf-89de-fa25686ab937}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\System\animation">
       <UniqueIdentifier>{b061cb3a-40f2-4c1a-8639-16c9d27d0e18}</UniqueIdentifier>
@@ -87,50 +63,8 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Source Files\Objects\Characters</Filter>
-    </ClCompile>
     <ClCompile Include="Configuration.cpp">
       <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameRate.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Loading.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Objects\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Position.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Tail.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Bust.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Hud.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="xmlFile.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Clouds.cpp">
-      <Filter>Source Files\Objects\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="Items.cpp">
-      <Filter>Source Files\Objects\Other</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files\System\animation</Filter>
@@ -145,9 +79,6 @@
       <Filter>Source Files\System\animation\animations</Filter>
     </ClCompile>
     <ClCompile Include="GuiManager.cpp">
-      <Filter>Source Files\System\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="GuiButton.cpp">
       <Filter>Source Files\System\gui</Filter>
     </ClCompile>
     <ClCompile Include="INIFile.cpp">
@@ -182,53 +113,8 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameRate.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Tail.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Position.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
     <ClInclude Include="Configuration.h">
       <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Loading.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="xmlFile.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Bust.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Header Files\Objects\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\Objects\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Hud.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Clouds.h">
-      <Filter>Header Files\Objects\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Items.h">
-      <Filter>Header Files\Objects\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="FadeIn.h">
       <Filter>Header Files\System\animation\animations</Filter>
@@ -246,9 +132,6 @@
       <Filter>Header Files\System\gui</Filter>
     </ClInclude>
     <ClInclude Include="GuiManager.h">
-      <Filter>Header Files\System\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="GuiButton.h">
       <Filter>Header Files\System\gui</Filter>
     </ClInclude>
     <ClInclude Include="FontCoinatiner.h">

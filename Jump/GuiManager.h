@@ -26,9 +26,6 @@ namespace jump
 				template<class iterator>
 				static GuiManager* add(iterator _begin, iterator _end)
 				{
-					if (!_begin || !_end)
-						throw std::exception();
-
 					for (auto curr = _begin; curr != _end; ++curr)
 						get_instance()->add(*curr);
 

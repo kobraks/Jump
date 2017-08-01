@@ -56,7 +56,7 @@ void jump::system::ini::IniFile::section(IniSection* _section)
 	{
 		auto contains = this->find(_section->name());
 
-		if (contains != sections_.end())
+		if (contains == sections_.end())
 			sections_.push_back(_section);
 		else
 			throw exception::IniFileSectionAlreadyExistsException();
