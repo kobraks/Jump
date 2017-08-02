@@ -75,7 +75,7 @@ std::string jump::system::ini::IniSection::name() const
 jump::system::ini::IniVariable jump::system::ini::IniSection::variable(const std::string& _var_name) const
 {
 	auto result = std::find_if(variables_.begin(), variables_.end(), 
-		[_var_name](const IniVariable const* _variable)
+		[_var_name](const IniVariable* const _variable)
 	{
 		return boost::algorithm::to_upper_copy(_var_name) == boost::algorithm::to_upper_copy(_variable->name);
 	});
@@ -160,7 +160,7 @@ void jump::system::ini::IniSection::variable(const std::initializer_list<IniVari
 std::vector<jump::system::ini::IniVariable*>::iterator jump::system::ini::IniSection::find(const std::string& _var_name)
 {
 	return std::find_if(variables_.begin(), variables_.end(), 
-		[_var_name](const IniVariable const* _variable)
+		[_var_name](const IniVariable* const _variable)
 	{
 		return boost::algorithm::to_upper_copy(_var_name) == boost::algorithm::to_upper_copy(_variable->name);
 	});

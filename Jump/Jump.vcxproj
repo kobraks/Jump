@@ -177,7 +177,6 @@
     <ClInclude Include="FadeOut.h" />
     <ClInclude Include="FontCoinatiner.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GUiEvent.h" />
     <ClInclude Include="GuiItem.h" />
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="INIFile.h" />

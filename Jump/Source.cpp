@@ -1,31 +1,30 @@
 #include <iostream>
 #include <exception>
 #include <memory>
+#include <thread>
 
 #include "Game.h"
 
 int main(int argc, char* argv[])
 {
+	jump::Game* game = nullptr;
+
 	try
 	{
-		auto game = std::make_unique<jump::Game>();
-
+		game = new jump::Game();
 		game->run_game();
-	}
-	catch (std::bad_alloc)
-	{
-		
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << ex.what() << std::endl;
-		system("pause");
-
+		std::this_thread::sleep_for(std::chrono::seconds(5));
 	}
 	catch (...)
 	{
 
 	}
+
+	delete game;
 
 	return EXIT_SUCCESS;
 }

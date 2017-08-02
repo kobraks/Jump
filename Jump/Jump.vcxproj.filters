@@ -137,9 +137,6 @@
     <ClInclude Include="FontCoinatiner.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="GUiEvent.h">
-      <Filter>Header Files\System\gui</Filter>
-    </ClInclude>
     <ClInclude Include="INIFile.h">
       <Filter>Header Files\System\ini</Filter>
     </ClInclude>

@@ -47,10 +47,10 @@ void jump::menu::SplashScreen::draw(sf::RenderTarget& _target, sf::RenderStates 
 
 void jump::menu::SplashScreen::update(sf::Event& _event, sf::RenderWindow& _window)
 {
-	if (!scaled_)
+	if (!scaled_ || _event.type == sf::Event::Resized)
 	{
 		scaled_ = true;
-		sprite_->setScale(_window.getSize().x / texture_->getSize().x, _window.getSize().y / texture_->getSize().y);
+		sprite_->setScale(static_cast<float>(_window.getSize().x) / texture_->getSize().x, static_cast<float>(_window.getSize().y) / texture_->getSize().y);
 	}
 
 	if (_event.type == sf::Event::KeyPressed || _event.type == sf::Event::MouseButtonPressed)

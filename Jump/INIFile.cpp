@@ -109,7 +109,7 @@ void jump::system::ini::IniFile::section(IniSection* _begin, IniSection* _end)
 
 jump::system::ini::IniSection jump::system::ini::IniFile::section(const std::string& _name) const
 {
-	auto result = std::find_if(sections_.begin(), sections_.end(), [_name](const IniSection const* _section)
+	auto result = std::find_if(sections_.begin(), sections_.end(), [_name](const IniSection* const _section)
 	{
 		return boost::algorithm::to_upper_copy(_name) == boost::algorithm::to_upper_copy(_section->name());
 	});
@@ -151,7 +151,7 @@ void jump::system::ini::IniFile::remove_section(const std::string& _section_name
 std::vector<jump::system::ini::IniSection*>::iterator jump::system::ini::IniFile::find(const std::string& _section_name)
 {
 	return std::find_if(sections_.begin(), sections_.end(), 
-		[_section_name](const IniSection const* _section)
+		[_section_name](const IniSection* const _section)
 		{
 			return boost::algorithm::to_upper_copy(_section_name) == boost::algorithm::to_upper_copy(_section->name());
 		});

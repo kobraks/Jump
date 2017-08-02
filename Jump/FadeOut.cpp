@@ -14,7 +14,7 @@ void FadeOut::update(sf::RenderWindow& _window)
 	stage_ -= 1;
 
 	if (stage_ >= 0 && stage_ <= 255)
-		sprite_->setColor(sf::Color(255, 255, 255, stage_));
+		sprite_->setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(stage_)));
 
 	if (stage_ <= 0) this->stop();
 }

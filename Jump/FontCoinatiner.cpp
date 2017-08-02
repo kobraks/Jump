@@ -1,7 +1,5 @@
 #include "FontCoinatiner.h"
 
-#include <algorithm>
-
 jump::system::FontCointainer::FontCointainer()
 {
 	
@@ -29,10 +27,14 @@ sf::Font* jump::system::FontCointainer::get_font(std::string _name)
 
 jump::system::FontCointainer* jump::system::FontCointainer::add_font(std::string _name, sf::Font* _font)
 {
+	auto instance = get_instance();
+
 	if (_font)
-		get_instance()->fonts_[_name] = _font;
+		instance->fonts_[_name] = _font;
 	else
 		throw std::exception();
+
+	return instance;
 }
 
 jump::system::FontCointainer::~FontCointainer()
