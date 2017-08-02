@@ -137,9 +137,6 @@
     <ClInclude Include="FontCoinatiner.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="GuiDrawable.h">
-      <Filter>Header Files\System\gui</Filter>
-    </ClInclude>
     <ClInclude Include="GUiEvent.h">
       <Filter>Header Files\System\gui</Filter>
     </ClInclude>
@@ -223,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="SplashScreen.h">
       <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="OutOfRangeException.h">
+      <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="NotInicializedException.h">
+      <Filter>Header Files\System\exceptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -53,19 +53,28 @@ void jump::menu::SplashScreen::update(sf::Event& _event, sf::RenderWindow& _wind
 		sprite_->setScale(_window.getSize().x / texture_->getSize().x, _window.getSize().y / texture_->getSize().y);
 	}
 
-	if (_event.type == _event.KeyPressed)
+	if (_event.type == sf::Event::KeyPressed || _event.type == sf::Event::MouseButtonPressed)
 	{
- 		if (fade_in_)
+		if (fade_in_)
 		{
-			system::AnimationHandler::remove_animation(fade_in_);
+			try
+			{
+				system::AnimationHandler::remove_animation(fade_in_);
+			}
+			catch(...)
+			{ }
 			fade_in_ = nullptr;
 		}
-		else if (fade_out_)
+		else
 		{
-			system::AnimationHandler::remove_animation(fade_out_);
-			fade_out_ = nullptr;
+			try
+			{
+				system::AnimationHandler::remove_animation(fade_out_);
+			}
+			catch (...)
+			{ }
 
-			stop();
+			fade_out_ = nullptr;
 		}
 	}
 }

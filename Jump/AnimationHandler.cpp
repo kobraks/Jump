@@ -1,6 +1,8 @@
 #include "AnimationHandler.h"
 
 #include <algorithm>
+#include "OutOfRangeException.h"
+#include "NotInicializedException.h"
 
 jump::system::AnimationHandler* jump::system::AnimationHandler::get_instance()
 {
@@ -22,7 +24,7 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::add(Animation* _
 			instance->animations_.push_back(_animation);
 	}
 	else
-		throw std::exception();
+		throw exception::NotInicializedException();
 
 	return instance;
 }
@@ -31,16 +33,13 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation
 {
 	auto instance = get_instance();
 
-	if (instance->animations_.empty())
-		throw std::exception();
-
 	if (_index >= 0 && _index < instance->animations_.size())
 	{
 		delete instance->animations_[_index];
 		instance->animations_.erase(instance->animations_.begin() + _index);
 	}
 	else
-		throw std::exception();
+		throw exception::OutOfRangeException();
 
 	return instance;
 }
@@ -49,6 +48,9 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation
 {
 	auto instance = get_instance();
 
+	if (!_animation)
+		throw exception::NotInicializedException();
+
 	auto find = std::find(instance->animations_.begin(), instance->animations_.end(), _animation);
 	if (instance->animations_.end() != find)
 	{
@@ -56,6 +58,8 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation
 
 		instance->animations_.erase(find);
 	}
+	else
+		throw std::exception(); //TODO exception name
 
 	return instance;
 }

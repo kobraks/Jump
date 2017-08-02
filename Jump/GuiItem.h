@@ -2,8 +2,6 @@
 
 #include <sfml/Graphics.hpp>
 
-#include "GuiDrawable.h"
-
 namespace jump
 {
 	namespace system
@@ -14,13 +12,13 @@ namespace jump
 			{
 				enum
 				{
-					normal = 0,
-					hovered = 1,
-					clicked = 2
+					NORMAL = 0,
+					HOVERED = 1,
+					CLICKED = 2
 				};
 			}
 
-			class GuiItem : public GuiDrawable
+			class GuiItem : public sf::Drawable
 			{
 			public:
 				GuiItem(GuiItem* _parent = nullptr) : parent_(_parent)

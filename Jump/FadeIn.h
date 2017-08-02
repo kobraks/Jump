@@ -20,7 +20,6 @@ namespace jump
 			protected:
 				sf::Sprite* sprite_;
 				sf::Texture* texture_;
-				float alpha_;
 			};
 		}
 	}

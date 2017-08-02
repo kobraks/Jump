@@ -30,7 +30,7 @@ namespace jump
 				return stage_;
 			}
 
-			void stage(const sf::Uint16& _stage)
+			virtual void stage(const sf::Uint16& _stage)
 			{
 				stage_ = _stage;
 			}

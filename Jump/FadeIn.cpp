@@ -6,19 +6,19 @@ jump::system::animations::FadeIn::FadeIn(sf::Sprite& _sprite, float _speed) : An
 	sprite_ = &_sprite;
 	sprite_->setColor(sf::Color(255, 255, 255, 0));
 	
-	alpha_ = -0;
+	stage_ = -0;
 }
 
 void jump::system::animations::FadeIn::update(sf::RenderWindow& _window)
 {
-	alpha_ += 1;
+	stage_ += 1;
 
-	if (alpha_ >= 0 && alpha_ <= 255)
-		sprite_->setColor(sf::Color(255, 255, 255, alpha_));
-	else if (alpha_ > 0)
+	if (stage_ >= 0 && stage_ <= 255)
+		sprite_->setColor(sf::Color(255, 255, 255, stage_));
+	else
 		sprite_->setColor(sf::Color(255, 255, 255, 255));
 
-	if (alpha_ >= 255) this->stop();
+	if (stage_ >= 255) this->stop();
 }
 
 void jump::system::animations::FadeIn::draw(sf::RenderTarget& _target, sf::RenderStates _states) const

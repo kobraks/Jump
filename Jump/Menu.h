@@ -2,6 +2,7 @@
 
 #include <queue>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 namespace jump
 {
@@ -37,28 +38,30 @@ namespace jump
 
 		void update(sf::RenderWindow& _window)
 		{
-			events_ = Events::get_events();
+			std::queue<sf::Event> events(Events::get_events());
 
-			if (events_.empty())
+			if (events.empty())
 			{
+				std::cout << "empty" << std::endl;
 				update(sf::Event(), _window);
 			}
 
-			while (!events_.empty())
+			while (!events.empty())
 			{
-				update(events_.front(), _window);
-				events_.pop();
+				update(events.front(), _window);
+				events.pop();
 				if (!is_running())
 					break;
 			}
 		}
 
-		void register_event(const sf::Event& _event)
+		static void register_event(const sf::Event& _event)
 		{
+			std::cout << _event.type << std::endl;
 			Events::register_event(_event);
 		}
 
-		void clear_events()
+		static void clear_events()
 		{
 			Events::clear_events();
 		}
@@ -68,7 +71,6 @@ namespace jump
 
 	private:
 		Menu* parent_;
-		std::queue<sf::Event> events_;
 
 		class Events
 		{

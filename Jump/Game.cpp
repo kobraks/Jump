@@ -93,8 +93,6 @@ void jump::Game::run_game()
 		sf::Vector2f mouse(sf::Mouse::getPosition(*window_));
 		sf::Event event;
 
-		menu_->clear_events();
-
 		while (window_->pollEvent(event))
 		{
 			menu_->register_event(event);
@@ -111,6 +109,7 @@ void jump::Game::run_game()
 			time_from_last_update -= config->time_step_;
 
 			update();
+			menu_->clear_events();
 		}
 
 		window_->clear();

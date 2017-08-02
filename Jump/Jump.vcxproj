@@ -180,7 +180,6 @@
     <ClInclude Include="GUiEvent.h" />
     <ClInclude Include="GuiItem.h" />
     <ClInclude Include="GuiManager.h" />
-    <ClInclude Include="GuiDrawable.h" />
     <ClInclude Include="INIFile.h" />
     <ClInclude Include="INIFileBadAllocException.h" />
     <ClInclude Include="INIFileException.h" />
@@ -197,6 +196,8 @@
     <ClInclude Include="INIParser.h" />
     <ClInclude Include="INIReader.h" />
     <ClInclude Include="INISection.h" />
+    <ClInclude Include="NotInicializedException.h" />
+    <ClInclude Include="OutOfRangeException.h" />
     <ClInclude Include="Simbols.h" />
     <ClInclude Include="INIToken.h" />
     <ClInclude Include="INITokenizer.h" />

@@ -88,7 +88,7 @@ jump::system::gui::GuiManager* jump::system::gui::GuiManager::draw()
 {
 	for (auto item : get_instance()->items_)
 		
-		get_instance()->window_->draw(const_cast<const GuiDrawable&>(*dynamic_cast<GuiDrawable*>(item)));
+		get_instance()->window_->draw(const_cast<const sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)));
 
 	return get_instance();
 }
