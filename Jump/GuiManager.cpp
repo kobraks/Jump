@@ -1,7 +1,6 @@
 #include "GuiManager.h"
 
-#include <algorithm>
-
+#include "NotInicializedException.h"
 
 jump::system::gui::GuiManager::GuiManager()
 {
@@ -14,17 +13,19 @@ jump::system::gui::GuiManager::~GuiManager()
 	clear();
 }
 
-class jump::system::gui::GuiManager* jump::system::gui::GuiManager::set_window(sf::RenderWindow& _window)
-{
-	get_instance()->window_ = &_window;
-	return get_instance();
-}
-
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::get_instance()
 {
 	static GuiManager instance;
 
 	return &instance;
+}
+
+class jump::system::gui::GuiManager* jump::system::gui::GuiManager::set_window(sf::RenderWindow& _window)
+{
+	auto instance = get_instance();
+
+	instance->window_ = &_window;
+	return instance;
 }
 
 class jump::system::gui::GuiManager* jump::system::gui::GuiManager::add_item(GuiItem* _item)
@@ -37,78 +38,92 @@ class jump::system::gui::GuiManager* jump::system::gui::GuiManager::add_item(Gui
 
 		return add_item(_item->parent());
 	}
-	
-	return this;
-
+	else
+		throw exception::NotInicializedException();
 }
 
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::add(GuiItem* _item)
 {
+	auto instance = get_instance();
+
 	if (_item)
 	{
-		get_instance()->add_item(_item);
+		instance->add_item(_item);
 	}
 	else
-		throw std::exception();
+		throw exception::NotInicializedException();
 
-	return get_instance();
+	return instance;
 }
 
 class jump::system::gui::GuiManager* jump::system::gui::GuiManager::add(GuiItem* _begin, GuiItem* _end)
 {
 	if (!_begin || !_end)
-		throw std::exception();
+		throw exception::NotInicializedException();
+
+	auto instance = get_instance();
 
 	for (auto curr = _begin; curr != _end; ++curr)
-		get_instance()->add(curr);
+		instance->add(curr);
 
-	return get_instance();
+	return instance;
 }
 
 
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::add(std::initializer_list<GuiItem*> _items)
 {
-	for (auto item : _items)
-		get_instance()->add(item);
+	auto instance = get_instance();
 
-	return get_instance();
+	for (auto item : _items)
+		instance->add(item);
+
+	return instance;
 }
 
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::clear()
 {
-	for (auto item : get_instance()->items_)
+	auto instance = get_instance();
+
+	for (auto item : instance->items_)
 		delete item;
 
-	get_instance()->items_.clear();
+	instance->items_.clear();
 
-	return get_instance();
+	return instance;
 }
 
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::draw()
 {
-	for (auto item : get_instance()->items_)
-		
-		get_instance()->window_->draw(const_cast<const sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)));
+	auto instance = get_instance();
 
-	return get_instance();
+	for (auto item : instance->items_)
+		if (item->is_visable())
+			instance->window_->draw(const_cast<const sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)));
+
+	return instance;
 }
 
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::update()
 {
-	for (auto item : get_instance()->items_)
+	auto instance = get_instance();
+
+	for (auto item : instance->items_)
 	{
-		for (auto event : get_instance()->events_)
-			item->update(event, *get_instance()->window_);
+		if (item->is_active())
+			for (auto event : instance->events_)
+				item->update(event, *instance->window_);
 	}
 
-	return get_instance();
+	return instance;
 }
 
-jump::system::gui::GuiManager* jump::system::gui::GuiManager::process_events(sf::Event& _event)
+jump::system::gui::GuiManager* jump::system::gui::GuiManager::register_event(const sf::Event& _event)
 {
-	get_instance()->events_.push_back(_event);
+	auto instance = get_instance();
 
-	return get_instance();
+	instance->events_.push_back(_event);
+
+	return instance;
 }
 
 

@@ -10,7 +10,7 @@ namespace jump
 	{
 	public:
 
-		Menu(Menu* _parent) : parent_(_parent), run_(true)
+		explicit Menu(Menu* _parent) : parent_(_parent), run_(true)
 		{
 		}
 
@@ -67,7 +67,7 @@ namespace jump
 		}
 
 	protected:
-		virtual void update(sf::Event& _event, sf::RenderWindow& _window) = 0;
+		virtual void update(const sf::Event& _event, sf::RenderWindow& _window) = 0;
 
 	private:
 		Menu* parent_;

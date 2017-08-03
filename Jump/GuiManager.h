@@ -36,7 +36,7 @@ namespace jump
 				static GuiManager* clear();
 
 				static GuiManager* draw();
-				static GuiManager* process_events(sf::Event& _event);
+				static GuiManager* register_event(const sf::Event& _event);
 				static GuiManager* update();
 			private:
 				GuiManager();

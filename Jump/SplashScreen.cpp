@@ -45,7 +45,7 @@ void jump::menu::SplashScreen::draw(sf::RenderTarget& _target, sf::RenderStates 
 {
 }
 
-void jump::menu::SplashScreen::update(sf::Event& _event, sf::RenderWindow& _window)
+void jump::menu::SplashScreen::update(const sf::Event& _event, sf::RenderWindow& _window)
 {
 	if (!scaled_ || _event.type == sf::Event::Resized)
 	{

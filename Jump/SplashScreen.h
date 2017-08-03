@@ -18,7 +18,7 @@ namespace jump
 			virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const;
 
 		protected:
-			virtual void update(sf::Event& _event, sf::RenderWindow& _window);
+			virtual void update(const sf::Event& _event, sf::RenderWindow& _window);
 
 		private:
 			bool scaled_;

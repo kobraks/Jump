@@ -55,6 +55,9 @@
     <Filter Include="Source Files\menu">
       <UniqueIdentifier>{988f8f31-a5fa-44a6-a5ae-a33e91db1a6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\map">
+      <UniqueIdentifier>{47486201-bda4-4d15-a837-3228db8a43cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -107,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="SplashScreen.cpp">
       <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiButton.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +235,21 @@
     </ClInclude>
     <ClInclude Include="NotInicializedException.h">
       <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="FontDoesNotExistException.h">
+      <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiButton.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

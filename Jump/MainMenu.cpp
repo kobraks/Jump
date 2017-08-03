@@ -89,7 +89,7 @@ void jump::menu::MainMenu::draw(sf::RenderTarget& _target, sf::RenderStates _sta
 		system::gui::GuiManager::draw();
 }
 
-void jump::menu::MainMenu::update(sf::Event& _event, sf::RenderWindow& _window)
+void jump::menu::MainMenu::update(const sf::Event& _event, sf::RenderWindow& _window)
 {
 	if (menu_)
 	{
@@ -104,7 +104,7 @@ void jump::menu::MainMenu::update(sf::Event& _event, sf::RenderWindow& _window)
 	}
 	else
 	{
-		system::gui::GuiManager::process_events(_event);
+		system::gui::GuiManager::register_event(_event);
 
 		system::gui::GuiManager::update();
 	}

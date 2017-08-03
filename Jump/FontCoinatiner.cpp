@@ -1,5 +1,7 @@
 #include "FontCoinatiner.h"
 
+#include "NotInicializedException.h"
+#include "FontDoesNotExistException.h"
 jump::system::FontCointainer::FontCointainer()
 {
 	
@@ -22,7 +24,7 @@ sf::Font* jump::system::FontCointainer::get_font(std::string _name)
 	if (font)
 		return font;
 	else
-		throw std::exception();
+		throw exception::FontDoesNotExistException();
 }
 
 jump::system::FontCointainer* jump::system::FontCointainer::add_font(std::string _name, sf::Font* _font)
@@ -32,7 +34,7 @@ jump::system::FontCointainer* jump::system::FontCointainer::add_font(std::string
 	if (_font)
 		instance->fonts_[_name] = _font;
 	else
-		throw std::exception();
+		throw exception::NotInicializedException();
 
 	return instance;
 }
