@@ -23,7 +23,6 @@ int main(int argc, char* argv[])
 	{
 
 	}
-
 	delete game;
 
 	return EXIT_SUCCESS;

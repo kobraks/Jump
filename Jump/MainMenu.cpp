@@ -12,6 +12,7 @@
 #include "UnableToLoadException.h"
 
 #include "SplashScreen.h"
+#include "EditorMenu.h"
 
 
 jump::menu::MainMenu::MainMenu(sf::RenderWindow& _window, Menu* _parent) : Menu(_parent)
@@ -91,6 +92,12 @@ void jump::menu::MainMenu::draw(sf::RenderTarget& _target, sf::RenderStates _sta
 
 void jump::menu::MainMenu::update(const sf::Event& _event, sf::RenderWindow& _window)
 {
+
+	if (_event.type == _event.KeyReleased && _event.key.code == sf::Keyboard::F2)
+	{
+		delete menu_;
+		menu_ = new EditorMenu(this);
+	}
 	if (menu_)
 	{
 		if (!menu_->is_running())
@@ -104,8 +111,6 @@ void jump::menu::MainMenu::update(const sf::Event& _event, sf::RenderWindow& _wi
 	}
 	else
 	{
-		system::gui::GuiManager::register_event(_event);
 
-		system::gui::GuiManager::update();
 	}
 }

@@ -26,6 +26,7 @@ namespace jump
 			static AnimationHandler* update(sf::RenderWindow& _window);
 			static AnimationHandler* draw(sf::RenderWindow& window);
 			static AnimationHandler* clear();
+			static bool contains(Animation* _animation);
 
 			static std::vector<Animation*> get_animations();
 

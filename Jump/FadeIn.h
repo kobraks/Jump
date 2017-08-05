@@ -12,9 +12,9 @@ namespace jump
 			{
 			public:
 				FadeIn(sf::Sprite& _sprite, float _speed = system::animations::speed::MEDIUM);
-				virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const;
+				void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;
 
-				virtual void update(sf::RenderWindow& _window);
+				void update(sf::RenderWindow& _window) override;
 
 				virtual ~FadeIn();
 			protected:

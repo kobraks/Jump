@@ -6,87 +6,26 @@
 #include "INIFileBadAllocException.h"
 #include "Simbols.h"
 
-jump::system::ini::IniParser::IniParser(std::vector<ini::IniToken*>& _tokens) : tokens_(_tokens)
+jump::system::ini::IniParser::IniParser(std::vector<ini::IniToken*>& _tokens) : tokens_(_tokens), it_(tokens_.begin())
 {
 }
 
 std::vector<jump::system::ini::IniSection*> jump::system::ini::IniParser::parse()
 {
 	std::vector<jump::system::ini::IniSection*> result;
-
-	bool is_section_name = false;
-	bool comment = false;
-	bool string = false;
-	bool variable_value = false;
-	std::string section_name;
-
+	
 	try
 	{
-		ini::IniVariable* variable = new ini::IniVariable();
-
-		for (auto it = tokens_.begin(); it != tokens_.end(); ++it)
+		IniSection* section;
+		while((section = get_section()))
 		{
-			IniToken* token = *it;
-
-			if (token->type == SIMBOL_NEW_LINE[0])
+			IniVariable* variable;
+			while ((variable = get_variable()))
 			{
-				if (variable)
-				{
-					boost::algorithm::trim(variable->name);
-					boost::algorithm::trim(variable->value);
-
-					if (!variable->name.empty())
-					{
-						if (!result.empty())
-						{
-							result[result.size() - 1]->variable(variable);
-
-							variable = new ini::IniVariable();
-						}
-						else
-						{
-							delete variable;
-							variable = new ini::IniVariable();
-						}
-					}
-
-					variable_value = false;
-				}
-
-				if (comment) comment = false;
-
-				continue;
+				section->variable(variable);
 			}
 
-			if (token->type == SIMBOL_COMMENT[0])
-				comment = true;
-			if (!comment)
-			{
-				if (token->type == SIMBOL_BEGIN_SECTION[0])
-					is_section_name = true;
-				else if (token->type == SIMBOL_END_SECTION[0])
-				{
-					is_section_name = false;
-
-					boost::algorithm::trim(section_name);
-					if (!section_name.empty())
-						result.push_back(new IniSection(section_name));
-				}
-				else if (token->type == SIMBOL_STRING[0])
-					string = string ? true : false;
-				else if (token->type == SIMBOL_EQUAL[0])
-					variable_value = true;
-				else if (token->type == SIMBOL_VALUE[0])
-				{
-					if (string && variable_value)
-						variable->value += token->value + " ";
-					else if (is_section_name)
-						section_name += token->value + " ";
-					else
-						variable->name += token->value + " ";
-				}
-
-			}
+			result.push_back(section);
 		}
 	}
 	catch(std::bad_alloc)
@@ -95,5 +34,108 @@ std::vector<jump::system::ini::IniSection*> jump::system::ini::IniParser::parse(
 	}
 
 	return result;
+}
+
+jump::system::ini::IniSection* jump::system::ini::IniParser::get_section()
+{
+	std::string section_name = "";
+
+	for (; it_ != tokens_.end(); ++it_)
+	{
+		IniToken* token = *it_;
+		if (token->type == SIMBOL_BEGIN_SECTION[0])
+		{
+			while(token->type != SIMBOL_END_SECTION[0])
+			{
+				if (token->type == SIMBOL_COMMENT[0])
+					read_comment();
+				else if (!token->value.empty())
+					section_name += token->value;
+
+				if (++it_ == tokens_.end())
+					break;
+
+				token = *it_;
+			}
+
+			if (tokens_.end() != it_)
+				++it_;
+
+			return new IniSection(section_name);
+
+		}
+
+	}
+
+	return nullptr;
+}
+
+jump::system::ini::IniVariable* jump::system::ini::IniParser::get_variable()
+{
+	std::string var_name;
+	std::string var_value;
+
+	if (get_variable_name(var_name) && get_variable_value(var_value))
+	{
+		boost::algorithm::trim(var_name);
+		boost::algorithm::trim(var_value);
+
+		return new IniVariable(var_name, var_value);
+	}
+
+	return nullptr;
+}
+
+bool jump::system::ini::IniParser::get_variable_name(std::string& _var_name)
+{
+	for (; it_ != tokens_.end(); ++it_)
+	{
+		auto token = *it_;
+
+		if (token->type == SIMBOL_COMMENT[0])
+			read_comment();
+		else if (token->type == SIMBOL_BEGIN_SECTION[0] ||
+			token->type == SIMBOL_END_SECTION[0] ||
+			token->type == SIMBOL_STRING[0])
+			break;
+		else if (token->type == SIMBOL_EQUAL[0])
+			return true;
+		else
+			_var_name += token->value.empty() ? "" : token->value + " ";
+
+	}
+
+	return false;
+}
+
+bool jump::system::ini::IniParser::get_variable_value(std::string& _var_value)
+{
+	for (; it_ != tokens_.end(); ++it_)
+	{
+		auto token = *it_;
+
+		if (token->type == SIMBOL_BEGIN_SECTION[0] ||
+			token->type == SIMBOL_END_SECTION[0] ||
+			token->type == SIMBOL_STRING[0])
+			break;
+		else if (token->type == SIMBOL_NEW_LINE[0] || 
+			token->type == SIMBOL_COMMENT[0])
+			return true;
+		else
+			_var_value += token->value.empty() ? "" : token->value + " ";
+	}
+
+	return false;
+}
+
+void jump::system::ini::IniParser::read_comment()
+{
+	for (;it_ != tokens_.end(); ++it_)
+	{
+		auto token = *it_;
+
+		if (token->type == SIMBOL_NEW_LINE[0])
+			return;
+	}
 }
 

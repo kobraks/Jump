@@ -16,7 +16,7 @@ namespace jump
 					
 				}
 
-				virtual const char* what() const throw()
+				const char* what() const throw() override
 				{
 					return message_.c_str();
 				}

@@ -14,7 +14,7 @@ namespace jump
 			public:
 				FadeOut(sf::Sprite& _sprite, float _speed = system::animations::speed::MEDIUM);
 
-				virtual void update(sf::RenderWindow& _window);
+				void update(sf::RenderWindow& _window) override;
 				virtual void stage(sf::Uint16 _stage);
 			};
 		}

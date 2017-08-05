@@ -18,7 +18,7 @@ std::vector<jump::system::ini::IniToken*> jump::system::ini::IniTokenizer::token
 
 	auto strings = split_for_tokenize(lines_);
 
-	for (auto string : strings)
+	for (auto& string : strings)
 	{
 		if (string == SIMBOL_NEW_LINE || 
 			string == SIMBOL_COMMENT || 
@@ -38,7 +38,7 @@ std::vector<std::string> jump::system::ini::IniTokenizer::split_for_tokenize(std
 {
 	std::vector<std::string> result;
 
-	for (auto line : _lines)
+	for (auto& line : _lines)
 	{
 		line = prepare_for_split(line);
 	}
@@ -55,6 +55,10 @@ std::vector<std::string> jump::system::ini::IniTokenizer::split_for_tokenize(std
 			result.push_back(line.substr(0, pos));
 			line.erase(0, pos + delimiter.length());
 		}
+		if (line != SIMBOL_NEW_LINE)
+			boost::algorithm::trim(line);
+		if (!line.empty())
+			result.push_back(line);
 	}
 
 	return result;
@@ -67,30 +71,30 @@ std::string jump::system::ini::IniTokenizer::prepare_for_split(const std::string
 		return result;
 
 	std::vector<std::string> replacement = {
-		"\"",
-		"=",
-		"[",
-		"]",
-		";"
+		SIMBOL_STRING,
+		SIMBOL_EQUAL,
+		SIMBOL_BEGIN_SECTION,
+		SIMBOL_END_SECTION,
+		SIMBOL_COMMENT
 	};
 
 	for (size_t i = 0; i < replacement.size(); ++i)
 	{
-		result = replace(result, replacement[i], replacement[i] + " ");
+		result = replace(result, replacement[i]," " + replacement[i] + " ");
 	}
 
 	result = replace(result, "  ", " ");
 
-	if (result != "\n") boost::trim(result);
+	if (result != SIMBOL_NEW_LINE) boost::trim(result);
 
 	return result;
 }
 
-std::string jump::system::ini::IniTokenizer::replace(const std::string& _string, const std::string& _what, const std::string& _replacment) const
+std::string jump::system::ini::IniTokenizer::replace(const std::string& _string, const std::string& _what, const std::string& _replacment)
 {
 	std::string result = _string;
 	size_t pos = 0;
-	while((pos = result.find(_what, pos)) == std::string::npos)
+	while((pos = result.find(_what, pos)) != std::string::npos)
 	{
 		result.replace(pos, _what.length(), _replacment);
 		pos += _replacment.length();

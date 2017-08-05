@@ -15,7 +15,7 @@
 
 jump::system::ini::IniReader::IniReader(IniFile* _ini, const std::string& _file_name)
 {
-	if (_ini)
+	if (!_ini)
 		throw exception::IniFileNotInitializedException();
 
 	std::fstream file(_file_name, std::ios::in);

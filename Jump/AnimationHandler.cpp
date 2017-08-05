@@ -20,7 +20,7 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::add(Animation* _
 
 	if (_animation)
 	{
-		if (std::find(instance->animations_.begin(), instance->animations_.end(), _animation) == instance->animations_.end())
+		if (!contains(_animation))
 			instance->animations_.push_back(_animation);
 	}
 	else
@@ -32,11 +32,12 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::add(Animation* _
 jump::system::AnimationHandler* jump::system::AnimationHandler::remove_animation(const size_t& _index)
 {
 	auto instance = get_instance();
+	auto& animations = instance->animations_;
 
-	if (_index >= 0 && _index < instance->animations_.size())
+	if (_index >= 0 && _index < animations.size())
 	{
-		delete instance->animations_[_index];
-		instance->animations_.erase(instance->animations_.begin() + _index);
+		delete animations[_index];
+		animations.erase(animations.begin() + _index);
 	}
 	else
 		throw exception::OutOfRangeException();
@@ -109,6 +110,13 @@ jump::system::AnimationHandler* jump::system::AnimationHandler::clear()
 	instance->animations_.clear();
 
 	return instance;
+}
+
+bool jump::system::AnimationHandler::contains(Animation* _animation)
+{
+	auto instance = get_instance();
+
+	return std::find(instance->animations_.begin(), instance->animations_.end(), _animation) != instance->animations_.end();
 }
 
 std::vector<jump::system::Animation*> jump::system::AnimationHandler::get_animations()

@@ -15,7 +15,6 @@ namespace jump
 			explicit Animation(sf::Uint16 _max_stages, float _speed, Animation* _animation = nullptr);
 
 			virtual void update(sf::RenderWindow& _window) = 0;;
-			virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const = 0;
 
 			bool is_running() const;
 			bool is_paused() const;

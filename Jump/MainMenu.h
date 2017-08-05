@@ -14,10 +14,10 @@ namespace jump
 			MainMenu(sf::RenderWindow& _window, Menu* _parent = nullptr);
 			~MainMenu();
 
-			virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const;
+			void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;
 
 		protected:
-			virtual void update(const sf::Event& _event, sf::RenderWindow& _window);
+			void update(const sf::Event& _event, sf::RenderWindow& _window) override;
 
 		private:
 			Menu* menu_;

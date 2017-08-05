@@ -37,6 +37,20 @@ jump::menu::SplashScreen::SplashScreen(Menu* _parent) : Menu(_parent), scaled_(f
 
 jump::menu::SplashScreen::~SplashScreen()
 {
+	try
+	{
+		system::AnimationHandler::remove_animation(fade_in_);
+	}
+	catch(...) {}
+
+	try
+	{
+		system::AnimationHandler::remove_animation(fade_out_);
+	}
+	catch(...){}
+
+	fade_in_ = fade_out_ = nullptr;
+
 	delete texture_;
 	delete sprite_;
 }
@@ -75,6 +89,18 @@ void jump::menu::SplashScreen::update(const sf::Event& _event, sf::RenderWindow&
 			{ }
 
 			fade_out_ = nullptr;
+			stop();
 		}
 	}
+
+	if (fade_in_)
+		if (!system::AnimationHandler::contains(fade_in_))
+			fade_in_ = nullptr;
+
+	if (fade_out_)
+		if (!system::AnimationHandler::contains(fade_out_))
+		{
+			fade_out_ = nullptr;
+			stop();
+		}
 }

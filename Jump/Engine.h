@@ -1,7 +1,9 @@
 #pragma once
 
+#include <vector>
+
 #include "Menu.h"
-#include "Map.h"
+#include "Entity.h"
 
 namespace jump
 {
@@ -11,12 +13,12 @@ namespace jump
 		Engine(Menu* _parent = nullptr);
 		~Engine();
 
-		virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states) const;
+		void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;
 
 	protected:
-		virtual void update(const sf::Event& _event, sf::RenderWindow& _window);
+		void update(const sf::Event& _event, sf::RenderWindow& _window) override;
 		
 	private:
-		Map* map_;
+		std::vector<Entity*> entities_;
 	};
 }
