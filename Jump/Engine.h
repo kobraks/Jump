@@ -14,11 +14,6 @@ namespace jump
 		~Engine();
 
 		void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;
-
-	protected:
-		void update(const sf::Event& _event, sf::RenderWindow& _window) override;
-		
-	private:
-		std::vector<Entity*> entities_;
+		void update(sf::RenderWindow& window) override;
 	};
 }

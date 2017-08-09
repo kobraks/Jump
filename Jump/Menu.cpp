@@ -23,26 +23,6 @@ void jump::Menu::stop()
 	run_ = false;
 }
 
-void jump::Menu::update(sf::RenderWindow& window)
-{
-	if (!is_running())
-		return;
-
-	auto events = Events::get_events();
-	if (events.empty())
-	{
-		update(sf::Event(), window);
-	}
-
-	while(!events.empty())
-	{
-		update(events.front(), window);
-		events.pop();
-		if (!is_running())
-			return;
-	}
-}
-
 void jump::Menu::register_event(const sf::Event& event)
 {
 	Events::register_event(event);

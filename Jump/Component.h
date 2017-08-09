@@ -2,7 +2,7 @@
 
 namespace luabridge
 {
-	class luaRef;
+	class LuaRef;
 }
 
 namespace jump
@@ -13,7 +13,7 @@ namespace jump
 		{
 		public:
 
-			Component(luabridge::luaRef* _lua_ref)
+			Component(luabridge::LuaRef* _lua_ref)
 			{
 			}
 

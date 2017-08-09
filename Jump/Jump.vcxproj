@@ -149,17 +149,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="AnimationHandler.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="EditorMenu.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityLoader.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="EntityWreater.cpp" />
     <ClCompile Include="FadeIn.cpp" />
     <ClCompile Include="FadeOut.cpp" />
     <ClCompile Include="FontCoinatiner.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GraphicalComponent.cpp" />
+    <ClCompile Include="GraphicComponent.cpp" />
     <ClCompile Include="GuiButton.cpp" />
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="imgui-SFML.cpp" />
@@ -172,14 +175,16 @@
     <ClCompile Include="INISection.cpp" />
     <ClCompile Include="INITokenizer.cpp" />
     <ClCompile Include="INIWriter.cpp" />
-    <ClCompile Include="LuaScript.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="PhisicComponent.cpp" />
+    <ClCompile Include="ScriptComponent.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SplashScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="AnimationHandler.h" />
     <ClInclude Include="BadAllocException.h" />
     <ClInclude Include="Component.h" />
@@ -188,7 +193,9 @@
     <ClInclude Include="EditorMenu.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityLoader.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="EntityWreater.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="FadeIn.h" />
     <ClInclude Include="FadeOut.h" />
@@ -214,7 +221,6 @@
     <ClInclude Include="INIFileUnableToWriteFileException.h" />
     <ClInclude Include="INIFileUnableToWriteStreamException.h" />
     <ClInclude Include="INIFileVariableDoesNotExistsException.h" />
-    <ClInclude Include="LuaScript.h" />
     <ClInclude Include="Macros.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Menu.h" />
@@ -224,6 +230,8 @@
     <ClInclude Include="INISection.h" />
     <ClInclude Include="NotInicializedException.h" />
     <ClInclude Include="OutOfRangeException.h" />
+    <ClInclude Include="PhisicComponent.h" />
+    <ClInclude Include="ScriptComponent.h" />
     <ClInclude Include="Simbols.h" />
     <ClInclude Include="INIToken.h" />
     <ClInclude Include="INITokenizer.h" />
@@ -235,6 +243,7 @@
     <ClInclude Include="stb_truetype.h" />
     <ClInclude Include="UnableToLoadException.h" />
     <ClInclude Include="UnableToLoadFontException.h" />
+    <ClInclude Include="UnableToOpenFileException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

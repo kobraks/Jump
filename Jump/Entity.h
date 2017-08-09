@@ -2,6 +2,7 @@
 
 #include <map>
 #include <typeindex>
+#include <string>
 
 namespace jump
 {
@@ -10,37 +11,50 @@ namespace jump
 		class Component;
 	}
 
-	class Entity
+	namespace entity
 	{
-	public:
-		Entity();
-		~Entity();
-
-		void add_component(std::type_index _type_index, component::Component* _component);
-
-		template<class T>
-		T* get_component()
+		class Entity
 		{
-			auto& component = components_.find(std::type_index(typeid(T)));
-			if (component != components_.end())
-				return dynamic_cast<T*>(component->second);
+		public:
+			Entity();
+			explicit Entity(const unsigned int& id);
+			~Entity();
 
-			return nullptr;
-		}
+			unsigned int get_id() const;
 
-		template<class T>
-		void remove_component()
-		{
-			auto& component = components_.find(typeid(T));
-			if (component != components_.end())
+			void add_component(std::type_index _type_index, component::Component* _component);
+			
+			template<class T>
+			void add_component(component::Component* component)
 			{
-				delete component->second;
-				//TODO remove components
+				add_component(typeid(T), component);
 			}
-		}
 
-	private:
-		std::map<std::type_index, component::Component*> components_;
-	};
+			template<class T>
+			T* get_component()
+			{
+				auto& component = components_.find(std::type_index(typeid(T)));
+				if (component != components_.end())
+					return dynamic_cast<T*>(component->second);
+
+				return nullptr;
+			}
+
+			template<class T>
+			void remove_component()
+			{
+				auto& component = components_.find(typeid(T));
+				if (component != components_.end())
+				{
+					delete component->second;
+					//TODO remove components
+				}
+			}
+
+		private:
+			unsigned int id_;
+			std::map<std::type_index, component::Component*> components_;
+		};
+	}
 
 }

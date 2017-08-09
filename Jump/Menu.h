@@ -16,13 +16,11 @@ namespace jump
 		bool is_running() const;
 		void stop();
 
-		virtual void update(sf::RenderWindow& window);
+		virtual void update(sf::RenderWindow& window) = 0;
 
 		static void register_event(const sf::Event& event);
 		static void clear_events();
 		static std::queue<sf::Event>& get_events();
-	protected:
-		virtual void update(const sf::Event& event, sf::RenderWindow& window) = 0;
 	private:
 		bool run_;
 		Menu* parent_;

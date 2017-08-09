@@ -16,13 +16,10 @@ namespace jump
 			~SplashScreen();
 
 			void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;
-
-		protected:
-			void update(const sf::Event& _event, sf::RenderWindow& _window) override;
+			void update(sf::RenderWindow& window) override;
 
 		private:
 			bool scaled_;
-
 			sf::Texture* texture_;
 			sf::Sprite* sprite_;
 

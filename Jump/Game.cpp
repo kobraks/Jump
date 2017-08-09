@@ -10,6 +10,7 @@
 #include "imgui-SFML.h"
 #include "MainMenu.h"
 #include "UnableToLoadFontException.h"
+#include "EntityManager.h"
 
 jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullptr), time_from_last_update_(sf::Time::Zero)
 {
@@ -49,6 +50,13 @@ jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullpt
 		system::gui::GuiManager::set_window(*window_);
 		ImGui::SFML::Init(*window_);
 		menu_ = new menu::MainMenu(*window_);
+
+		try
+		{
+			entity::EntityManager::load_from_file(ENTITIES_FILE);
+		}
+		catch(...)
+		{ }
 	}
 	catch (std::bad_alloc)
 	{
@@ -77,12 +85,10 @@ void jump::Game::run_game()
 		window_->clear();
 
 		parse_events();
+		frame_rate = clock.getElapsedTime();
 		time_from_last_update_ += clock.getElapsedTime();
 		ImGui::SFML::Update(*window_, clock.restart());
 		update();
-
-		ImGui::ShowTestWindow();
-
 
 		if (config_->debug)
 		{

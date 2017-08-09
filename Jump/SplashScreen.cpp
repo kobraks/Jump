@@ -59,37 +59,49 @@ void jump::menu::SplashScreen::draw(sf::RenderTarget& _target, sf::RenderStates 
 {
 }
 
-void jump::menu::SplashScreen::update(const sf::Event& _event, sf::RenderWindow& _window)
+void jump::menu::SplashScreen::update(sf::RenderWindow& window)
 {
-	if (!scaled_ || _event.type == sf::Event::Resized)
-	{
-		scaled_ = true;
-		sprite_->setScale(static_cast<float>(_window.getSize().x) / texture_->getSize().x, static_cast<float>(_window.getSize().y) / texture_->getSize().y);
-	}
+	if (!is_running())
+		return;
 
-	if (_event.type == sf::Event::KeyPressed || _event.type == sf::Event::MouseButtonPressed)
+	auto events = get_events();
+	while(!events.empty())
 	{
-		if (fade_in_)
+		auto event = events.front();
+		events.pop();
+
+		if (!scaled_ || event.type == sf::Event::Resized)
 		{
-			try
-			{
-				system::AnimationHandler::remove_animation(fade_in_);
-			}
-			catch(...)
-			{ }
-			fade_in_ = nullptr;
+			scaled_ = true;
+			sprite_->setScale(static_cast<float>(window.getSize().x) / texture_->getSize().x, static_cast<float>(window.getSize().y) / texture_->getSize().y);
 		}
-		else
-		{
-			try
-			{
-				system::AnimationHandler::remove_animation(fade_out_);
-			}
-			catch (...)
-			{ }
 
-			fade_out_ = nullptr;
-			stop();
+		if (event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed)
+		{
+			if (fade_in_)
+			{
+				try
+				{
+					system::AnimationHandler::remove_animation(fade_in_);
+				}
+				catch (...)
+				{
+				}
+				fade_in_ = nullptr;
+			}
+			else
+			{
+				try
+				{
+					system::AnimationHandler::remove_animation(fade_out_);
+				}
+				catch (...)
+				{
+				}
+
+				fade_out_ = nullptr;
+				stop();
+			}
 		}
 	}
 

@@ -90,14 +90,25 @@ void jump::menu::MainMenu::draw(sf::RenderTarget& _target, sf::RenderStates _sta
 		system::gui::GuiManager::draw();
 }
 
-void jump::menu::MainMenu::update(const sf::Event& _event, sf::RenderWindow& _window)
+void jump::menu::MainMenu::update(sf::RenderWindow& window)
 {
+	auto events = get_events();
 
-	if (_event.type == _event.KeyReleased && _event.key.code == sf::Keyboard::F2)
+	while(!events.empty())
 	{
-		delete menu_;
-		menu_ = new EditorMenu(this);
+		auto event = events.front();
+		events.pop();
+
+		if (event.type == event.KeyReleased && event.key.code == sf::Keyboard::F2)
+		{
+			if (!dynamic_cast<EditorMenu*>(menu_))
+			{
+				delete menu_;
+				menu_ = new EditorMenu(this);
+			}
+		}
 	}
+
 	if (menu_)
 	{
 		if (!menu_->is_running())
@@ -106,11 +117,6 @@ void jump::menu::MainMenu::update(const sf::Event& _event, sf::RenderWindow& _wi
 			menu_ = nullptr;
 		}
 		else
-			menu_->update(_window);
-
-	}
-	else
-	{
-
+			menu_->update(window);
 	}
 }

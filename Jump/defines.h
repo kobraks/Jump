@@ -1,6 +1,7 @@
 #pragma once
 
 #define CONFIGURATION_FILE_NAME "config.ini"
+#define ENTITIES_FILE "entities.lua"
 #define SFML_LOGO "sfml-logo.png"
 #define BUTTON_TEXUTRE "button.png"
 

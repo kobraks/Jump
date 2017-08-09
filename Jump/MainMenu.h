@@ -15,9 +15,7 @@ namespace jump
 			~MainMenu();
 
 			void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;
-
-		protected:
-			void update(const sf::Event& _event, sf::RenderWindow& _window) override;
+			void update(sf::RenderWindow& window) override;
 
 		private:
 			Menu* menu_;

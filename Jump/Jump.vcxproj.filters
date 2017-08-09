@@ -73,11 +73,11 @@
     <Filter Include="Source Files\ImGui\SFML">
       <UniqueIdentifier>{fe4c1357-dcd6-4216-9dff-abbe5b9eb9ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\lua">
-      <UniqueIdentifier>{4c981065-b8c9-4e7e-b4bd-936ca2dc59ba}</UniqueIdentifier>
+    <Filter Include="Source Files\entity">
+      <UniqueIdentifier>{67a08150-9f40-47c3-9040-89c1bafbfba7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\lua">
-      <UniqueIdentifier>{38805400-9d11-456d-999b-c515f138577a}</UniqueIdentifier>
+    <Filter Include="Header Files\entity">
+      <UniqueIdentifier>{bdb2e3c0-efa3-4a1f-bf21-c59c722d6772}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,15 +135,6 @@
     <ClCompile Include="GuiButton.cpp">
       <Filter>Source Files\System\gui</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="imgui.cpp">
       <Filter>Source Files\ImGui</Filter>
     </ClCompile>
@@ -153,20 +144,41 @@
     <ClCompile Include="imgui-SFML.cpp">
       <Filter>Source Files\ImGui\SFML</Filter>
     </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EditorMenu.cpp">
       <Filter>Source Files\menu</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicalComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaScript.cpp">
-      <Filter>Source Files\lua</Filter>
-    </ClCompile>
     <ClCompile Include="imgui_demo.cpp">
       <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityLoader.cpp">
+      <Filter>Source Files\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Source Files\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PhisicComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityWreater.cpp">
+      <Filter>Source Files\entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,14 +305,8 @@
     <ClInclude Include="Macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Header Files\component</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stb_rect_pack.h">
       <Filter>Header Files\ImGui</Filter>
@@ -326,17 +332,38 @@
     <ClInclude Include="imconfig-SFML.h">
       <Filter>Header Files\ImGui\SFML</Filter>
     </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EditorMenu.h">
       <Filter>Header Files\menu</Filter>
     </ClInclude>
-    <ClInclude Include="LuaScript.h">
-      <Filter>Header Files\lua</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicComponent.h">
       <Filter>Header Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Header Files\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityLoader.h">
+      <Filter>Header Files\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="UnableToOpenFileException.h">
+      <Filter>Header Files\System\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptComponent.h">
+      <Filter>Header Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="PhisicComponent.h">
+      <Filter>Header Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>Header Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityWreater.h">
+      <Filter>Header Files\entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
