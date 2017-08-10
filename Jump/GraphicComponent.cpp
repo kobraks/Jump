@@ -1,8 +1,8 @@
 #include "GraphicComponent.h"
 #include "lua/lua.hpp"
-#include "lua/LuaBridge.h"
+#include "lua/LuaIntf.h"
 
-jump::component::GraphicComponent::GraphicComponent(luabridge::LuaRef& _lua_ref): Component(&_lua_ref), sprite_(nullptr), texture_(nullptr)
+jump::component::GraphicComponent::GraphicComponent(entity::Entity* entity, LuaIntf::LuaRef _lua_ref): Component(entity), sprite_(nullptr), texture_(nullptr)
 {
 }
 

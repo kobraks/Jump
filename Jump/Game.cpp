@@ -11,11 +11,13 @@
 #include "MainMenu.h"
 #include "UnableToLoadFontException.h"
 #include "EntityManager.h"
+#include "Log.h"
 
 jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullptr), time_from_last_update_(sf::Time::Zero)
 {
 	try
 	{
+		auto log = system::Log::get_instance();
 		auto fonts = system::FontCointainer::get_instance();
 
 		fonts->add_font(TITLE_CODE, new sf::Font());
@@ -25,38 +27,62 @@ jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullpt
 
 		try
 		{
+			log->write("Load configuration file", system::logDEBUG);
 			config_->load(CONFIGURATION_FILE_NAME);
 		}
-		catch (...)
+		catch (std::exception& ex)
 		{
+			log->write_error("Unable to open configuration file attempt to create new file", ex.what());
 			config_->set_defaults();
 			config_->save(CONFIGURATION_FILE_NAME);
 		}
 
+		log->write("start to load fonts", system::logDEBUG);
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[TITLE_CODE], system::logDEBUG1);
 		if (!fonts->get_font(TITLE_CODE)->loadFromFile(config_->font_path + config_->font_names[TITLE_CODE]))
+		{
+			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[TITLE_CODE]);
 			throw system::exception::UnableToLoadFontException(config_->font_path + config_->font_names[TITLE_CODE]);
+		}
 
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[OPTION_CODE], system::logDEBUG1);
 		if (!fonts->get_font(OPTION_CODE)->loadFromFile(config_->font_path + config_->font_names[OPTION_CODE]))
+		{
+			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[OPTION_CODE]);
 			throw system::exception::UnableToLoadFontException(config_->font_path + config_->font_names[OPTION_CODE]);
 
+		}
+
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[AUTHOR_CODE], system::logDEBUG1);
 		if (!fonts->get_font(AUTHOR_CODE)->loadFromFile(config_->font_path + config_->font_names[AUTHOR_CODE]))
+		{
+			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[OPTION_CODE]);
 			throw system::exception::UnableToLoadFontException(config_->font_path + config_->font_names[AUTHOR_CODE]);
+		}
 
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[DEBUG_CODE], system::logDEBUG1);
 		if (!fonts->get_font(DEBUG_CODE)->loadFromFile(config_->font_path + config_->font_names[DEBUG_CODE]))
+		{
+			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[DEBUG_CODE]);
 			throw system::exception::UnableToLoadFontException(config_->font_path + config_->font_names[DEBUG_CODE]);
+		}
 
+		try
+		{
+			log->write("Attempt to load entities", system::logDEBUG);
+			entity::EntityManager::load_from_file(ENTITIES_FILE);
+		}
+		catch (std::exception& ex)
+		{
+			log->write_error("Unable to load entities", ex.what());
+		}
+
+		log->write("creating window: ", system::logDEBUG);
 		window_ = new sf::RenderWindow(sf::VideoMode(800, 600, 32), WINDOW_NAME, sf::Style::Default);
 
 		system::gui::GuiManager::set_window(*window_);
 		ImGui::SFML::Init(*window_);
 		menu_ = new menu::MainMenu(*window_);
-
-		try
-		{
-			entity::EntityManager::load_from_file(ENTITIES_FILE);
-		}
-		catch(...)
-		{ }
 	}
 	catch (std::bad_alloc)
 	{
@@ -90,22 +116,28 @@ void jump::Game::run_game()
 		ImGui::SFML::Update(*window_, clock.restart());
 		update();
 
-		if (config_->debug)
+		if (config_->debug || config_->show_fps)
 		{
 			auto p_open = true;
 			auto mouse_pos = sf::Mouse::getPosition(*window_);
 
 			ImGui::SetNextWindowPos(window_->mapPixelToCoords(sf::Vector2i(0, 0), window_->getView()));
-			if (!ImGui::Begin("Example: Fixed Overlay", &p_open, ImVec2(0, 0), 0.3f, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings))
+			if (!ImGui::Begin("Fixed Overlay", &p_open, ImVec2(0, 0), 0.3f, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings))
 			{
 				ImGui::End();
 				return;
 			}
 
 			ImGui::Text("Fps: %.2f", 1.0f / frame_rate.asSeconds());
-			ImGui::Text("Mouse Position: (%i,%i)", mouse_pos.x, mouse_pos.y);
+
+			if (config_->debug)
+			{
+				ImGui::Text("Mouse Position: (%i,%i)", mouse_pos.x, mouse_pos.y);
+			}
 			ImGui::End();
 		}
+
+		ImGui::ShowTestWindow();
 
 		draw();
 

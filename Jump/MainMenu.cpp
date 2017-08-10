@@ -13,10 +13,13 @@
 
 #include "SplashScreen.h"
 #include "EditorMenu.h"
+#include "Log.h"
 
 
 jump::menu::MainMenu::MainMenu(sf::RenderWindow& _window, Menu* _parent) : Menu(_parent)
 {
+	show_log_ = false;
+
 	try
 	{
 		menu_ = new SplashScreen(this);
@@ -88,6 +91,9 @@ void jump::menu::MainMenu::draw(sf::RenderTarget& _target, sf::RenderStates _sta
 		_target.draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)), _states);
 	else
 		system::gui::GuiManager::draw();
+
+	if (show_log_)
+		system::Log::draw("log", &show_log_);
 }
 
 void jump::menu::MainMenu::update(sf::RenderWindow& window)
@@ -106,6 +112,11 @@ void jump::menu::MainMenu::update(sf::RenderWindow& window)
 				delete menu_;
 				menu_ = new EditorMenu(this);
 			}
+		}
+
+		if (event.type == event.KeyReleased && event.key.code == sf::Keyboard::F3)
+		{
+			show_log_ = !show_log_;
 		}
 	}
 

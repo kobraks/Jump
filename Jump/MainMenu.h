@@ -20,6 +20,7 @@ namespace jump
 		private:
 			Menu* menu_;
 			sf::Texture* texture_button_;
+			bool show_log_;
 		};
 	}
 

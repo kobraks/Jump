@@ -165,20 +165,20 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files\menu</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="PhisicComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EntityWreater.cpp">
       <Filter>Source Files\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaEntityHandle.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,17 +353,14 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files\menu</Filter>
     </ClInclude>
-    <ClInclude Include="ScriptComponent.h">
-      <Filter>Header Files\component</Filter>
-    </ClInclude>
-    <ClInclude Include="PhisicComponent.h">
-      <Filter>Header Files\component</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationComponent.h">
-      <Filter>Header Files\component</Filter>
-    </ClInclude>
     <ClInclude Include="EntityWreater.h">
       <Filter>Header Files\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaEntityHandle.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

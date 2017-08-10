@@ -149,8 +149,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="AnimationHandler.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="EditorMenu.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -175,16 +175,15 @@
     <ClCompile Include="INISection.cpp" />
     <ClCompile Include="INITokenizer.cpp" />
     <ClCompile Include="INIWriter.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="LuaEntityHandle.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="PhisicComponent.cpp" />
-    <ClCompile Include="ScriptComponent.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SplashScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="AnimationHandler.h" />
     <ClInclude Include="BadAllocException.h" />
     <ClInclude Include="Component.h" />
@@ -221,6 +220,8 @@
     <ClInclude Include="INIFileUnableToWriteFileException.h" />
     <ClInclude Include="INIFileUnableToWriteStreamException.h" />
     <ClInclude Include="INIFileVariableDoesNotExistsException.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="LuaEntityHandle.h" />
     <ClInclude Include="Macros.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Menu.h" />
@@ -230,8 +231,6 @@
     <ClInclude Include="INISection.h" />
     <ClInclude Include="NotInicializedException.h" />
     <ClInclude Include="OutOfRangeException.h" />
-    <ClInclude Include="PhisicComponent.h" />
-    <ClInclude Include="ScriptComponent.h" />
     <ClInclude Include="Simbols.h" />
     <ClInclude Include="INIToken.h" />
     <ClInclude Include="INITokenizer.h" />

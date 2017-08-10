@@ -13,3 +13,4 @@
 #define MSG_UNABLE_TO_LOAD "Unable to load a "
 #define MSG_OUT_OF_RANGE_EXCEPTION "exit out of scope"
 #define MSG_FONT_DOES_NOT_EXIST_EXCPETION "Selected font does not exist"
+#define MSG_UNABLE_TO_OPEN_FILE_EXCEPTION "Unable to open file: "

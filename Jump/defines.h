@@ -1,7 +1,7 @@
 #pragma once
 
 #define CONFIGURATION_FILE_NAME "config.ini"
-#define ENTITIES_FILE "entities.lua"
+#define ENTITIES_FILE "entities.txt"
 #define SFML_LOGO "sfml-logo.png"
 #define BUTTON_TEXUTRE "button.png"
 
@@ -11,6 +11,15 @@
 #define AUTHOR_CODE "author"
 #define TITLE_CODE "title"
 #define DEBUG_CODE "debug"
+
+#pragma region lua
+#define GRAPHIC_CODE "graphic"
+#define PHYSICS_CODE "physics"
+#define SCRIPT_CODE "script"
+#define ANIMATION_CODE "animation"
+#define CONTENT_TABLE_NAME "entities"
+#define IGNORE_CODE "ignore"
+#pragma endregion
 
 #define WHEEL_CODE "wheel"
 #define LOADING_BAR_CODE "loadBar"

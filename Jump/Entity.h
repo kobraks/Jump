@@ -13,6 +13,8 @@ namespace jump
 
 	namespace entity
 	{
+		class LuaEntityHandle;
+
 		class Entity
 		{
 		public:
@@ -20,7 +22,11 @@ namespace jump
 			explicit Entity(const unsigned int& id);
 			~Entity();
 
+			void set_type(const std::string& type);
+			std::string get_type() const;
+
 			unsigned int get_id() const;
+			void set_id(unsigned int& id);
 
 			void add_component(std::type_index _type_index, component::Component* _component);
 			
@@ -28,6 +34,12 @@ namespace jump
 			void add_component(component::Component* component)
 			{
 				add_component(typeid(T), component);
+			}
+
+			template<class T>
+			void add_component()
+			{
+				add_component(typeid(T), new T(this));
 			}
 
 			template<class T>
@@ -53,7 +65,9 @@ namespace jump
 
 		private:
 			unsigned int id_;
+			std::string type_;
 			std::map<std::type_index, component::Component*> components_;
+			LuaEntityHandle* lua_entity_handle_;
 		};
 	}
 

@@ -18,13 +18,16 @@ namespace jump
 
 			static std::vector<Entity* >::size_type get_count();
 			static void load_from_file(const std::string& file_name);
+
+			static void clear();
 		private:
 			EntityManager();
 			EntityManager(EntityManager&) = delete;
 			std::vector<Entity*> entities_;
 
-			static EntityManager* get_instance();
+			void load_entity_from_file(const std::string& _file_name);
 
+			static EntityManager* get_instance();
 		};
 	}
 }

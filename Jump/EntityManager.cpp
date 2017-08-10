@@ -1,9 +1,12 @@
 #include "EntityManager.h"
 
+#include <fstream>
+
 #include "Entity.h"
 #include "EntityLoader.h"
 #include "OutOfRangeException.h"
 #include "NotInicializedException.h"
+#include "UnableToOpenFileException.h"
 #include "BadAllocException.h"
 
 jump::entity::EntityManager::EntityManager()
@@ -19,8 +22,7 @@ jump::entity::EntityManager* jump::entity::EntityManager::get_instance()
 
 jump::entity::EntityManager::~EntityManager()
 {
-	for (auto& entity : entities_)
-		delete entity;
+	clear();
 }
 
 jump::entity::Entity* jump::entity::EntityManager::get_entity(unsigned int& index)
@@ -50,16 +52,48 @@ std::vector<jump::entity::Entity*>::size_type jump::entity::EntityManager::get_c
 
 void jump::entity::EntityManager::load_from_file(const std::string& file_name)
 {
+	clear();
+
+	std::fstream file(file_name, std::ios::in);
+	if (!file.good())
+	{
+		file.close();
+		throw system::exception::UnableToOpenFileException(file_name);
+	}
+
+	std::vector<std::string> entity_names;
+	
+	std::string line;
+	while (std::getline(file, line))
+		entity_names.push_back(line);
+
+	for (auto& entity_name : entity_names)
+		get_instance()->load_entity_from_file(entity_name);
+
+	file.close();
+}
+
+void jump::entity::EntityManager::clear()
+{
+	auto& entities = get_instance()->entities_;
+
+	for (auto& entity : entities)
+		delete &entity;
+
+	entities.clear();
+}
+
+void jump::entity::EntityManager::load_entity_from_file(const std::string& _file_name)
+{
 	try
 	{
-		auto entity_loader = new EntityLoader(file_name);
-		get_instance()->entities_ = entity_loader->get_entites();
+		auto entity_loader = new EntityLoader(_file_name);
+		entities_.push_back(entity_loader->get_entity());
 		delete entity_loader;
 	}
-	catch(std::bad_alloc)
+	catch (std::bad_alloc)
 	{
 		throw system::exception::BadAllocException();
 	}
+	
 }
-
-

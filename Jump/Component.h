@@ -1,25 +1,32 @@
 #pragma once
 
-namespace luabridge
+struct lua_State;
+
+namespace LuaIntf
 {
 	class LuaRef;
+	class LuaState;
 }
 
 namespace jump
 {
+	namespace entity
+	{
+		class Entity;
+	}
+
 	namespace component
 	{
 		class Component
 		{
 		public:
+			explicit Component(entity::Entity* entity);
 
-			Component(luabridge::LuaRef* _lua_ref)
-			{
-			}
+			virtual ~Component();
 
-			virtual ~Component()
-			{
-			}
+			entity::Entity* get_entity() const;
+		private:
+			entity::Entity* entity_;
 		};
 	}
 
