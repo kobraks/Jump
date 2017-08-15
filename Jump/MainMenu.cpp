@@ -1,15 +1,11 @@
 #include "MainMenu.h"
 
-#include <string>
-
 #include "GuiManager.h"
 
-#include "defines.h"
 #include "Configuration.h"
 #include "FontCoinatiner.h"
 
 #include "BadAllocException.h"
-#include "UnableToLoadException.h"
 
 #include "SplashScreen.h"
 #include "EditorMenu.h"
@@ -18,11 +14,9 @@
 
 jump::menu::MainMenu::MainMenu(sf::RenderWindow& _window, Menu* _parent) : Menu(_parent)
 {
-	show_log_ = false;
-
 	try
 	{
-		menu_ = new SplashScreen(this);
+		menu_ = new SplashScreen(_window, this);
 		texture_button_ = nullptr;
 
 /*		const size_t amount_options = 3;
@@ -91,9 +85,7 @@ void jump::menu::MainMenu::draw(sf::RenderTarget& _target, sf::RenderStates _sta
 		_target.draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)), _states);
 	else
 		system::gui::GuiManager::draw();
-
-	if (show_log_)
-		system::Log::draw("log", &show_log_);
+		
 }
 
 void jump::menu::MainMenu::update(sf::RenderWindow& window)
@@ -105,19 +97,18 @@ void jump::menu::MainMenu::update(sf::RenderWindow& window)
 		auto event = events.front();
 		events.pop();
 
-		if (event.type == event.KeyReleased && event.key.code == sf::Keyboard::F2)
+		if (system::Configuration::get_instance()->debug)
 		{
-			if (!dynamic_cast<EditorMenu*>(menu_))
+			if (event.type == event.KeyReleased && event.key.code == sf::Keyboard::F2)
 			{
-				delete menu_;
-				menu_ = new EditorMenu(this);
+				if (!dynamic_cast<EditorMenu*>(menu_))
+				{
+					delete menu_;
+					menu_ = new EditorMenu(this);
+				}
 			}
 		}
-
-		if (event.type == event.KeyReleased && event.key.code == sf::Keyboard::F3)
-		{
-			show_log_ = !show_log_;
-		}
+		
 	}
 
 	if (menu_)

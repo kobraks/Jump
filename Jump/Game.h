@@ -25,9 +25,9 @@ namespace jump
 		system::Configuration* config_;
 		sf::RenderWindow* window_;
 		sf::Time time_from_last_update_;
+		bool show_log_, show_console_;
 		Menu* menu_;
 
-		void show_frame_rate(bool show, sf::Time time);
 		void parse_events();
 		void update();
 		void draw();

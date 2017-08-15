@@ -2218,6 +2218,7 @@ struct ExampleAppConsole
         ImGui::Separator();
 
         // Command-line
+		ImGui::Button("ala ma kota"); ImGui::SameLine();
         if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf), ImGuiInputTextFlags_EnterReturnsTrue|ImGuiInputTextFlags_CallbackCompletion|ImGuiInputTextFlags_CallbackHistory, &TextEditCallbackStub, (void*)this))
         {
             char* input_end = InputBuf+strlen(InputBuf);

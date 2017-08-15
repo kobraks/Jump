@@ -9,7 +9,7 @@
 #include "UnableToLoadException.h"
 #include "BadAllocException.h"
 
-jump::menu::SplashScreen::SplashScreen(Menu* _parent) : Menu(_parent), scaled_(false)
+jump::menu::SplashScreen::SplashScreen(sf::RenderWindow& window, Menu* _parent) : Menu(_parent)
 {
 	try
 	{
@@ -21,6 +21,7 @@ jump::menu::SplashScreen::SplashScreen(Menu* _parent) : Menu(_parent), scaled_(f
 		texture_->setSmooth(true);
 		sprite_ = new sf::Sprite();
 		sprite_->setTexture(*texture_);
+		sprite_->setScale(static_cast<float>(window.getSize().x) / texture_->getSize().x, static_cast<float>(window.getSize().y) / texture_->getSize().y);
 
 		fade_out_ = new system::animations::FadeOut(*sprite_, 2.5f / 255.f);
 		fade_in_ = new system::animations::FadeIn(*sprite_, 2.5f / 255.f);
@@ -70,9 +71,8 @@ void jump::menu::SplashScreen::update(sf::RenderWindow& window)
 		auto event = events.front();
 		events.pop();
 
-		if (!scaled_ || event.type == sf::Event::Resized)
+		if (event.type == sf::Event::Resized)
 		{
-			scaled_ = true;
 			sprite_->setScale(static_cast<float>(window.getSize().x) / texture_->getSize().x, static_cast<float>(window.getSize().y) / texture_->getSize().y);
 		}
 

@@ -8,6 +8,7 @@
 #include "NotInicializedException.h"
 #include "UnableToOpenFileException.h"
 #include "BadAllocException.h"
+#include "Log.h"
 
 jump::entity::EntityManager::EntityManager()
 {
@@ -68,8 +69,16 @@ void jump::entity::EntityManager::load_from_file(const std::string& file_name)
 		entity_names.push_back(line);
 
 	for (auto& entity_name : entity_names)
-		get_instance()->load_entity_from_file(entity_name);
-
+	{
+		try
+		{
+			get_instance()->load_entity_from_file(entity_name);
+		}
+		catch (std::exception& exception)
+		{
+			system::Log::write_error("Unable to load entity", exception.what());
+		}
+	}
 	file.close();
 }
 
@@ -91,8 +100,9 @@ void jump::entity::EntityManager::load_entity_from_file(const std::string& _file
 		entities_.push_back(entity_loader->get_entity());
 		delete entity_loader;
 	}
-	catch (std::bad_alloc)
+	catch (std::bad_alloc& exception)
 	{
+		system::Log::write_error("Unable to allocate more memory", exception.what());
 		throw system::exception::BadAllocException();
 	}
 	

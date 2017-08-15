@@ -19,7 +19,10 @@ jump::entity::EntityLoader::EntityLoader(const std::string& _file_name)
 
 	auto entity_table = LuaIntf::LuaRef(lua_state_, _file_name.c_str());
 	entity_ = new Entity();
-
+	entity_->set_type(_file_name);
+	entity_->get_lua_handler()->register_functions(lua_state_);
+	entity_->get_lua_handler()->set_state(lua_state_);
+	entity_->get_lua_handler()->load_script(lua_state_, &entity_table);
 	populate_entity(entity_, &entity_table);
 }
 

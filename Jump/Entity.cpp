@@ -1,6 +1,5 @@
 #include "Entity.h"
 #include "Component.h"
-#include "LuaEntityHandle.h"
 
 void jump::entity::Entity::add_component(std::type_index _type_index, jump::component::Component* _component)
 {
@@ -9,6 +8,17 @@ void jump::entity::Entity::add_component(std::type_index _type_index, jump::comp
 		delete component->second;
 
 	components_[_type_index] = _component;
+}
+
+jump::entity::LuaEntityHandle* jump::entity::Entity::get_lua_handler() const
+{
+	return lua_entity_handle_;
+}
+
+void jump::entity::Entity::set_lua_handler(LuaEntityHandle* lua_entity_handle)
+{
+	delete lua_entity_handle_;
+	lua_entity_handle_ = lua_entity_handle;
 }
 
 jump::entity::Entity::Entity(): id_(0), lua_entity_handle_(new LuaEntityHandle(this))

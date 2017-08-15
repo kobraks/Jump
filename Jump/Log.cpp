@@ -2,9 +2,10 @@
 
 #include <iostream>
 
-jump::system::Log::Log(): scroll_to_bottom_(false), line_(0)
+jump::system::Log::Log(): scroll_to_bottom_(false), line_(0), max_log_level_(logDEBUG4)
 {
-	file_ = std::fstream("log.txt", std::ios::trunc);
+	file_ = std::fstream("log.txt", std::ios::trunc | std::ios::out);
+	file_ << "start logging" << std::endl;
 }
 
 jump::system::Log* jump::system::Log::get_instance()
@@ -17,7 +18,7 @@ jump::system::Log* jump::system::Log::get_instance()
 std::string jump::system::Log::log_level_to_string(TLogLevel log_level)
 {
 	static const char* const buffer[] = { "ERROR", "WARNING", "INFO", "DEBUG", "DEBUG1", "DEBUG2", "DEBUG3", "DEBUG4" };
-	std::cout << static_cast<int>(log_level) << ", " << buffer[static_cast<int>(log_level)] << std::endl;
+	//std::cout << static_cast<int>(log_level) << ", " << buffer[static_cast<int>(log_level)] << std::endl;
 	return buffer[static_cast<int>(log_level)];
 }
 
@@ -35,28 +36,22 @@ ImVec4 jump::system::Log::select_color(const char* message)
 
 void jump::system::Log::add_log(const char* format, ...)
 {
-	auto& buffer = get_instance()->text_;
-	auto& scroll_to_bottom = get_instance()->scroll_to_bottom_;
-	auto& colors = get_instance()->colors_;
-	auto& file = get_instance()->file_;
+	auto instance = get_instance();
+	auto& buffer = instance->text_;
+	auto& scroll_to_bottom = instance->scroll_to_bottom_;
+	auto& colors = instance->colors_;
+	auto& file = instance->file_;
 
 	va_list args;
-	try
-	{
-		va_start(args, format);
-		auto text = get_string(format, args);
-		va_end(args);
-		buffer.push_back(text);
-		if (file.good())
-			file << text << std::endl;
+	va_start(args, format);
+	auto text = get_string(format, args);
+	va_end(args);
+	buffer.push_back(text);
+	if (file.good())
+		file << text;
 
-		colors.push_back(select_color(text.c_str()));
-	}
-	catch(std::exception& ex)
-	{
-		std::cout << ex.what() << std::endl;
-		::system("pause");
-	}
+	colors.push_back(select_color(text.c_str()));
+	std::cout << text;
 
 
 	scroll_to_bottom = true;
@@ -67,45 +62,67 @@ std::string jump::system::Log::get_string(const char* format, va_list args)
 	va_list args_copy;
 	va_copy(args_copy, args);
 
-	std::cout << "format: " << format << " args: " << args << std::endl;
 	auto length = vsnprintf(nullptr, 0, format, args);
 	if (length <= 0)
 		return "";
 
-	auto string = new char[length];
-	vsnprintf(string, length, format, args_copy);
+	auto string = new char[length + 1];
+	vsnprintf(string, length + 1, format, args_copy);
 	std::string result = string;
 	delete[] string;
-	std::cout << "result: " << result << std::endl;
 	return result;
+}
+
+void jump::system::Log::set_max_log_level(const TLogLevel& log_level)
+{
+	get_instance()->max_log_level_ = log_level;
+}
+
+jump::system::TLogLevel jump::system::Log::get_max_log_level()
+{
+	return static_cast<TLogLevel>(get_instance()->max_log_level_);
 }
 
 void jump::system::Log::write_error(const std::string& message, const std::string&error_message)
 {
-	add_log("%u: [%s]: %s", get_instance()->line_, log_level_to_string(logERROR).c_str(), message.c_str());
-	add_log("error message: %s", error_message.c_str());
-	get_instance()->colors_[get_instance()->colors_.size() - 1] = ImColor(1.0f, 0.4f, 0.4f, 1.0f);;
-	get_instance()->line_++;
+	auto instance = get_instance();
+
+	if (instance->max_log_level_ >= logERROR)
+	{
+		add_log("%u: [%s]: %s\n", instance->line_, log_level_to_string(logERROR).c_str(), message.c_str());
+		if (!error_message.empty())
+			add_log("error message: %s\n", error_message.c_str());
+		instance->colors_[instance->colors_.size() - 1] = ImColor(1.0f, 0.4f, 0.4f, 1.0f);;
+		instance->line_++;
+	}
 }
 
 void jump::system::Log::write(const std::string& message, const int& log_level)
 {
-	add_log("%u: [%s]: %s\n", get_instance()->line_, log_level_to_string(static_cast<TLogLevel>(log_level)).c_str(), message.c_str());
-	get_instance()->line_++;
+	if (get_instance()->max_log_level_ >= log_level)
+	{
+		add_log("%u: [%s]: %s\n", get_instance()->line_, log_level_to_string(static_cast<TLogLevel>(log_level)).c_str(), message.c_str());
+		get_instance()->line_++;
+	}
 }
 
 
 void jump::system::Log::draw(const char* title, const bool* const p_open)
 {
-	auto& filter = get_instance()->filter_;
-	auto& texts = get_instance()->text_;
-	auto& colors = get_instance()->colors_;
-	auto& scroll_to_bottom = get_instance()->scroll_to_bottom_;
+	auto instance = get_instance();
+	auto& filter = instance->filter_;
+	auto& texts = instance->text_;
+	auto& colors = instance->colors_;
+	auto& scroll_to_bottom = instance->scroll_to_bottom_;
+	auto& max_log_level = instance->max_log_level_;
+
 
 	ImGui::SetNextWindowSize(ImVec2(400, 100), ImGuiSetCond_FirstUseEver);
 	ImGui::Begin(title, const_cast<bool*>(p_open));
 	if (ImGui::Button("clear"))
 		clear();
+	ImGui::SameLine();
+	ImGui::Combo("max log level", &max_log_level, "log error\0log warning\0log info\0log debug\0log debug1\0log debug2\0log debug3\0log debug4");
 	auto copy = ImGui::Button("Copy");
 	ImGui::SameLine();
 	filter.Draw("Filter", -100.0f);
@@ -142,4 +159,5 @@ void jump::system::Log::clear()
 jump::system::Log::~Log()
 {
 	clear();
+	file_.close();
 }

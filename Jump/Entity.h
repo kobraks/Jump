@@ -3,6 +3,7 @@
 #include <map>
 #include <typeindex>
 #include <string>
+#include "LuaEntityHandle.h"
 
 namespace jump
 {
@@ -13,14 +14,15 @@ namespace jump
 
 	namespace entity
 	{
-		class LuaEntityHandle;
-
 		class Entity
 		{
 		public:
 			Entity();
 			explicit Entity(const unsigned int& id);
 			~Entity();
+
+			LuaEntityHandle* get_lua_handler() const;
+			void set_lua_handler(LuaEntityHandle* lua_entity_handle);
 
 			void set_type(const std::string& type);
 			std::string get_type() const;
@@ -62,7 +64,6 @@ namespace jump
 					//TODO remove components
 				}
 			}
-
 		private:
 			unsigned int id_;
 			std::string type_;

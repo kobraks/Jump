@@ -12,8 +12,9 @@
 #include "UnableToLoadFontException.h"
 #include "EntityManager.h"
 #include "Log.h"
+#include "Console.h"
 
-jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullptr), time_from_last_update_(sf::Time::Zero)
+jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullptr), time_from_last_update_(sf::Time::Zero), show_log_(false), show_console_(false)
 {
 	try
 	{
@@ -27,40 +28,46 @@ jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullpt
 
 		try
 		{
-			log->write("Load configuration file", system::logDEBUG);
+			log->write("Load configuration file");
 			config_->load(CONFIGURATION_FILE_NAME);
 		}
 		catch (std::exception& ex)
 		{
 			log->write_error("Unable to open configuration file attempt to create new file", ex.what());
 			config_->set_defaults();
-			config_->save(CONFIGURATION_FILE_NAME);
+			try
+			{
+				config_->save(CONFIGURATION_FILE_NAME);
+			}
+			catch (std::exception& exception)
+			{
+				log->write_error("Unabe to save configuration file", exception.what());
+			}
 		}
 
-		log->write("start to load fonts", system::logDEBUG);
-		log->write("attempt to load font: " + config_->font_path + config_->font_names[TITLE_CODE], system::logDEBUG1);
+		log->write("start to load fonts");
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[TITLE_CODE]);
 		if (!fonts->get_font(TITLE_CODE)->loadFromFile(config_->font_path + config_->font_names[TITLE_CODE]))
 		{
 			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[TITLE_CODE]);
 			throw system::exception::UnableToLoadFontException(config_->font_path + config_->font_names[TITLE_CODE]);
 		}
 
-		log->write("attempt to load font: " + config_->font_path + config_->font_names[OPTION_CODE], system::logDEBUG1);
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[OPTION_CODE]);
 		if (!fonts->get_font(OPTION_CODE)->loadFromFile(config_->font_path + config_->font_names[OPTION_CODE]))
 		{
 			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[OPTION_CODE]);
 			throw system::exception::UnableToLoadFontException(config_->font_path + config_->font_names[OPTION_CODE]);
-
 		}
 
-		log->write("attempt to load font: " + config_->font_path + config_->font_names[AUTHOR_CODE], system::logDEBUG1);
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[AUTHOR_CODE]);
 		if (!fonts->get_font(AUTHOR_CODE)->loadFromFile(config_->font_path + config_->font_names[AUTHOR_CODE]))
 		{
 			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[OPTION_CODE]);
 			throw system::exception::UnableToLoadFontException(config_->font_path + config_->font_names[AUTHOR_CODE]);
 		}
 
-		log->write("attempt to load font: " + config_->font_path + config_->font_names[DEBUG_CODE], system::logDEBUG1);
+		log->write("attempt to load font: " + config_->font_path + config_->font_names[DEBUG_CODE]);
 		if (!fonts->get_font(DEBUG_CODE)->loadFromFile(config_->font_path + config_->font_names[DEBUG_CODE]))
 		{
 			log->write_error("Unable to load font", MSG_UNABLE_TO_LOAD_FONT + config_->font_path + config_->font_names[DEBUG_CODE]);
@@ -69,7 +76,7 @@ jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullpt
 
 		try
 		{
-			log->write("Attempt to load entities", system::logDEBUG);
+			log->write("Attempt to load entities");
 			entity::EntityManager::load_from_file(ENTITIES_FILE);
 		}
 		catch (std::exception& ex)
@@ -77,15 +84,16 @@ jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullpt
 			log->write_error("Unable to load entities", ex.what());
 		}
 
-		log->write("creating window: ", system::logDEBUG);
+		log->write("creating window: ");
 		window_ = new sf::RenderWindow(sf::VideoMode(800, 600, 32), WINDOW_NAME, sf::Style::Default);
 
 		system::gui::GuiManager::set_window(*window_);
 		ImGui::SFML::Init(*window_);
 		menu_ = new menu::MainMenu(*window_);
 	}
-	catch (std::bad_alloc)
+	catch (std::bad_alloc& ex)
 	{
+		system::Log::write_error("Unable to alocate more memory", ex.what());
 		throw system::exception::BadAllocException();
 	}
 }
@@ -137,26 +145,12 @@ void jump::Game::run_game()
 			ImGui::End();
 		}
 
-		ImGui::ShowTestWindow();
+		//ImGui::ShowTestWindow();
 
 		draw();
 
 		window_->display();
 	}
-}
-
-void jump::Game::show_frame_rate(bool show, sf::Time tile)
-{
-	/*	if (show)
-		{
-			frame_rate_text.setCharacterSize(10U);
-			frame_rate_text.setFont(*system::FontCointainer::get_font(DEBUG_CODE));
-	
-			frame_rate_text.setPosition(window_->mapPixelToCoords(sf::Vector2i(0, 5), window_->getView()));
-			frame_rate_text.setString(std::to_string(static_cast<int>(std::truncf(1.0f / frame_rate.asSeconds()))) + " FPS");
-	
-			window_->draw(frame_rate_text);
-		}*/
 }
 
 void jump::Game::parse_events()
@@ -172,6 +166,19 @@ void jump::Game::parse_events()
 		{
 			if (menu_ && menu_->is_running())
 				menu_->stop();
+		}
+
+		if (config_->debug)
+		{
+			if (event.type == event.KeyReleased && event.key.code == sf::Keyboard::F3)
+			{
+				show_log_ = !show_log_;
+			}
+
+			if (event.type == event.KeyReleased && event.key.code == sf::Keyboard::Tilde)
+			{
+				show_console_ = !show_console_;
+			}
 		}
 	}
 }
@@ -197,8 +204,9 @@ void jump::Game::draw()
 {
 	if (menu_)
 		window_->draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)));
-	//	show_frame_rate(config_->show_fps, clock.getElapsedTime());
 
 	system::AnimationHandler::draw(*window_);
+	if (show_log_) system::Log::draw("Log", &show_log_);
+	if (show_console_) system::Console::draw("Console", &show_console_);
 	ImGui::SFML::Render(*window_);
 }

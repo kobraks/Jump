@@ -16,6 +16,8 @@ namespace jump
 		public:
 			Log(Log&) = delete;
 			
+			static void set_max_log_level(const TLogLevel& log_level);
+			static TLogLevel get_max_log_level();
 			static void write_error(const std::string& message, const std::string& error_message = "");
 			static void write(const std::string& message, const int& log_level = logINFO);
 			static void draw(const char* title, const bool* const p_open);
@@ -35,6 +37,7 @@ namespace jump
 			bool scroll_to_bottom_;
 			ImGuiTextFilter filter_;
 			unsigned int line_;
+			int max_log_level_;
 
 			static std::string log_level_to_string(TLogLevel log_level);
 			static ImVec4 select_color(const char* message);
