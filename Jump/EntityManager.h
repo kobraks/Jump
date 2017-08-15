@@ -12,9 +12,13 @@ namespace jump
 		{
 		public:
 			~EntityManager();
+			static bool empty();
 
-			static Entity* get_entity(unsigned int& index);
+			static Entity* get_entity(size_t index);
 			static void add_entity(Entity* entity);
+
+			static void remove_entity(size_t index);
+			static void remove_entity(Entity* entity);
 
 			static std::vector<Entity* >::size_type get_count();
 			static void load_from_file(const std::string& file_name);

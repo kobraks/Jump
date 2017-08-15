@@ -124,6 +124,10 @@ void jump::Game::run_game()
 		ImGui::SFML::Update(*window_, clock.restart());
 		update();
 
+		//ImGui::ShowTestWindow();
+
+		draw();
+
 		if (config_->debug || config_->show_fps)
 		{
 			auto p_open = true;
@@ -144,13 +148,12 @@ void jump::Game::run_game()
 			}
 			ImGui::End();
 		}
+		ImGui::SFML::Render(*window_);
 
-		//ImGui::ShowTestWindow();
-
-		draw();
 
 		window_->display();
 	}
+
 }
 
 void jump::Game::parse_events()
@@ -208,5 +211,4 @@ void jump::Game::draw()
 	system::AnimationHandler::draw(*window_);
 	if (show_log_) system::Log::draw("Log", &show_log_);
 	if (show_console_) system::Console::draw("Console", &show_console_);
-	ImGui::SFML::Render(*window_);
 }

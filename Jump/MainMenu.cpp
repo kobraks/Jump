@@ -106,6 +106,11 @@ void jump::menu::MainMenu::update(sf::RenderWindow& window)
 					delete menu_;
 					menu_ = new EditorMenu(this);
 				}
+				else
+				{
+					delete menu_;
+					menu_ = nullptr;
+				}
 			}
 		}
 		

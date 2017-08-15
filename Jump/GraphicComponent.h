@@ -11,7 +11,8 @@ namespace jump
 		{
 		public:
 			GraphicComponent();
-			explicit GraphicComponent(entity::Entity* entity, LuaIntf::LuaRef _lua_ref);
+			GraphicComponent(entity::Entity* entity, LuaIntf::LuaRef _lua_ref);
+			explicit GraphicComponent(entity::Entity* entity);
 			~GraphicComponent();
 
 			void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;

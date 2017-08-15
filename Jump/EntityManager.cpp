@@ -26,7 +26,12 @@ jump::entity::EntityManager::~EntityManager()
 	clear();
 }
 
-jump::entity::Entity* jump::entity::EntityManager::get_entity(unsigned int& index)
+bool jump::entity::EntityManager::empty()
+{
+	return get_instance()->entities_.empty();
+}
+
+jump::entity::Entity* jump::entity::EntityManager::get_entity(size_t index)
 {
 	auto& entities = get_instance()->entities_;
 
@@ -87,7 +92,7 @@ void jump::entity::EntityManager::clear()
 	auto& entities = get_instance()->entities_;
 
 	for (auto& entity : entities)
-		delete &entity;
+		delete entity;
 
 	entities.clear();
 }
@@ -106,4 +111,27 @@ void jump::entity::EntityManager::load_entity_from_file(const std::string& _file
 		throw system::exception::BadAllocException();
 	}
 	
+}
+
+void jump::entity::EntityManager::remove_entity(size_t index)
+{
+	auto& entities = get_instance()->entities_;
+
+	if (index > 0 && index < entities.size())
+	{
+		delete entities[index];
+		entities.erase(entities.begin() + index);
+	}
+	else
+		throw system::exception::OutOfRangeException();
+
+}
+
+void jump::entity::EntityManager::remove_entity(Entity* entity)
+{
+	auto& entities = get_instance()->entities_;
+
+	for (size_t i = 0; i < entities.size(); ++i)
+		if (entities[i] == entity)
+			return remove_entity(i);
 }

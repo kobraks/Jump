@@ -79,6 +79,12 @@
     <Filter Include="Header Files\entity">
       <UniqueIdentifier>{bdb2e3c0-efa3-4a1f-bf21-c59c722d6772}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\utilities">
+      <UniqueIdentifier>{ff9f8b81-b4b7-4723-bbff-ac71c36a5366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities">
+      <UniqueIdentifier>{c3c58342-f186-4dc1-a67d-60237a9c92f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -185,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityListCreator.cpp">
+      <Filter>Source Files\utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -373,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityListCreator.h">
+      <Filter>Header Files\utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -41,7 +41,7 @@ namespace jump
 			template<class T>
 			void add_component()
 			{
-				add_component(typeid(T), new T(this));
+				add_component<T>(new T(this));
 			}
 
 			template<class T>

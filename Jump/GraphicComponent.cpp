@@ -6,6 +6,10 @@ jump::component::GraphicComponent::GraphicComponent(entity::Entity* entity, LuaI
 {
 }
 
+jump::component::GraphicComponent::GraphicComponent(entity::Entity* entity): Component(entity), sprite_(nullptr), texture_(nullptr)
+{
+}
+
 jump::component::GraphicComponent::GraphicComponent(): Component(nullptr), sprite_(nullptr), texture_(nullptr)
 {
 }
