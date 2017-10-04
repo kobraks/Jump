@@ -1,6 +1,7 @@
 #include "Log.h"
 
 #include <iostream>
+#include "Configuration.h"
 
 jump::system::Log::Log(): scroll_to_bottom_(false), line_(0), max_log_level_(logDEBUG4)
 {
@@ -122,7 +123,8 @@ void jump::system::Log::draw(const char* title, const bool* const p_open)
 	if (ImGui::Button("clear"))
 		clear();
 	ImGui::SameLine();
-	ImGui::Combo("max log level", &max_log_level, "log error\0log warning\0log info\0log debug\0log debug1\0log debug2\0log debug3\0log debug4");
+	if (Configuration::get_instance()->debug)
+		ImGui::Combo("max log level", &max_log_level, "log error\0log warning\0log info\0log debug\0log debug1\0log debug2\0log debug3\0log debug4");
 	auto copy = ImGui::Button("Copy");
 	ImGui::SameLine();
 	filter.Draw("Filter", -100.0f);

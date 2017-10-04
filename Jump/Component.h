@@ -25,6 +25,7 @@ namespace jump
 			virtual ~Component();
 
 			entity::Entity* get_entity() const;
+			virtual Component* get_copy() const = 0;
 		private:
 			entity::Entity* entity_;
 		};

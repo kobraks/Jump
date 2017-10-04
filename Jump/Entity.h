@@ -4,6 +4,7 @@
 #include <typeindex>
 #include <string>
 #include "LuaEntityHandle.h"
+#include <SFML/System/Vector2.hpp>
 
 namespace jump
 {
@@ -19,10 +20,16 @@ namespace jump
 		public:
 			Entity();
 			explicit Entity(const unsigned int& id);
+			Entity(const Entity& entity);
 			~Entity();
+
+			Entity* get_copy() const;
 
 			LuaEntityHandle* get_lua_handler() const;
 			void set_lua_handler(LuaEntityHandle* lua_entity_handle);
+
+			sf::Vector2f get_position() const;
+			void set_position(const sf::Vector2f& position);
 
 			void set_type(const std::string& type);
 			std::string get_type() const;
@@ -69,6 +76,7 @@ namespace jump
 			std::string type_;
 			std::map<std::type_index, component::Component*> components_;
 			LuaEntityHandle* lua_entity_handle_;
+			sf::Vector2f position_;
 		};
 	}
 

@@ -23,3 +23,17 @@ void jump::component::GraphicComponent::draw(sf::RenderTarget& _target, sf::Rend
 	if (sprite_)
 		_target.draw(*sprite_, _states);
 }
+
+jump::component::Component* jump::component::GraphicComponent::get_copy() const
+{
+	auto gr = new GraphicComponent();
+	if (sprite_)
+		gr->sprite_ = new sf::Sprite(*sprite_);
+	
+	if (texture_)
+		gr->texture_ = new sf::Texture(*texture_);
+
+	gr->sprite_->setTexture(*gr->texture_);
+
+	return gr;
+}

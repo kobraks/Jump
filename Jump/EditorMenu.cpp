@@ -7,6 +7,7 @@
 #include "GraphicComponent.h"
 #include "Log.h"
 #include "EntityListCreator.h"
+#include "EditorMsgs.h"
 #include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <limits>
@@ -14,7 +15,6 @@
 jump::menu::EditorMenu::EditorMenu(Menu* parent): Menu(parent), editor_menu(new Menus)
 {
 }
-
 
 jump::menu::EditorMenu::~EditorMenu()
 {
@@ -81,7 +81,7 @@ void jump::menu::EditorMenu::Menus::select_menu(bool* p_open)
 		show_select_menu_ = false;
 		show_edit_entity_menu_ = true;;
 	}
-	if (ImGui::Button("Back"))
+	if (ImGui::Button(BACK))
 		close();
 
 	ImGui::End();
@@ -118,7 +118,7 @@ void jump::menu::EditorMenu::Menus::edit_entity(bool* p_open)
 		entity::EntityManager::remove_entity(entity_);
 	}
 
-	if (ImGui::Button("Back"))
+	if (ImGui::Button(BACK))
 	{
 		*p_open = false;
 		show_select_menu_ = true;
@@ -150,7 +150,7 @@ void jump::menu::EditorMenu::Menus::select_type_of_entity(bool* p_open)
 		{
 			if (!is_duplicate(buff_))
 			{
-				system::Log::write("Create new entity with name: " + entity_name, system::logDEBUG);
+				system::Log::write("A new entity was created with name: " + entity_name, system::logDEBUG);
 
 				auto entity = new entity::Entity(entity::EntityManager::get_count());
 				entity->set_type(entity_name);
@@ -174,5 +174,4 @@ void jump::menu::EditorMenu::Menus::select_type_of_entity(bool* p_open)
 	}
 
 	ImGui::End();
-	
 }

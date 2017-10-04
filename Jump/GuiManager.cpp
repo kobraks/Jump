@@ -103,20 +103,6 @@ jump::system::gui::GuiManager* jump::system::gui::GuiManager::draw()
 	return instance;
 }
 
-jump::system::gui::GuiManager* jump::system::gui::GuiManager::update()
-{
-	auto instance = get_instance();
-
-	for (auto item : instance->items_)
-	{
-		if (item->is_active())
-			for (auto event : instance->events_)
-				item->update(event, *instance->window_);
-	}
-
-	return instance;
-}
-
 jump::system::gui::GuiManager* jump::system::gui::GuiManager::register_event(const sf::Event& _event)
 {
 	auto instance = get_instance();

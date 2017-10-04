@@ -195,6 +195,18 @@
     <ClCompile Include="EntityListCreator.cpp">
       <Filter>Source Files\utilities</Filter>
     </ClCompile>
+    <ClCompile Include="GuiItem.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiForm.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiLabel.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiMessageBox.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -385,6 +397,18 @@
     </ClInclude>
     <ClInclude Include="EntityListCreator.h">
       <Filter>Header Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorMsgs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiMessageBox.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiForm.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiLabel.h">
+      <Filter>Header Files\System\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

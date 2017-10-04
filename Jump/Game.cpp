@@ -14,7 +14,7 @@
 #include "Log.h"
 #include "Console.h"
 
-jump::Game::Game(): config_(system::Configuration::get_instance()), menu_(nullptr), time_from_last_update_(sf::Time::Zero), show_log_(false), show_console_(false)
+jump::Game::Game(): config_(system::Configuration::get_instance()), time_from_last_update_(sf::Time::Zero), show_log_(false), show_console_(false), menu_(nullptr)
 {
 	try
 	{
@@ -134,7 +134,7 @@ void jump::Game::run_game()
 			auto mouse_pos = sf::Mouse::getPosition(*window_);
 
 			ImGui::SetNextWindowPos(window_->mapPixelToCoords(sf::Vector2i(0, 0), window_->getView()));
-			if (!ImGui::Begin("Fixed Overlay", &p_open, ImVec2(0, 0), 0.3f, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings))
+			if (!ImGui::Begin("Fixed Overlay", &p_open, ImVec2(0, 0), 0.3f, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 			{
 				ImGui::End();
 				return;
@@ -205,6 +205,8 @@ void jump::Game::update()
 
 void jump::Game::draw()
 {
+	system::gui::GuiManager::draw();
+	
 	if (menu_)
 		window_->draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)));
 

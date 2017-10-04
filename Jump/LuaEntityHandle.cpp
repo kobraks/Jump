@@ -6,7 +6,7 @@
 
 #define ADD_FUNCTION(x) addFunction(#x, &LuaEntityHandle::x)
 
-jump::entity::LuaEntityHandle::LuaEntityHandle(Entity* entity) : entity_(entity), lua_state_(nullptr), update_function(nullptr)
+jump::entity::LuaEntityHandle::LuaEntityHandle(Entity* entity) : entity_(entity), lua_state_(nullptr), update_(nullptr)
 {
 }
 
@@ -14,7 +14,6 @@ jump::entity::LuaEntityHandle::LuaEntityHandle(Entity* entity) : entity_(entity)
 jump::entity::LuaEntityHandle::~LuaEntityHandle()
 {
 	entity_ = nullptr;
-	lua_close(lua_state_);
 }
 
 jump::entity::Entity* jump::entity::LuaEntityHandle::get_entity() const
@@ -29,25 +28,25 @@ void jump::entity::LuaEntityHandle::set_entity(Entity* entity)
 
 lua_State* jump::entity::LuaEntityHandle::get_state() const
 {
-	return lua_state_;
+	return &*lua_state_;
 }
 
 void jump::entity::LuaEntityHandle::set_state(lua_State* lua_state)
 {
-	lua_state_ = lua_state;
+	lua_state_ = std::shared_ptr<lua_State>(lua_state, [](lua_State* lua_state) { lua_close(lua_state); });
 }
 
 void jump::entity::LuaEntityHandle::update()
 {
-	if (update_function)
+	if (update_)
 	{
 		try
 		{
-			(*update_function)();
+			(*update_)();
 		}
 		catch (LuaIntf::LuaException& exception)
 		{
-			system::Log::write_error("Unable to run update function", exception.what());
+			system::Log::write_error("\"" + entity_->get_type() +  "\"Unable to run update function", exception.what());
 		}
 	}
 	else
@@ -69,35 +68,80 @@ void jump::entity::LuaEntityHandle::register_functions(lua_State* lua_state)
 	LuaIntf::LuaBinding(lua_state)
 		.beginClass<LuaEntityHandle>("LuaEntityHandle")
 		.ADD_FUNCTION(set_image)
+		.ADD_FUNCTION(set_position)
+		.ADD_FUNCTION(set_animation_key)
+		.ADD_FUNCTION(set_animation_frame)
+		.ADD_FUNCTION(get_current_frame)
+		.ADD_FUNCTION(get_current_animation_key)
+		.ADD_FUNCTION(get_position_x)
+		.ADD_FUNCTION(get_position_y)
+		.ADD_FUNCTION(get_position)
 	.endClass();
 }
 
 void jump::entity::LuaEntityHandle::load_script(lua_State* lua_state, LuaIntf::LuaRef* entity_table)
 {
-	if ((update_function = new LuaIntf::LuaRef(entity_table->get<LuaIntf::LuaRef>("update")))->isValid())
+	update_ = std::make_shared<LuaIntf::LuaRef>(LuaIntf::LuaRef(entity_table->get<LuaIntf::LuaRef>("update")));
+
+	if (update_->isValid())
 	{
-		if (!update_function->isFunction())
+		if (!update_->isFunction())
 		{
 			system::Log::write_error("Unable to find update function");
-			delete update_function;
-			update_function = nullptr;
+			update_ = nullptr;
 		}
 	}
 	else
 	{
 		system::Log::write_error("Unable to find update function");
-		delete update_function;
-		update_function = nullptr;
+		update_ = nullptr;
 	}
 }
 
-void jump::entity::LuaEntityHandle::set_image(std::string file_name)
+void jump::entity::LuaEntityHandle::set_image(const std::string& file_name)
 {
-	auto gr = entity_->get_component<component::GraphicComponent>();
-	if (gr)
+	if (auto gr = entity_->get_component<component::GraphicComponent>())
 	{
-		//TODO graphics
+		//TODO
 	}
 	else
-		system::Log::write_error("Unable to get graphic component", "Graphic component for selected entity does not exist");
+		system::Log::write_error("Graphic component for \"" + entity_->get_type() + "\" entity does not exist");
+}
+
+void jump::entity::LuaEntityHandle::set_position(const float& x, const float& y)
+{
+	entity_->set_position(sf::Vector2f(x, y));
+}
+
+void jump::entity::LuaEntityHandle::set_animation_key(const std::string& animation_key)
+{
+}
+
+void jump::entity::LuaEntityHandle::set_animation_frame(const float& x, const float& y, const float& width, const float& height)
+{
+}
+
+unsigned jump::entity::LuaEntityHandle::get_current_frame() const
+{
+	return 0;
+}
+
+std::string jump::entity::LuaEntityHandle::get_current_animation_key() const
+{
+	return "";
+}
+
+float jump::entity::LuaEntityHandle::get_position_x() const
+{
+	return get_position().x;
+}
+
+float jump::entity::LuaEntityHandle::get_position_y() const
+{
+	return get_position().y;
+}
+
+sf::Vector2f jump::entity::LuaEntityHandle::get_position() const
+{
+	return sf::Vector2f(0, 0);
 }

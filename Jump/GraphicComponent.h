@@ -17,6 +17,7 @@ namespace jump
 
 			void draw(sf::RenderTarget& _target, sf::RenderStates _states) const override;
 
+			Component* get_copy() const override;
 		private:
 			sf::Sprite* sprite_;
 			sf::Texture* texture_;
