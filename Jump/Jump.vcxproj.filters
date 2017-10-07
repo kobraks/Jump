@@ -208,10 +208,10 @@
       <Filter>Source Files\System\gui</Filter>
     </ClCompile>
     <ClCompile Include="GuiSameLine.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System\gui</Filter>
     </ClCompile>
     <ClCompile Include="GuiInputBox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\System\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -420,10 +420,10 @@
       <Filter>Header Files\System\gui</Filter>
     </ClInclude>
     <ClInclude Include="GuiSameLine.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System\gui</Filter>
     </ClInclude>
     <ClInclude Include="GuiInputBox.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\System\gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
