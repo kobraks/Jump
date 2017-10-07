@@ -83,9 +83,6 @@ void jump::menu::MainMenu::draw(sf::RenderTarget& _target, sf::RenderStates _sta
 {
 	if (menu_)
 		_target.draw(const_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(menu_)), _states);
-	else
-		system::gui::GuiManager::draw();
-		
 }
 
 void jump::menu::MainMenu::update(sf::RenderWindow& window)

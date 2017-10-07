@@ -167,10 +167,12 @@
     <ClCompile Include="GraphicComponent.cpp" />
     <ClCompile Include="GuiButton.cpp" />
     <ClCompile Include="GuiForm.cpp" />
+    <ClCompile Include="GuiInputBox.cpp" />
     <ClCompile Include="GuiItem.cpp" />
     <ClCompile Include="GuiLabel.cpp" />
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="GuiMessageBox.cpp" />
+    <ClCompile Include="GuiSameLine.cpp" />
     <ClCompile Include="imgui-SFML.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
@@ -214,10 +216,13 @@
     <ClInclude Include="GraphicComponent.h" />
     <ClInclude Include="GuiButton.h" />
     <ClInclude Include="GuiForm.h" />
+    <ClInclude Include="GuiInputBox.h" />
     <ClInclude Include="GuiItem.h" />
     <ClInclude Include="GuiLabel.h" />
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="GuiMessageBox.h" />
+    <ClInclude Include="GuiSameLine.h" />
+    <ClInclude Include="GuiTypes.h" />
     <ClInclude Include="imconfig-SFML.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui-SFML.h" />

@@ -1,10 +1,7 @@
 #pragma once
 #include <list>
-#include <queue>
-#include <initializer_list>
 #include <sfml/Graphics.hpp>
-
-#include "GuiItem.h"
+#include <queue>
 
 namespace jump
 {
@@ -12,40 +9,38 @@ namespace jump
 	{
 		namespace gui
 		{
+			class GuiItem;
+
 			class GuiManager
 			{
 			public:
 				GuiManager(GuiManager&) = delete;
+				GuiManager(GuiManager&&) = delete;
 				~GuiManager();
 
 				static GuiManager* set_window(sf::RenderWindow& _window);
-				static GuiManager* add(std::initializer_list<GuiItem*> _items);
-				static GuiManager* add(GuiItem* _item);
-				static GuiManager* add(GuiItem* _begin, GuiItem* _end);
-
-				template<class iterator>
-				static GuiManager* add(iterator _begin, iterator _end)
-				{
-					for (auto curr = _begin; curr != _end; ++curr)
-						get_instance()->add(*curr);
-
-					return get_instance();
-				}
-
-
 				static GuiManager* clear();
-
 				static GuiManager* draw();
-				static GuiManager* register_event(const sf::Event& _event);
+
+				static GuiManager* remove(GuiItem* item);
+				static GuiManager* remove_and_destroy(GuiItem* item);
+				static GuiManager* add(GuiItem* item);
+
+				GuiManager& operator=(GuiManager&) = delete;
+				GuiManager& operator=(GuiManager&&) = delete;
 			private:
 				GuiManager();
 
 				std::list<GuiItem*> items_;
-				std::list<sf::Event> events_;
+				std::queue<std::list<GuiItem*>::iterator> to_remove_;
+				std::queue<GuiItem*> to_delete_;
 				sf::RenderWindow* window_;
 
 				static GuiManager* get_instance();
-				GuiManager* add_item(GuiItem* _item);
+				bool exist(GuiItem* item);
+
+				void remove();
+				void destroy();
 			};
 		}
 	}

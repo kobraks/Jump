@@ -14,6 +14,8 @@
 #include "Log.h"
 #include "Console.h"
 
+#include "GuiMessageBox.h"
+
 jump::Game::Game(): config_(system::Configuration::get_instance()), time_from_last_update_(sf::Time::Zero), show_log_(false), show_console_(false), menu_(nullptr)
 {
 	try
@@ -113,6 +115,8 @@ void jump::Game::run_game()
 {
 	auto frame_rate = sf::Time::Zero;
 	sf::Clock clock;
+	system::gui::GuiMessageBox message_box(nullptr, "ala", "beata", system::gui::YES_NO_IGNORE_BUTTON);
+
 
 	while (window_->isOpen())
 	{
