@@ -166,6 +166,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GraphicComponent.cpp" />
     <ClCompile Include="GuiButton.cpp" />
+    <ClCompile Include="GuiComboBox.cpp" />
     <ClCompile Include="GuiForm.cpp" />
     <ClCompile Include="GuiInputBox.cpp" />
     <ClCompile Include="GuiItem.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GraphicComponent.h" />
     <ClInclude Include="GuiButton.h" />
+    <ClInclude Include="GuiComboBox.h" />
     <ClInclude Include="GuiForm.h" />
     <ClInclude Include="GuiInputBox.h" />
     <ClInclude Include="GuiItem.h" />
