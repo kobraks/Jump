@@ -10,7 +10,7 @@ namespace jump
 			class GuiItem;
 
 			typedef size_t flag_t;
-			typedef std::function<void(const GuiItem*)> event_function;
+			typedef std::function<void(GuiItem*)> event_function;
 
 		}
 	}

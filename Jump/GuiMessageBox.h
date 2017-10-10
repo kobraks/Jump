@@ -14,15 +14,23 @@ namespace jump
 			const flag_t YES_NO_IGNORE_BUTTON = YES_NO_BUTTON | IGNORE_BUTTON;
 
 			class GuiForm;
+			class GuiLabel;
 
 			class GuiMessageBox : public GuiItem
 			{
 			public:
 				GuiMessageBox(GuiItem* parent, const std::string& name, const std::string& text, const flag_t& flags = YES_NO_IGNORE_BUTTON);
-				GuiMessageBox(GuiItem* parent, const std::string& name, const std::string& label, const sf::Vector2f& position, const flag_t& flags = YES_NO_IGNORE_BUTTON);
-				GuiMessageBox(GuiItem* parent, const std::string& name, const std::string& label, const sf::Vector2f& position, const sf::Vector2f& size, const flag_t& flags = YES_NO_IGNORE_BUTTON);
 				GuiMessageBox(const GuiMessageBox& message_box);
 				GuiMessageBox(GuiMessageBox&& message_box) = default;
+
+				void title(const std::string& title);
+				std::string title() const;
+
+				void text(const std::string& text);
+				std::string text() const;
+
+				flag_t flags() const;
+				void flags(const flag_t& flags);
 
 				bool yes_clicked() const;
 				bool no_clicked() const;
@@ -40,9 +48,11 @@ namespace jump
 			protected:
 				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-				std::string text_;
+				std::string title_;
+				flag_t flags_;
 				size_t button_cliked_;
 
+				GuiLabel* label_;
 				GuiForm* form_;
 			};
 		}

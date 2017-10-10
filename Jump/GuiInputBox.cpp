@@ -2,58 +2,18 @@
 #include "imgui.h"
 #include "BadAllocException.h"
 
-jump::system::gui::GuiInputBox::GuiInputBox()
-{
-	try
-	{
-		buffer_ = new Buffer(1);
-	}
-	catch (std::bad_alloc)
-	{
-		throw exception::BadAllocException();
-	}
-}
 
-jump::system::gui::GuiInputBox::GuiInputBox(GuiItem* parent) : GuiInputBox()
+jump::system::gui::GuiInputBox::GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text,
+	const sf::Vector2f& position) : GuiControl(parent, name, position)
 {
-	GuiItem::set_parent(parent);
-}
-
-jump::system::gui::GuiInputBox::GuiInputBox(GuiItem* parent, const std::string& text) : GuiInputBox(parent)
-{
-	set_name(text);
-}
-
-jump::system::gui::GuiInputBox::GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text) : GuiInputBox(parent, name)
-{
-	delete buffer_;
-
 	try
 	{
 		buffer_ = new Buffer(text);
 	}
-	catch (std::bad_alloc)
+	catch(std::bad_alloc)
 	{
 		throw exception::BadAllocException();
 	}
-}
-
-jump::system::gui::GuiInputBox::GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text,
-	const sf::Vector2f& position) : GuiInputBox(parent, name, text)
-{
-	set_position(position);
-}
-
-jump::system::gui::GuiInputBox::GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text,
-	const sf::Vector2f& position, const sf::Vector2f& size) : GuiInputBox(parent, name, text, position)
-{
-	set_size(size);
-}
-
-jump::system::gui::GuiInputBox::GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text,
-	const sf::Vector2f& position, const sf::Vector2f& size, const flag_t& flags) : GuiInputBox(parent, name, text, position, size)
-{
-	set_flags(flags);
 }
 
 jump::system::gui::GuiInputBox::GuiInputBox(const GuiInputBox& input)
@@ -74,7 +34,7 @@ jump::system::gui::GuiInputBox::~GuiInputBox()
 
 jump::system::gui::GuiItem* jump::system::gui::GuiInputBox::clone() const
 {
-	return new GuiInputBox(parent(), get_name(), get_text(), get_position(), get_size(), get_flags());
+	return new GuiInputBox(parent(), name(), buffer_->get_text(), position());
 }
 
 std::string jump::system::gui::GuiInputBox::get_text() const
@@ -92,11 +52,9 @@ jump::system::gui::GuiInputBox& jump::system::gui::GuiInputBox::operator=(const 
 
 jump::system::gui::GuiInputBox& jump::system::gui::GuiInputBox::operator=(GuiInputBox&& input) noexcept
 {
-	set_name(input.get_name());
-	set_size(input.get_size());
 	set_parent(input.parent());
-	set_flags(input.get_flags());
-	set_position(input.get_position());
+	name(input.name());
+	position(input.position());
 
 	buffer_ = input.buffer_;
 	input.buffer_ = nullptr;
@@ -106,7 +64,10 @@ jump::system::gui::GuiInputBox& jump::system::gui::GuiInputBox::operator=(GuiInp
 
 void jump::system::gui::GuiInputBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	ImGui::InputText(get_name().c_str(), buffer_->get_buffer(), buffer_->size());
+	if (position().x > 0 && position().y > 0)
+		ImGui::SetCursorPos(position());
+
+	ImGui::InputText(name().c_str(), buffer_->get_buffer(), buffer_->size());
 	buffer_->set_text(buffer_->get_text());
 }
 

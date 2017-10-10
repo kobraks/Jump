@@ -1,11 +1,7 @@
 #include "GuiForm.h"
 #include "imgui.h"
 
-#include "NotInicializedException.h"
-
-#include <iostream>
-
-jump::system::gui::GuiForm::GuiForm() : GuiItem(), main_form_(true), open_(true)
+jump::system::gui::GuiForm::GuiForm() : GuiControl(), main_form_(true), open_(true), flags_(0)
 {
 }
 
@@ -16,12 +12,12 @@ jump::system::gui::GuiForm::GuiForm(GuiItem* parent) : GuiForm()
 
 jump::system::gui::GuiForm::GuiForm(GuiItem* parent, const std::string& name) : GuiForm(parent)
 {
-	set_name(name);
+	GuiControl::name(name);
 }
 
 jump::system::gui::GuiForm::GuiForm(GuiItem* parent, const std::string& name, const sf::Vector2f& position) : GuiForm(parent, name)
 {
-	set_position(position);
+	GuiControl::position(position);
 }
 
 jump::system::gui::GuiForm::GuiForm(GuiItem* parent, const std::string& name, const sf::Vector2f& position,
@@ -43,10 +39,7 @@ jump::system::gui::GuiForm::GuiForm(GuiForm& gui_form)
 
 jump::system::gui::GuiForm::~GuiForm()
 {
-	for (auto item : items_)
-		delete item;
-
-	items_.clear();
+	clear();
 }
 
 void jump::system::gui::GuiForm::set_parent(GuiItem* parent)
@@ -63,52 +56,30 @@ void jump::system::gui::GuiForm::set_parent(GuiItem* parent)
 	}
 }
 
-void jump::system::gui::GuiForm::add_item(GuiItem* item)
+void jump::system::gui::GuiForm::set_size(const sf::Vector2f& size)
 {
-	if (!item || exist(item))
-		return;
-
-	item->set_parent(this);
-	items_.push_back(item);
+	size_ = size;
 }
 
-void jump::system::gui::GuiForm::remove(GuiItem* item)
+sf::Vector2f jump::system::gui::GuiForm::get_size() const
 {
-	if (!item)
-		return;
-	
-	auto iterator= std::find(items_.begin(), items_.end(), item);
-	if (iterator != items_.end())
-		items_.erase(iterator);
+	return size_;
 }
 
-void jump::system::gui::GuiForm::remove_and_destroy(GuiItem* item)
+void jump::system::gui::GuiForm::set_flags(const flag_t& flags)
 {
-	if (!item)
-		return;
-
-	auto iterator = std::find(items_.begin(), items_.end(), item);
-	if (iterator != items_.end())
-	{
-		delete *iterator;
-		items_.erase(iterator);
-	}
+	flags_ = flags;
 }
 
-bool jump::system::gui::GuiForm::exist(GuiItem* item)
+jump::system::gui::flag_t jump::system::gui::GuiForm::get_flags() const
 {
-	if (!item)
-		throw exception::NotInicializedException();
-
-	return std::find(items_.begin(), items_.end(), item) != items_.end();
+	return flags_;
 }
 
 jump::system::gui::GuiItem* jump::system::gui::GuiForm::clone() const
 {
-	auto result = new GuiForm(parent(), get_name(), get_position(), get_size(), get_flags());
-
-	for (auto item : items_)
-		result->items_.push_back(item->clone());
+	auto result = new GuiForm(parent(), name(), position(), get_size(), get_flags());
+	result->move_items(get_copy());
 
 	result->main_form_ = main_form_;
 	result->open_ = open_;
@@ -127,8 +98,8 @@ jump::system::gui::GuiForm& jump::system::gui::GuiForm::operator=(const GuiForm&
 
 void jump::system::gui::GuiForm::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	if (get_position().x >= 0 && get_position().y >= 0)
-		ImGui::SetNextWindowPos(get_position());
+	if (position().x >= 0 && position().y >= 0)
+		ImGui::SetNextWindowPos(position());
 	else
 		ImGui::SetNextWindowPosCenter();
 	if (get_size().x != 0 && get_size().y != 0) ImGui::SetNextWindowSize(get_size());
@@ -136,11 +107,11 @@ void jump::system::gui::GuiForm::draw(sf::RenderTarget& target, sf::RenderStates
 	//std::cout << "position: (" << get_position().x << ", " << get_position().y << ")\n";
 
 	if (main_form_)
-		ImGui::Begin(get_name().c_str(), const_cast<bool*>(&open_), static_cast<ImGuiWindowFlags>(translate_flags(get_flags())));
+		ImGui::Begin(name().c_str(), const_cast<bool*>(&open_), static_cast<ImGuiWindowFlags>(translate_flags(get_flags())));
 	else
-		ImGui::TreeNode(get_name().c_str());
+		ImGui::TreeNode(name().c_str());
 
-	for (auto item : items_)
+	for (auto item : get_items())
 		target.draw(static_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)), states);
 
 	if (main_form_)

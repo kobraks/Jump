@@ -1,5 +1,6 @@
 #pragma once
 #include "GuiItem.h"
+#include "GuiControl.h"
 
 namespace jump
 {
@@ -7,12 +8,10 @@ namespace jump
 	{
 		namespace gui
 		{
-			class GuiComboBox : public GuiItem
+			class GuiComboBox : public GuiControl
 			{
 			public:
-				GuiComboBox(GuiItem* parent, const std::string& name);
-				GuiComboBox(GuiItem* parent, const std::string& name, char** items, const size_t& items_count);
-				GuiComboBox(GuiItem* parent, const std::string& name, char** items, const size_t& items_count, const sf::Vector2f& position);
+				explicit GuiComboBox(GuiItem* parent = nullptr, const std::string& name = "", const char*const* items = nullptr, const size_t& items_count = 0, const sf::Vector2f& position = sf::Vector2f(-1, -1));
 				GuiComboBox(const GuiComboBox& combo);
 				GuiComboBox(GuiComboBox&& combo) noexcept;
 
@@ -44,7 +43,7 @@ namespace jump
 				{
 				public:
 					List();
-					List(char** list, const size_t& size);
+					List(const char*const* list, const size_t& size);
 
 					~List();
 

@@ -13,11 +13,11 @@ namespace jump
 				GuiLabel();
 				explicit GuiLabel(GuiItem* parent);
 				GuiLabel(GuiItem* parent, const std::string& text);
-				GuiLabel(GuiItem* parent, const std::string& text, const sf::Vector2f& position);
-				GuiLabel(GuiItem* parent, const std::string& text, const sf::Vector2f& position, const sf::Vector2f& size);
-				GuiLabel(GuiItem* parent, const std::string& text, const sf::Vector2f& position, const sf::Vector2f& size, const flag_t& flags);
 				GuiLabel(const GuiLabel& label);
 				GuiLabel(GuiLabel&& label) = default;
+
+				void text(const std::string& text);
+				std::string text() const;
 
 				~GuiLabel() override;
 
@@ -27,6 +27,9 @@ namespace jump
 				GuiLabel& operator=(GuiLabel&& label) = default;
 			protected:
 				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+			private:
+				std::string text_;
 			};
 		}
 	}

@@ -115,8 +115,6 @@ void jump::Game::run_game()
 {
 	auto frame_rate = sf::Time::Zero;
 	sf::Clock clock;
-	system::gui::GuiMessageBox message_box(nullptr, "ala", "beata", system::gui::YES_NO_IGNORE_BUTTON);
-
 
 	while (window_->isOpen())
 	{

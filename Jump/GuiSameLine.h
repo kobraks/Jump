@@ -14,10 +14,6 @@ namespace jump
 			public:
 				GuiSameLine();
 				GuiSameLine(GuiItem* parent);
-				GuiSameLine(GuiItem* parent, const std::string& name);
-				GuiSameLine(GuiItem* parent, const std::string& name, const sf::Vector2f& position);
-				GuiSameLine(GuiItem* parent, const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size);
-				GuiSameLine(GuiItem* parent, const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size, const flag_t& flags);
 				GuiSameLine(GuiSameLine& item);
 				GuiSameLine(GuiSameLine&& item) = default;
 

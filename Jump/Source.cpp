@@ -18,10 +18,12 @@ int main(int argc, char* argv[])
 	{
 		std::cout << ex.what() << std::endl;
 		std::this_thread::sleep_for(std::chrono::seconds(5));
+
+		return EXIT_FAILURE;
 	}
 	catch (...)
 	{
-
+		return EXIT_FAILURE;
 	}
 	delete game;
 

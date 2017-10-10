@@ -3,6 +3,7 @@
 
 #include "GuiTypes.h"
 #include "GuiItem.h"
+#include "GuiControl.h"
 
 namespace jump
 {
@@ -11,20 +12,17 @@ namespace jump
 		namespace gui
 		{
 			
-			class GuiButton : public GuiItem
+			class GuiButton : public GuiControl
 			{
 			public:
-				GuiButton();
-				explicit GuiButton(GuiItem* parent);
-				GuiButton(GuiItem* parent, const std::string& name);
-				GuiButton(GuiItem* parent, const std::string& name, const sf::Vector2f& position);
-				GuiButton(GuiItem* parent, const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size);
-				GuiButton(GuiItem* parent, const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size, const flag_t& flags);
-				GuiButton(GuiItem* parent, const std::string& name, const sf::Vector2f& position, const sf::Vector2f& size, const flag_t& flags, event_function on_click);
+				explicit GuiButton(GuiItem* parent = nullptr, const std::string& name = "", const sf::Vector2f& position = sf::Vector2f(-1, -1), const sf::Vector2f& size = sf::Vector2f(0, 0), event_function on_click = nullptr);
 				GuiButton(GuiButton& item);
 				GuiButton(GuiButton&& item) = default;
 
-				~GuiButton();
+				~GuiButton() override;
+
+				void size(const sf::Vector2f& size);
+				sf::Vector2f size() const;
 
 				void set_on_click_action(event_function on_click);
 				GuiItem* clone() const override;
@@ -36,7 +34,7 @@ namespace jump
 
 			private:
 				event_function on_click_;
-
+				sf::Vector2f size_;
 			};
 		}
 	}

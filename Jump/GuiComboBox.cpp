@@ -6,40 +6,19 @@
 
 #include <string.h>
 
-jump::system::gui::GuiComboBox::GuiComboBox(GuiItem* parent, const std::string& name) : GuiItem(parent, name)
+
+jump::system::gui::GuiComboBox::GuiComboBox(GuiItem* parent, const std::string& name, const char*const*items,
+	const size_t& items_count, const sf::Vector2f& position) : GuiControl(parent, name, position)
 {
 	try
 	{
-		list_ = new List();
+		if (items)
+			list_ = new List(items, items_count);
+		else
+			list_ = new List();
+
 	}
 	catch(std::bad_alloc)
-	{
-		throw exception::BadAllocException();
-	}
-}
-
-jump::system::gui::GuiComboBox::GuiComboBox(GuiItem* parent, const std::string& name, char** items,
-	const size_t& items_count) : GuiItem(parent, name)
-{
-	try
-	{
-		list_ = new List(items, items_count);
-	}
-	catch (std::bad_alloc)
-	{
-		throw exception::BadAllocException();
-	}
-
-}
-
-jump::system::gui::GuiComboBox::GuiComboBox(GuiItem* parent, const std::string& name, char** items,
-	const size_t& items_count, const sf::Vector2f& position) : GuiItem(parent, name, position)
-{
-	try
-	{
-		list_ = new List(items, items_count);
-	}
-	catch (std::bad_alloc)
 	{
 		throw exception::BadAllocException();
 	}
@@ -110,14 +89,7 @@ void jump::system::gui::GuiComboBox::remove_item(const std::string& item)
 
 jump::system::gui::GuiItem* jump::system::gui::GuiComboBox::clone() const
 {
-	auto result = new GuiComboBox(parent(), get_name());
-
-	result->set_size(get_size());
-	result->set_flags(get_flags());
-	result->set_position(get_position());
-
-	delete result->list_;
-	result->list_ = new List(*list_);
+	auto result = new GuiComboBox(parent(), name(), list_->items(), list_->size(), position());
 
 	return result;
 }
@@ -145,11 +117,9 @@ jump::system::gui::GuiComboBox& jump::system::gui::GuiComboBox::operator=(GuiCom
 	list_ = combo.list_;
 	combo.list_ = nullptr;
 
-	set_name(combo.get_name());
-	set_size(combo.get_size());
-	set_flags(combo.get_flags());
+	name(combo.name());
 	set_parent(combo.parent());
-	set_position(combo.get_position());
+	position(combo.position());
 
 	return *this;
 }
@@ -159,7 +129,10 @@ void jump::system::gui::GuiComboBox::draw(sf::RenderTarget& target, sf::RenderSt
 	int size = static_cast<int>(list_->size());
 	int selected = list_->selected();
 
-	ImGui::Combo(get_name().c_str(), &selected, list_->items(), size);
+	if (position().x >= 0 && position().y >= 0)
+		ImGui::SetCursorPos(position());
+
+	ImGui::Combo(name().c_str(), &selected, list_->items(), size);
 	list_->set_selected(selected);
 }
 
@@ -167,7 +140,7 @@ jump::system::gui::GuiComboBox::List::List(): list_(nullptr), size_(0), selected
 {
 }
 
-jump::system::gui::GuiComboBox::List::List(char** list, const size_t& size): size_(size), selected_(0)
+jump::system::gui::GuiComboBox::List::List(const char*const* list, const size_t& size): size_(size), selected_(0)
 {
 	list_ = new char*[size];
 

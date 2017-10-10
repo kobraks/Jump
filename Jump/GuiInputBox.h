@@ -2,6 +2,7 @@
 
 #include "GuiItem.h"
 #include "GuiTypes.h"
+#include "GuiControl.h"
 
 namespace jump
 {
@@ -9,16 +10,10 @@ namespace jump
 	{
 		namespace gui
 		{
-			class GuiInputBox : public GuiItem
+			class GuiInputBox : public GuiControl
 			{
 			public:
-				GuiInputBox();
-				explicit GuiInputBox(GuiItem* parent);
-				GuiInputBox(GuiItem* parent, const std::string& name);
-				GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text);
-				GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text, const sf::Vector2f& position);
-				GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text, const sf::Vector2f& position, const sf::Vector2f& size);
-				GuiInputBox(GuiItem* parent, const std::string& name, const std::string& text, const sf::Vector2f& position, const sf::Vector2f& size, const flag_t& flags);
+				GuiInputBox(GuiItem* parent = nullptr, const std::string& name = "", const std::string& text = "", const sf::Vector2f& position = sf::Vector2f(-1, -1));
 				GuiInputBox(const GuiInputBox& input);
 				GuiInputBox(GuiInputBox&& input) noexcept;
 
