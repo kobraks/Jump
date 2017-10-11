@@ -70,21 +70,16 @@ void jump::system::gui::GuiComboBox::remove_item(const size_t& item)
 	list_->remove(item);
 }
 
-void jump::system::gui::GuiComboBox::remove_item(char* item)
+void jump::system::gui::GuiComboBox::remove_item(const std::string& item)
 {
 	for (size_t i = 0; i < list_->size(); ++i)
 	{
-		if (std::strcmp(item, list_->get(i)))
+		if (item == list_->get(i))
 		{
 			list_->remove(i);
 			return;
 		}
 	}
-}
-
-void jump::system::gui::GuiComboBox::remove_item(const std::string& item)
-{
-	remove_item(item.c_str());
 }
 
 jump::system::gui::GuiItem* jump::system::gui::GuiComboBox::clone() const

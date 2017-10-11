@@ -27,6 +27,9 @@ namespace jump
 				GuiForm(GuiForm&& gui_form) = default;
 				~GuiForm() override;
 
+				bool is_open() const;
+				void close();
+
 				void set_parent(GuiItem* parent) override;
 
 				void set_size(const sf::Vector2f& size);

@@ -1,5 +1,4 @@
 #include "GuiItemCointainer.h"
-#include "GuiItem.h"
 
 #include "NotInicializedException.h"
 #include "OutOfRangeException.h"
@@ -23,7 +22,7 @@ void jump::system::gui::GuiItemCointainer::add(GuiItem* item)
 	if (!item)
 		throw exception::NotInicializedException();
 
-	if (exist(item))
+	if (!exist(item))
 		items_.push_back(item);
 }
 

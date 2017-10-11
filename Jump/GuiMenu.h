@@ -10,7 +10,7 @@ namespace jump
 	{
 		namespace gui
 		{
-			class GuiMenu : public GuiItem, GuiItemCointainer
+			class GuiMenu : public GuiItem, public GuiItemCointainer
 			{
 			public:
 				GuiMenu(GuiItem* parent = nullptr, const std::string& name = "", const bool& enabled = true, event_function on_click = nullptr);

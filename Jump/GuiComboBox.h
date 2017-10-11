@@ -25,7 +25,6 @@ namespace jump
 				void set_item(const size_t& index, const std::string& value);
 
 				void remove_item(const size_t& item);
-				void remove_item(char* item);
 				void remove_item(const std::string& item);
 
 				GuiItem* clone() const override;

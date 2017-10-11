@@ -22,7 +22,12 @@ void jump::system::gui::GuiMenu::add(GuiItem* item)
 		throw exception::NotInicializedException();
 
 	if (dynamic_cast<GuiMenu*>(item) || dynamic_cast<GuiItem*>(item))
+	{
+		if (item->parent() != this)
+			item->set_parent(this);
+
 		GuiItemCointainer::add(item);
+	}
 	else
 		throw std::exception(); //TODO exception
 }
@@ -54,7 +59,11 @@ void jump::system::gui::GuiMenu::enabled(const bool& enabled)
 
 jump::system::gui::GuiItem* jump::system::gui::GuiMenu::clone() const
 {
-	return new GuiMenu(parent(), name_,enabled_, on_click_);
+	auto result = new GuiMenu(parent(), name_,enabled_, on_click_);
+	result->move_items(get_copy());
+
+	return result;
+
 }
 
 void jump::system::gui::GuiMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const

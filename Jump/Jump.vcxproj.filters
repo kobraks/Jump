@@ -229,6 +229,9 @@
       <Filter>Source Files\System\gui</Filter>
     </ClCompile>
     <ClCompile Include="GuiControl.cpp">
+      <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiMenuSeparator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -459,6 +462,9 @@
       <Filter>Header Files\System\gui</Filter>
     </ClInclude>
     <ClInclude Include="GuiControl.h">
+      <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiMenuSeparator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

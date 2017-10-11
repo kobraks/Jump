@@ -73,7 +73,9 @@ void jump::system::gui::GuiInputBox::draw(sf::RenderTarget& target, sf::RenderSt
 
 jump::system::gui::GuiInputBox::Buffer::Buffer(const std::string& text) : Buffer(text.size() + 1)
 {
-	std::copy(text.begin(), text.end(), buffer_);
+	for (size_t i = 0; i < text.size(); ++i)
+		buffer_[i] = text[i];
+
 	buffer_[size_ - 1] = '\0';
 }
 
@@ -96,7 +98,8 @@ jump::system::gui::GuiInputBox::Buffer& jump::system::gui::GuiInputBox::Buffer::
 {
 	resize(buffer.size());
 
-	std::copy(buffer.buffer_, buffer.buffer_ + buffer.size_, buffer_);
+	for (size_t i = 0; i < size_; ++i)
+		buffer_[i] = buffer.buffer_[i];
 
 	return *this;
 }
@@ -128,7 +131,10 @@ size_t jump::system::gui::GuiInputBox::Buffer::size() const
 void jump::system::gui::GuiInputBox::Buffer::set_text(const std::string& text)
 {
 	resize(text.size() + 1);
-	std::copy(text.begin(), text.end(), buffer_);
+	
+	for (size_t i = 0; i < text.size(); ++i)
+		buffer_[i] = text[i];
+
 	buffer_[size_ - 1] = '\0';
 }
 

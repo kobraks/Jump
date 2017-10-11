@@ -11,8 +11,8 @@ namespace jump
 			class GuiMenuItem : public GuiItem
 			{
 			public:
-				GuiMenuItem(GuiItem* parent, const std::string& name, const std::string& shortcut = "", const bool& selected = true, const bool& enabled = true, event_function on_click = nullptr);
-				GuiMenuItem(GuiItem* parent, const std::string& name, const std::string& shortcut = "", event_function on_click = nullptr);
+				GuiMenuItem(GuiItem* parent, const std::string& name, const std::string& shortcut, const bool& selected = false, const bool& enabled = true, event_function on_click = nullptr);
+				GuiMenuItem(GuiItem* parent, const std::string& name, const std::string& shortcut, event_function on_click);
 				GuiMenuItem(const GuiMenuItem& menu);
 				GuiMenuItem(GuiMenuItem&& menu) noexcept;
 

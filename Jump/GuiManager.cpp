@@ -23,8 +23,13 @@ jump::system::gui::GuiManager* jump::system::gui::GuiManager::get_instance()
 
 bool jump::system::gui::GuiManager::exist(GuiItem* item)
 {
-	auto iterator = std::find(items_.begin(), items_.end(), item);
-	return iterator != items_.end();
+	if (!item)
+		throw exception::NotInicializedException();
+
+	auto& items = get_instance()->items_;
+
+	auto iterator = std::find(items.begin(), items.end(), item);
+	return iterator != items.end();
 }
 
 void jump::system::gui::GuiManager::remove()

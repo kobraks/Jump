@@ -21,7 +21,12 @@ void jump::system::gui::GuiMenuBar::add(GuiItem* item)
 		throw exception::NotInicializedException();
 
 	if (dynamic_cast<GuiMenu*>(item) || dynamic_cast<GuiMenuItem*>(item))
+	{
+		if (item->parent() != this)
+			item->set_parent(this);
+
 		GuiItemCointainer::add(item);
+	}
 	else
 		throw std::exception(); //TODO exception
 }
@@ -52,7 +57,7 @@ void jump::system::gui::GuiMenuBar::draw(sf::RenderTarget& target, sf::RenderSta
 {
 	if (ImGui::BeginMainMenuBar())
 	{
-		for (auto item : get_copy())
+		for (auto item : get_items())
 			target.draw(static_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)), states);
 
 		ImGui::EndMainMenuBar();

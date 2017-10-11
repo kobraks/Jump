@@ -12,7 +12,7 @@ jump::system::gui::GuiMenuItem::GuiMenuItem(GuiItem* parent, const std::string& 
 }
 
 jump::system::gui::GuiMenuItem::GuiMenuItem(GuiItem* parent, const std::string& name, const std::string& shortcut,
-	event_function on_click) : GuiMenuItem(parent, name, shortcut, true, true, on_click)
+	event_function on_click) : GuiMenuItem(parent, name, shortcut, false, true, on_click)
 {
 }
 

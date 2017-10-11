@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-
+#include "GuiItem.h"
 
 namespace jump
 {
@@ -8,8 +8,6 @@ namespace jump
 	{
 		namespace gui
 		{
-			class GuiItem;
-
 			class GuiItemCointainer
 			{
 			public:

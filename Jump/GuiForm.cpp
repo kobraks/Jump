@@ -42,6 +42,16 @@ jump::system::gui::GuiForm::~GuiForm()
 	clear();
 }
 
+bool jump::system::gui::GuiForm::is_open() const
+{
+	return open_;
+}
+
+void jump::system::gui::GuiForm::close()
+{
+	open_ = false;
+}
+
 void jump::system::gui::GuiForm::set_parent(GuiItem* parent)
 {
 	if (parent == this)

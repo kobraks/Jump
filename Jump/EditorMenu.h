@@ -13,6 +13,20 @@ namespace jump
 		class EntityListCreator;
 	}
 
+	namespace system
+	{
+		namespace gui
+		{
+			class GuiForm;
+			class GuiMessageBox;
+			class GuiLabel;
+			class GuiMenuBar;
+			class GuiMenu;
+			class GuiMenuItem;
+			class GuiComboBox;
+		}
+	}
+
 	namespace menu
 	{
 		class EditorMenu : public Menu
@@ -25,33 +39,7 @@ namespace jump
 			void update(sf::RenderWindow& window) override;
 
 		private:			
-			class Menus
-			{
-			public:
-				explicit Menus();
-				~Menus();
-
-				void draw();
-				bool is_open() const;
-				void close();
-
-			private:
-				void select_menu(bool* p_open = nullptr);
-				void edit_entity(bool* p_open = nullptr);
-				static bool is_duplicate(char *str);
-				void select_type_of_entity(bool* p_open = nullptr);
-
-				bool show_select_menu_, show_edit_entity_menu_, show_select_type_entity_menu_;
-				bool is_open_;
-
-				char* buff_;
-				size_t buff_size_;
-				size_t selected_;
-
-				entity::Entity* entity_;
-
-				utilities::EntityListCreator* entity_list_creator_;
-			}* editor_menu;
+			system::gui::GuiForm* form_;
 		};
 	}
 }

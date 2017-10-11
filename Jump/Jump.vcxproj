@@ -176,6 +176,7 @@
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="GuiMenu.cpp" />
     <ClCompile Include="GuiMenuBar.cpp" />
+    <ClCompile Include="GuiMenuSeparator.cpp" />
     <ClCompile Include="GuiMessageBox.cpp" />
     <ClCompile Include="GuiSameLine.cpp" />
     <ClCompile Include="imgui-SFML.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="GuiMenu.h" />
     <ClInclude Include="GuiMenuBar.h" />
+    <ClInclude Include="GuiMenuSeparator.h" />
     <ClInclude Include="GuiMessageBox.h" />
     <ClInclude Include="GuiSameLine.h" />
     <ClInclude Include="GuiTypes.h" />

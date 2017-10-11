@@ -26,6 +26,8 @@ namespace jump
 				static GuiManager* remove_and_destroy(GuiItem* item);
 				static GuiManager* add(GuiItem* item);
 
+				static bool exist(GuiItem* item);
+
 				GuiManager& operator=(GuiManager&) = delete;
 				GuiManager& operator=(GuiManager&&) = delete;
 			private:
@@ -37,7 +39,6 @@ namespace jump
 				sf::RenderWindow* window_;
 
 				static GuiManager* get_instance();
-				bool exist(GuiItem* item);
 
 				void remove();
 				void destroy();
