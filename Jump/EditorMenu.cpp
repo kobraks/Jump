@@ -9,14 +9,9 @@
 #include "EntityListCreator.h"
 #include "EditorMsgs.h"
 
-#include "GuiButton.h"
-#include "GuiForm.h"
-#include "GuiComboBox.h"
-#include "GuiMenu.h"
-#include "GuiMenuBar.h"
-#include "GuiMenuItem.h"
-#include "Configuration.h"
 #include "GuiManager.h"
+#include "Configuration.h"
+#include "GuiInputMessageBox.h"
 
 jump::menu::EditorMenu::EditorMenu(Menu* parent): Menu(parent)
 {
@@ -27,26 +22,15 @@ jump::menu::EditorMenu::EditorMenu(Menu* parent): Menu(parent)
 	GuiMenuBar* menu_bar = new GuiMenuBar();
 	auto file_menu = new GuiMenu(menu_bar, "File");
 
-	file_menu->add(new GuiMenuItem(file_menu, "open", ""));
-	file_menu->name();
-
+	file_menu->add(new GuiMenuItem(file_menu, "open", "CTRL+O", [this](GuiItem*) { open_button(); }));
 	GuiMenu* entity_menu = new GuiMenu(menu_bar, "Entity");
 	
 	menu_bar->add(file_menu);
 	menu_bar->add(entity_menu);
 
-	file_menu->name();
-
-
 	form_->add(menu_bar);
 
-	file_menu->name();
-
-
 	GuiManager::add(form_);
-
-	file_menu->name();
-
 }
 
 jump::menu::EditorMenu::~EditorMenu()
@@ -64,4 +48,11 @@ void jump::menu::EditorMenu::update(sf::RenderWindow& window)
 
 	if (!system::gui::GuiManager::exist(form_))
 		stop();
+}
+
+void jump::menu::EditorMenu::open_button()
+{
+	system::Log::write("Clicked open", system::logDEBUG4);
+
+	auto input = new system::gui::GuiInputMessageBox(form_, "ala", "beata");
 }

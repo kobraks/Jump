@@ -141,7 +141,6 @@ void jump::Game::run_game()
 				ImGui::End();
 				return;
 			}
-
 			ImGui::Text("Fps: %.2f", 1.0f / frame_rate.asSeconds());
 
 			if (config_->debug)

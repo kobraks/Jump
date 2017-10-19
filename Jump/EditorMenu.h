@@ -1,6 +1,13 @@
 #pragma once
 #include "Menu.h"
 
+#include "GuiButton.h"
+#include "GuiForm.h"
+#include "GuiComboBox.h"
+#include "GuiMenu.h"
+#include "GuiMenuBar.h"
+#include "GuiMenuItem.h"
+
 namespace jump
 {
 	namespace entity
@@ -13,20 +20,6 @@ namespace jump
 		class EntityListCreator;
 	}
 
-	namespace system
-	{
-		namespace gui
-		{
-			class GuiForm;
-			class GuiMessageBox;
-			class GuiLabel;
-			class GuiMenuBar;
-			class GuiMenu;
-			class GuiMenuItem;
-			class GuiComboBox;
-		}
-	}
-
 	namespace menu
 	{
 		class EditorMenu : public Menu
@@ -37,6 +30,9 @@ namespace jump
 
 			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 			void update(sf::RenderWindow& window) override;
+
+		protected:
+			void open_button();
 
 		private:			
 			system::gui::GuiForm* form_;

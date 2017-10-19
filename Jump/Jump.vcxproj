@@ -170,6 +170,7 @@
     <ClCompile Include="GuiControl.cpp" />
     <ClCompile Include="GuiForm.cpp" />
     <ClCompile Include="GuiInputBox.cpp" />
+    <ClCompile Include="GuiInputMessageBox.cpp" />
     <ClCompile Include="GuiItem.cpp" />
     <ClCompile Include="GuiItemCointainer.cpp" />
     <ClCompile Include="GuiLabel.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="GuiControl.h" />
     <ClInclude Include="GuiForm.h" />
     <ClInclude Include="GuiInputBox.h" />
+    <ClInclude Include="GuiInputMessageBox.h" />
     <ClInclude Include="GuiItem.h" />
     <ClInclude Include="GuiItemCointainer.h" />
     <ClInclude Include="GuiLabel.h" />

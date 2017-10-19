@@ -1,1 +1,12 @@
 start logging
+0: [INFO]: Load configuration file
+1: [INFO]: start to load fonts
+2: [INFO]: attempt to load font: Data/Fonts/FRADM.ttf
+3: [INFO]: attempt to load font: Data/Fonts/framd.ttf
+4: [INFO]: attempt to load font: Data/Fonts/FRADM.ttf
+5: [INFO]: attempt to load font: Data/Fonts/consola.ttf
+6: [INFO]: Attempt to load entities
+7: [ERROR]: Unable to load entity
+error message: Unable to load a data/entities/ghost.lua
+8: [INFO]: creating window: 
+9: [DEBUG4]: Clicked open
