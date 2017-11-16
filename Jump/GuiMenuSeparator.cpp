@@ -14,7 +14,7 @@ jump::system::gui::GuiItem* jump::system::gui::GuiMenuSeparator::clone() const
 	return new GuiMenuSeparator(parent());
 }
 
-void jump::system::gui::GuiMenuSeparator::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiMenuSeparator::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 	ImGui::Separator();
 }

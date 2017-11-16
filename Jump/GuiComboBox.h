@@ -35,7 +35,7 @@ namespace jump
 				GuiComboBox& operator= (const GuiComboBox& combo);
 				GuiComboBox& operator= (GuiComboBox&& combo) noexcept;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 
 			private:
 				class List

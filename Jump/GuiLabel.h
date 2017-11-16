@@ -26,7 +26,7 @@ namespace jump
 				GuiLabel& operator=(const GuiLabel& label);
 				GuiLabel& operator=(GuiLabel&& label) = default;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 
 			private:
 				std::string text_;

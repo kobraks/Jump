@@ -71,9 +71,14 @@ jump::system::gui::GuiManager* jump::system::gui::GuiManager::draw()
 {
 	auto instance = get_instance();
 	auto& items = instance->items_;
+	auto& window = instance->window_;
 
 	for (auto item : items)
-		instance->window_->draw(const_cast<const sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)));
+	{
+		item->on_draw();
+		item->draw(*window, sf::RenderStates());
+		item->on_end_draw();
+	}
 
 	instance->remove();
 	instance->destroy();

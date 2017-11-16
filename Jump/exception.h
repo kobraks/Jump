@@ -1,6 +1,7 @@
 #pragma once
 #include <exception>
 #include <string>
+#include "Log.h"
 
 namespace jump
 {
@@ -11,9 +12,9 @@ namespace jump
 			class Exception : public std::exception
 			{
 			public:
-				explicit Exception(const std::string& _message) : message_(_message)
+				explicit Exception(const std::string& message) : message_(message)
 				{
-					
+					Log::write_error("", message);
 				}
 
 				const char* what() const throw() override

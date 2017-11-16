@@ -1,5 +1,7 @@
 #pragma once
 
+#define GUI_RESIZE_LENGTH 256
+
 #define CONFIGURATION_FILE_NAME "config.ini"
 #define ENTITIES_FILE "entities.txt"
 #define SFML_LOGO "sfml-logo.png"

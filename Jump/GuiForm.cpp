@@ -99,45 +99,55 @@ jump::system::gui::GuiItem* jump::system::gui::GuiForm::clone() const
 
 jump::system::gui::GuiForm& jump::system::gui::GuiForm::operator=(const GuiForm& gui_form)
 {
-	auto clone = gui_form.clone();
-	*this = std::move(*dynamic_cast<GuiForm*>(clone));
+	auto clone = dynamic_cast<GuiForm*>(gui_form.clone());
+	move_values(clone);
+	main_form_ = std::move(clone->main_form_);
+	open_ = std::move(clone->open_);
+
+	position(clone->position());
+	set_size(clone->get_size());
+	set_flags(clone->get_flags());
+	name(clone->name());
+
+	move_items(clone->get_items());
+
 	delete clone;
 
 	return *this;
 }
 
-void jump::system::gui::GuiForm::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiForm::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
-	if (position().x >= 0 && position().y >= 0)
+	if (position().x >= 0 && position().y >= 0 && !(GUI_FORCE_MIDDLE_POSITION & flags_))
 		ImGui::SetNextWindowPos(position());
 	else
 		ImGui::SetNextWindowPosCenter();
-	if (get_size().x != 0 && get_size().y != 0) ImGui::SetNextWindowSize(get_size());
+	if (get_size().x < 0 && get_size().y < 0) ImGui::SetNextWindowSize(get_size());
 
 	//std::cout << "position: (" << get_position().x << ", " << get_position().y << ")\n";
 
-	if (main_form_)
+	//if (main_form_)
 		ImGui::Begin(name().c_str(), const_cast<bool*>(&open_), static_cast<ImGuiWindowFlags>(translate_flags(get_flags())));
-	else
-		ImGui::TreeNode(name().c_str());
+	//else
+		//ImGui::TreeNode(name().c_str());
 
-	for (auto item : get_items())
-		target.draw(static_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)), states);
+	draw_items(target, states);
 
-	if (main_form_)
+	//if (main_form_)
 		ImGui::End();
-	else
-		ImGui::TreePop();
+	//else
+		//ImGui::TreePop();
 }
 
 int jump::system::gui::GuiForm::translate_flags(const flag_t& flags) const
 {
 	int result = 0;
 
-	if (GUI_NO_SAVE)
+	if (GUI_NO_SAVE & flags)
 		result |= ImGuiWindowFlags_NoSavedSettings;
-	if (GUI_AUTO_RESIZE)
+	if (GUI_AUTO_RESIZE & flags)
 		result |= ImGuiWindowFlags_AlwaysAutoResize;
-
+	if (GUI_NO_TITLE_BAR & flags)
+		result |= ImGuiWindowFlags_NoTitleBar;
 	return result;
 }

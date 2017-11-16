@@ -47,18 +47,21 @@ jump::system::gui::GuiItem* jump::system::gui::GuiMenuBar::clone() const
 jump::system::gui::GuiMenuBar& jump::system::gui::GuiMenuBar::operator=(const GuiMenuBar& menu_bar)
 {
 	auto clone = dynamic_cast<GuiMenuBar*>(menu_bar.clone());
-	*this = std::move(*clone);
+	move_values(clone);
+
+	move_items(clone->get_items());
+
+
 	delete clone;
 
 	return *this;
 }
 
-void jump::system::gui::GuiMenuBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiMenuBar::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 	if (ImGui::BeginMainMenuBar())
 	{
-		for (auto item : get_items())
-			target.draw(static_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)), states);
+		draw_items(target, states);
 
 		ImGui::EndMainMenuBar();
 	}

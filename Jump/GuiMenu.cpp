@@ -66,7 +66,7 @@ jump::system::gui::GuiItem* jump::system::gui::GuiMenu::clone() const
 
 }
 
-void jump::system::gui::GuiMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiMenu::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 	if (ImGui::BeginMenu(name_.c_str(), enabled_))
 	{
@@ -74,7 +74,7 @@ void jump::system::gui::GuiMenu::draw(sf::RenderTarget& target, sf::RenderStates
 			on_click_(const_cast<GuiMenu*>(this));
 
 		for (auto item : get_items())
-			target.draw(static_cast<sf::Drawable&>(*dynamic_cast<sf::Drawable*>(item)), states);
+			item->draw(target, states);
 
 		ImGui::EndMenu();
 	}

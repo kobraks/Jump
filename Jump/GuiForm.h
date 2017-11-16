@@ -4,6 +4,7 @@
 #include "GuiControl.h"
 #include "GuiItem.h"
 #include "GuiItemCointainer.h"
+#include <SFML/System/Vector2.hpp>
 
 namespace jump
 {
@@ -13,6 +14,8 @@ namespace jump
 		{
 			const flag_t GUI_NO_SAVE = 0x1;
 			const flag_t GUI_AUTO_RESIZE = 0x2;
+			const flag_t GUI_NO_TITLE_BAR = 0x4;
+			const flag_t GUI_FORCE_MIDDLE_POSITION = 0x8;
 
 			class GuiForm : public GuiControl, public GuiItemCointainer
 			{
@@ -43,7 +46,7 @@ namespace jump
 				GuiForm& operator= (const GuiForm& gui_form);
 				GuiForm& operator= (GuiForm&& gui_form) = default;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 
 			private:
 				bool main_form_, open_;

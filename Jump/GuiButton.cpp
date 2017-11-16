@@ -47,13 +47,16 @@ jump::system::gui::GuiItem* jump::system::gui::GuiButton::clone() const
 jump::system::gui::GuiButton& jump::system::gui::GuiButton::operator=(GuiButton& item)
 {
 	auto clone = dynamic_cast<GuiButton*>(item.clone());
-	*this = std::move(*clone);
+	on_click_ = std::move(clone->on_click_);
+	size_ = std::move(clone->size_);
+	move_values(clone);
+
 	delete clone;
 
 	return *this;
 }
 
-void jump::system::gui::GuiButton::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiButton::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 	if (position().x >= 0 && position().y >= 0)
 		ImGui::SetCursorPos(position());

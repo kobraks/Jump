@@ -17,6 +17,8 @@ namespace jump
 				GuiInputMessageBox(GuiItem* parent, const std::string& name, const std::string& text, const std::string& default_text = "", const flag_t& flags = YES_BUTTON);
 				~GuiInputMessageBox();
 
+				void set_action_on_close(event_function function);
+
 				void name(const std::string& name) const;
 				std::string name() const;
 
@@ -30,7 +32,7 @@ namespace jump
 				int button_clicked();
 				GuiItem* clone() const override;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 			private:
 				GuiForm* form_;
 				GuiInputBox* input_;
@@ -38,6 +40,9 @@ namespace jump
 
 				int button_clicked_;
 				flag_t flags_;
+				bool first_draw_;
+
+				event_function on_close_;
 			};
 		}
 	}

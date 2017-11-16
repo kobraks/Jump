@@ -1,8 +1,10 @@
 #pragma once
 
+#include <functional>
 #include "GuiItem.h"
 #include "GuiTypes.h"
 #include "GuiControl.h"
+#include "imgui.h"
 
 namespace jump
 {
@@ -17,6 +19,14 @@ namespace jump
 				GuiInputBox(const GuiInputBox& input);
 				GuiInputBox(GuiInputBox&& input) noexcept;
 
+				void set_action_on_return_click(event_function on_return_click);
+				void set_action_on_key_click(event_function on_key_click);
+
+				void flags(const ImGuiInputTextFlags& flags);
+				ImGuiInputTextFlags flags() const;
+
+				void auto_focus_on_first_draw();
+
 				~GuiInputBox() override;
 
 				GuiItem* clone() const override;
@@ -26,34 +36,35 @@ namespace jump
 				GuiInputBox& operator= (const GuiInputBox& input);
 				GuiInputBox& operator=(GuiInputBox&& input) noexcept;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 
 			private:
 				class Buffer
 				{
 				public:
-					explicit Buffer(const std::string& text);
+					explicit Buffer(const std::string& string);
 					explicit Buffer(const size_t& size);
-					Buffer(const Buffer& buffer);
-					Buffer(Buffer&& buffer) noexcept;
 
-					Buffer& operator=(const Buffer& buffer);
-					Buffer& operator=(Buffer&& buffer) noexcept;
+					std::string get_text() const;
+					void set_text(const std::string& string);
 
-					~Buffer();
+					size_t get_size() const;
+					void set_size(const size_t& size);
 
 					char* get_buffer() const;
-					size_t size() const;
 
-					void set_text(const std::string& text);
-					std::string get_text() const;
-
-					void resize(const size_t& size);
 
 				private:
 					char* buffer_;
 					size_t size_;
 				} *buffer_;
+
+				event_function on_enter_;
+				event_function on_key_click_;
+
+				ImGuiInputTextFlags flags_;
+
+				bool auto_focus_;
 			};
 		}
 	}

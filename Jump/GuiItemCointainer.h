@@ -41,6 +41,8 @@ namespace jump
 				void move_items(std::vector<GuiItem*>&& items);
 
 				void remove_all_items();
+
+				void draw_items(sf::RenderTarget& target, sf::RenderStates states);
 			private:
 				std::vector<GuiItem*> items_;
 			};

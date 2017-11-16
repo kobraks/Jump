@@ -1,5 +1,6 @@
 #pragma once
 #include "GuiItem.h"
+#include <SFML/System/Vector2.hpp>
 
 namespace jump
 {

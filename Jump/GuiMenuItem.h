@@ -33,16 +33,20 @@ namespace jump
 				bool selected() const;
 				void selected(const bool& selected);
 
+				bool select_on_click() const;
+				void select_on_click(const bool& select_on_click);
+
 				GuiItem* clone() const override;
 				
 				GuiMenuItem& operator=(const GuiMenuItem& menu);
 				GuiMenuItem& operator=(GuiMenuItem&& menu) = default;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 			private:
 				event_function on_click_;
 				std::string shortcut_, name_;
 				bool selected_, enabled_;
+				bool select_on_click_;
 
 			};
 		}

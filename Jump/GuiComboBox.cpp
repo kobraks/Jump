@@ -54,7 +54,17 @@ void jump::system::gui::GuiComboBox::add_item(char* item)
 
 void jump::system::gui::GuiComboBox::add_item(const std::string& item)
 {
-	add_item(item.c_str());
+	if (item.empty())
+		throw exception::NotInicializedException();
+
+	char* buff = new char[item.size() + 1];
+
+	for (std::string::size_type i = 0; i < item.size(); i++)
+		buff[i] = item[i];
+
+	buff[item.size() + 1] = '\0';
+	
+	list_->add(buff);
 }
 
 void jump::system::gui::GuiComboBox::set_item(const size_t& index, const std::string& value)
@@ -119,7 +129,7 @@ jump::system::gui::GuiComboBox& jump::system::gui::GuiComboBox::operator=(GuiCom
 	return *this;
 }
 
-void jump::system::gui::GuiComboBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiComboBox::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 	int size = static_cast<int>(list_->size());
 	int selected = list_->selected();

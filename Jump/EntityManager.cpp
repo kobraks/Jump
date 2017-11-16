@@ -4,6 +4,7 @@
 
 #include "Entity.h"
 #include "EntityLoader.h"
+#include "EntitiesStorageLoader.h"
 #include "OutOfRangeException.h"
 #include "NotInicializedException.h"
 #include "UnableToOpenFileException.h"
@@ -60,18 +61,9 @@ void jump::entity::EntityManager::load_from_file(const std::string& file_name)
 {
 	clear();
 
-	std::fstream file(file_name, std::ios::in);
-	if (!file.good())
-	{
-		file.close();
-		throw system::exception::UnableToOpenFileException(file_name);
-	}
-
-	std::vector<std::string> entity_names;
-	
-	std::string line;
-	while (std::getline(file, line))
-		entity_names.push_back(line);
+	auto loader = new EntitiesStorageLoader(file_name);
+	auto entity_names = loader->get_entities_names();
+	delete loader;
 
 	for (auto& entity_name : entity_names)
 	{
@@ -84,7 +76,6 @@ void jump::entity::EntityManager::load_from_file(const std::string& file_name)
 			system::Log::write_error("Unable to load entity", exception.what());
 		}
 	}
-	file.close();
 }
 
 void jump::entity::EntityManager::clear()

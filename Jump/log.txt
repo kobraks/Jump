@@ -6,7 +6,12 @@ start logging
 4: [INFO]: attempt to load font: Data/Fonts/FRADM.ttf
 5: [INFO]: attempt to load font: Data/Fonts/consola.ttf
 6: [INFO]: Attempt to load entities
-7: [ERROR]: Unable to load entity
+7: [ERROR]: 
 error message: Unable to load a data/entities/ghost.lua
-8: [INFO]: creating window: 
-9: [DEBUG4]: Clicked open
+8: [ERROR]: Unable to load entity
+error message: Unable to load a data/entities/ghost.lua
+9: [INFO]: creating window: 
+10: [ERROR]: 
+error message: Unable to read memory
+11: [ERROR]: 
+error message: Unable to read memory

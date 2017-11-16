@@ -4,6 +4,7 @@
 #include "GuiTypes.h"
 #include "GuiItem.h"
 #include "GuiControl.h"
+#include <SFML/System/Vector2.hpp>
 
 namespace jump
 {
@@ -30,7 +31,7 @@ namespace jump
 				GuiButton& operator= (GuiButton& item);
 				GuiButton& operator= (GuiButton&& item) = default;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 
 			private:
 				event_function on_click_;

@@ -131,6 +131,16 @@ void jump::system::gui::GuiItemCointainer::remove_all_items()
 	items_.clear();
 }
 
+void jump::system::gui::GuiItemCointainer::draw_items(sf::RenderTarget& target, sf::RenderStates states)
+{
+	for (auto& item : items_)
+	{
+		item->on_draw();
+		item->draw(target, states);
+		item->on_end_draw();
+	}
+}
+
 size_t jump::system::gui::GuiItemCointainer::size() const
 {
 	return items_.size();

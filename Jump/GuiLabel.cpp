@@ -43,13 +43,15 @@ jump::system::gui::GuiItem* jump::system::gui::GuiLabel::clone() const
 jump::system::gui::GuiLabel& jump::system::gui::GuiLabel::operator=(const GuiLabel& label)
 {
 	auto clone = dynamic_cast<GuiLabel*>(label.clone());
-	*this = std::move(*clone);
+	text_ = std::move(clone->text_);
+	move_values(clone);
+
 	delete clone;
 
 	return *this;
 }
 
-void jump::system::gui::GuiLabel::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiLabel::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 	ImGui::Text(text_.c_str());
 }

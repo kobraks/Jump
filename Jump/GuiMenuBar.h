@@ -25,7 +25,7 @@ namespace jump
 				GuiMenuBar& operator= (const GuiMenuBar& menu_bar);
 				GuiMenuBar& operator= (GuiMenuBar&& menu_bar) = default;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 			};
 		}
 	}

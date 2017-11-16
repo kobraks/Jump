@@ -12,6 +12,9 @@ namespace jump
 		explicit Menu(Menu* parent);
 		virtual ~Menu();
 
+		Menu(Menu&) = delete;
+		Menu& operator= (const Menu&) = delete;
+
 		Menu* perent() const;
 		bool is_running() const;
 		void stop();

@@ -85,6 +85,9 @@
     <Filter Include="Source Files\utilities">
       <UniqueIdentifier>{c3c58342-f186-4dc1-a67d-60237a9c92f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{18443d00-f998-4e4a-b98d-76fa6fd4dc32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -236,6 +239,18 @@
     </ClCompile>
     <ClCompile Include="GuiInputMessageBox.cpp">
       <Filter>Source Files\System\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="EntitiesStorageLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneWriter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +487,18 @@
     </ClInclude>
     <ClInclude Include="GuiInputMessageBox.h">
       <Filter>Header Files\System\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="EntitiesStorageLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneWriter.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

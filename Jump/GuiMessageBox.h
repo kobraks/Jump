@@ -46,8 +46,9 @@ namespace jump
 				GuiMessageBox& operator=(GuiMessageBox&& message_box) = default;
 
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 
+			private:
 				std::string title_;
 				flag_t flags_;
 				size_t button_cliked_;

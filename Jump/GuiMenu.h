@@ -29,7 +29,7 @@ namespace jump
 				//void set_parent(GuiItem* parent) override;
 				GuiItem* clone() const override;
 			protected:
-				void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				void draw(sf::RenderTarget& target, sf::RenderStates states) override;
 
 			private:
 				event_function on_click_;

@@ -137,12 +137,19 @@ void jump::system::gui::GuiMessageBox::show() const
 jump::system::gui::GuiMessageBox& jump::system::gui::GuiMessageBox::operator=(const GuiMessageBox& message_box)
 {
 	auto clone = dynamic_cast<GuiMessageBox*>(message_box.clone());
-	*this = std::move(*clone);
+
+	move_values(clone);
+	form_ = std::move(clone->form_);
+	button_cliked_ = std::move(clone->button_cliked_);
+	label_ = std::move(clone->label_);
+	title_ = std::move(clone->title_);
+	flags_ = std::move(clone->flags_);
+
 	delete clone;
 	return *this;
 }
 
-void jump::system::gui::GuiMessageBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void jump::system::gui::GuiMessageBox::draw(sf::RenderTarget& target, sf::RenderStates states)
 {
 
 }
